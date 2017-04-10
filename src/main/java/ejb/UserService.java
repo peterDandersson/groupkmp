@@ -1,5 +1,6 @@
 package ejb;
 
+import jpa.Admin;
 import jpa.Student;
 import jpa.Teacher;
 import jpa.User_;
@@ -22,19 +23,23 @@ public class UserService {
         return this.toString();
     }
 
-    public Long createUser(String email, String password){
-        // String email, String password, String firstName, String lastName, String address, Date birthDate
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++ create user");
-        //Teacher user = new Teacher(email, password, "fnText", "lnTest", "addrTest");
-        //Student user = new Student(email, password, "fnText", "lnTest", "addrTest");
-        User_ user = new User_(email, password, "fnText", "lnTest", "addrTest");
-        em.persist(user);
-        System.out.println(user.getDecriminatorValue());
-        return user.getId();
+    public Long createUser(String email, String password, String role){
+
+        Long id = createUser(role, email, password, "fnTest", "lnTest", "addrTest");
+        return id;
     }
 
-    public Long createUser(String email, String password, String firstName, String lastName, String address){
-        User_ user = new User_(email,password,firstName,lastName,address);
+    public Long createUser(String role, String email, String password, String firstName, String lastName, String address){
+        User_ user = null;
+        if (role.equals("TEACHER")) {
+            user = new Teacher(email, password, firstName, lastName, address);
+        }
+        else if(role.equals("STUDENT")) {
+            user = new Student(email, password, firstName, lastName, address);
+        }
+        else if(role.equals("ADMIN")) {
+            user = new Admin(email, password, firstName, lastName, address);
+        }
         em.persist(user);
         return user.getId();
     }
