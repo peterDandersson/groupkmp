@@ -8,12 +8,12 @@
 <f:view>
     <h:form>
         <h:outputLabel value="email:"/>
-        <h:inputText value="#{logIn.email}"/>
+        <h:inputText value="#{userBean.email}"/>
         <br/>
         <h:outputLabel value="password:"/>
-        <h:inputText value="#{logIn.password}"/>
+        <h:inputText value="#{userBean.password}"/>
         <br/>
-        <h:commandButton action="#{logIn.logIn}" value="klicka"/>
+        <h:commandButton action="#{userBean.logIn}" value="klicka"/>
     </h:form>
 </f:view>
 </html>
