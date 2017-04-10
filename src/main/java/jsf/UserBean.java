@@ -30,7 +30,6 @@ public class UserBean {
         setEmail("");
         setPassword("");
         return "createUser";
-
     }
 
     private boolean isStudent() {
