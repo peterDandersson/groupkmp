@@ -6,15 +6,12 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<f:view>
-    <ui:composition template="templates/site-template.xhtml">
+    <ui:composition template="/templates/site-template.xhtml">
         <ui:param name="pageTitle" value="Page One"/>
         <ui:define name="main-panel">
-            <!--div id="main-container">
-                <h:outputLabel value="Admin #{userBean.userInfo}"/>
-            </div-->
-            <h:outputLabel value="Admin -------- #{userBean.userInfo}"/>
+            <div id="main-container">
+                <h:outputLabel value="Admin -------- #{userBean.userInfo}"/>
+            </div>
         </ui:define>
     </ui:composition>
-</f:view>
 </html>

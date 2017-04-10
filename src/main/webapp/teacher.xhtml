@@ -5,7 +5,14 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Teacher ------ #{userBean.userInfo}"/>
-</f:view>
+<ui:composition template="/templates/site-template.xhtml">
+    <ui:param name="pageTitle" value="Page One"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <f:view>
+                <h:outputLabel value="Teacher ------ #{userBean.userInfo}"/>
+            </f:view>
+        </div>
+    </ui:define>
+</ui:composition>
 </html>
