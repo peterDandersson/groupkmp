@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view contentType="text/html">
+    <h:head>
+        <f:metadata charset="UTF-8" />
+        <title>CourseApp - #{pageTitle}</title>
+        <style type="text/css">
+            #nav-bar{
+                width: 100%;
+                height: 60px;
+                background-color: #389aff;
+                position: fixed;
+                top: 0px;
+                left: 0px;
+            }
+            #main-container{
+                margin: 40px;
+                margin-top: 80px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <ui:include src="nav-bar.xhtml"/>
+        <ui:insert name="main-panel" />
+    </h:body>
+</f:view>
+</html>
