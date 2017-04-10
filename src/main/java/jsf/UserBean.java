@@ -16,6 +16,7 @@ public class UserBean {
 
     private String email;
     private String password;
+    private String role;
 
     private User_ user;
 
@@ -24,9 +25,11 @@ public class UserBean {
         return user.getDecriminatorValue().toLowerCase();
     }
 
-    public void createStudent() {
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++ createStudent");
-        Long id = userService.createUser(email,password);
+    public String createUser() {
+        Long id = userService.createUser(email, password, role);
+        setEmail("");
+        setPassword("");
+        return "createUser";
 
     }
 
@@ -48,6 +51,14 @@ public class UserBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getUserInfo(){
