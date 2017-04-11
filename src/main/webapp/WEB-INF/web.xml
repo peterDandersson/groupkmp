@@ -23,7 +23,7 @@
 
   <!-- Welcome files -->
   <welcome-file-list>
-    <welcome-file>login.xhtml</welcome-file>
+    <welcome-file>dev-links.xhtml</welcome-file>
   </welcome-file-list>
   
   <context-param>
