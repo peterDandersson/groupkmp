@@ -2,12 +2,29 @@ package testpack;
 
 import javax.faces.bean.ManagedBean;
 
-/**
- * Created by Elev1 on 2017-04-05.
- */
 @ManagedBean
 public class TestEJB {
     private String testString;
+    private boolean isAdmin = true;
+    private boolean isStudent = true;
+    private boolean isTeacher = true;
+    private boolean isLoggedIn = true;
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public boolean isStudent() {
+        return isStudent;
+    }
+
+    public boolean isTeacher() {
+        return isTeacher;
+    }
 
     public String getTestString() {
         return (testString != null) ? testString : "Hello test!";
@@ -17,3 +34,4 @@ public class TestEJB {
         this.testString = testString;
     }
 }
+
