@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class TestEJB {
     private String testString;
-    private boolean isAdmin = true;
+    private boolean isAdmin = false;
     private boolean isStudent = true;
     private boolean isTeacher = true;
     private boolean isLoggedIn = true;

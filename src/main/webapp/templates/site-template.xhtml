@@ -10,61 +10,12 @@
         <f:metadata charset="UTF-8" />
         <title>CourseApp - #{pageTitle}</title>
         <style type="text/css">
-            #nav-bar{
-                width: 100%;
-                height: 60px;
-                background-color: #389aff;
-                position: fixed;
-                top: 0px;
-                left: 0px;
-            }
             #main-container{
                 margin: 40px;
                 margin-top: 80px;
             }
-            #nav-bar-logo{
-                color: white;
-                padding-top: 20px;
-                display: inline-block;
-                width: 16%;
-                text-indent: 40px;
-            }
-            #nav-bar-courses{
-                color: white;
-                padding-top: 20px;
-                display: inline-block;
-                width: 16%;
-                text-align: center;
-            }
-            #nav-bar-teachers{
-                color: white;
-                padding-top: 20px;
-                display: inline-block;
-                width: 16%;
-                text-align: center;
-            }
-            #nav-bar-students{
-                color: white;
-                padding-top: 20px;
-                display: inline-block;
-                width: 16%;
-                text-align: center;
-            }
-            #nav-bar-stats{
-                color: white;
-                padding-top: 20px;
-                display: inline-block;
-                width: 16%;
-                text-align: center;
-            }
-            #nav-bar-log-out{
-                color: white;
-                padding-top: 20px;
-                display: inline-block;
-                width: 16%;
-                text-align: center;
-            }
         </style>
+        <h:outputStylesheet library="css" name="nav-bar.css"  />
     </h:head>
     <h:body>
         <ui:include src="nav-bar.xhtml"/>
