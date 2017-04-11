@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 
 @Local
@@ -19,14 +20,14 @@ public class CourseService {
         return this.toString();
     }
 
-    public Long createCourse(){
-
-        Long id = createCourse("test");
+    public Long createCourse(String courseName, String description){
+        Date date = new Date();
+        Long id = createCourse(courseName, description, date, date, 20);
         return id;
     }
 
-    public Long createCourse(String name){
-        Course course = null;
+    public Long createCourse(String courseName, String description, Date startDate, Date endDate, int maxStudents){
+        Course course = new Course(courseName, description, startDate, endDate, maxStudents);
         em.persist(course);
         return course.getId();
     }
@@ -38,8 +39,12 @@ public class CourseService {
     }
 
     public Course getCourse(Long id) {
-        Course user = (Course) em.createNamedQuery("getCourse").setParameter("id", id).getSingleResult();
-        return user;
+        Course course = (Course) em.createNamedQuery("getCourse").setParameter("id", id).getSingleResult();
+        return course;
+    }
+
+    public List<Course> getAllCourses() {
+        return em.createNamedQuery("getAllCourses").getResultList();
     }
 
 }

@@ -6,6 +6,17 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-    <h:outputLabel value="Hello, world"/>
+    <h:panelGrid columns="1">
+        <h:dataTable id="tbl1" value="#{coursesBean.allCourses}" var="p">
+            <h:column >
+                <f:facet name="header">Name</f:facet>
+                <h:outputText id="id" value="#{p.courseName}"/>
+            </h:column>
+            <h:column >
+                <f:facet name="header">Description</f:facet>
+                <h:outputText value="#{p.description}"/>
+            </h:column>
+        </h:dataTable>
+    </h:panelGrid>
 </f:view>
 </html>

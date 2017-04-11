@@ -6,23 +6,29 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/templates/site-template.xhtml">
+<ui:composition template="/templates/site-template.xhtml">
 
-        <!--f:metadata>
-            <f:viewParam id="id" name="id" value="#{userBean.userRole()}" validator="#{myBean.validate}"/>
-        </f:metadata-->
+    <!--f:metadata>
+        <f:viewParam id="id" name="id" value="#{userBean.userRole()}" validator="#{myBean.validate}"/>
+    </f:metadata-->
 
-        <ui:param name="pageTitle" value="Admin"/>
+    <ui:param name="pageTitle" value="Admin"/>
 
-        <ui:define name="main-panel">
-            <div id="main-container">
+    <ui:define name="main-panel">
+        <div id="main-container">
             <h:panelGroup rendered="#{userBean.isAdmin()}">
-                    <h:outputLabel value="Admin: #{userBean.userInfo}"/>
+                <h:outputLabel value="Admin: #{userBean.userInfo}"/>
+                <br />
+                <ui:decorate template="/templates/courses-table.xhtml">
+                </ui:decorate>
+                <br />
+                <ui:decorate template="/templates/courses-form.xhtml">
+                </ui:decorate>
             </h:panelGroup>
             <h:panelGroup rendered="#{!userBean.isAdmin()}">
-                    <h:outputLabel value="denied"/>
+                <h:outputLabel value="denied"/>
             </h:panelGroup>
-            </div>
-        </ui:define>
-    </ui:composition>
+        </div>
+    </ui:define>
+</ui:composition>
 </html>
