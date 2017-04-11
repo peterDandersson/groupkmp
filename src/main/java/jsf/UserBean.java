@@ -6,6 +6,11 @@ import jpa.User_;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.xml.ws.Response;
+import java.io.IOException;
 
 @ManagedBean
 @SessionScoped
@@ -22,7 +27,7 @@ public class UserBean {
 
     public String logIn(){
         user = userService.logIn(email, password);
-        return user.getDecriminatorValue().toLowerCase();
+        return user.getRole().toLowerCase() + "?faces-redirect=true";
     }
 
     public String createUser() {
@@ -30,11 +35,18 @@ public class UserBean {
         setEmail("");
         setPassword("");
         return "createUser";
-
     }
 
-    private boolean isStudent() {
-        return user.getRole().equals("STUDENT");
+    public boolean isStudent() {
+        return user != null && user.getRole().equals("STUDENT");
+    }
+
+    public boolean isTeacher() {
+        return user != null && user.getRole().equals("TEACHER");
+    }
+
+    public boolean isAdmin() {
+        return user != null && user.getRole().equals("ADMIN");
     }
 
     public String getEmail() {
@@ -65,4 +77,9 @@ public class UserBean {
         return user.toString();
 
     }
+
+    public String userRole() {
+        return user.getRole();
+    }
+
 }

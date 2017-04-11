@@ -20,7 +20,7 @@ public class Admin extends User_ {
 
     @Override
     public String toString() {
-        return "Teacher {" +
+        return "Admin {" +
                 "id=" + getId() +
                 ", email='" + getEmail() + '\'' +
                 ", password='" + getPassword() + '\'' +
