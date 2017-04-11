@@ -16,4 +16,8 @@ public class Course {
 
 
     //private Set<Day> days;
+
+    public Long getId() {
+        return id;
+    }
 }
