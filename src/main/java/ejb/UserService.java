@@ -24,7 +24,6 @@ public class UserService {
     }
 
     public Long createUser(String email, String password, String role){
-
         Long id = createUser(role, email, password, "fnTest", "lnTest", "addrTest");
         return id;
     }

@@ -1,10 +1,9 @@
-
 package org.arquillian.example;
 
 import javax.ejb.EJB;
 
 import ejb.UserService;
-import jpa.User_;
+import jpa.*;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -13,46 +12,56 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import testpack.TestEJB;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * @author <a href="http://community.jboss.org/people/dan.j.allen">Dan Allen</a>
- */
+
 @RunWith(Arquillian.class)
 public class DBTest {
     @Deployment
     public static Archive<?> createDeployment() {
-        // You can use war packaging...
-        WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
-            .addClasses(UserService.class, User_.class)
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+            .addClass(UserService.class)
+                .addClass(User_.class)
+                .addClass(Admin.class)
+                .addClass(Teacher.class)
+                .addClass(Student.class)
+                .addClass(StudentCourse.class)
+                //.addClass(Course.class)
+/*            .addClass(Admin.class)
+            .addClass(Teacher.class)
+                .addClass(Student.class)
+                .addClass(Attendance.class)
+                .addClass(Course.class)
+                .addClass(Day.class)
+                .addClass(StudentCourse.class)
+                .addClass(TestEJB.class)*/
             //.addPackage(User_.class.getPackage())
             //.addPackage(LogIn.class.getPackage())
 
-            //.addClasses(Driver.class, DriverService.class)
-            //.addAsResource("test-persistence.xml")
             .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
             //.addAsWebInfResource("jbossas-ds.xml")
-            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-        return war;
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                //.addAsWebInfResource("beans.xml")
+        ;
     }
 
 
     @EJB
-    UserService userService;
+    private UserService userService;
 
 
     @Test
     public void userCountTest() {
         System.out.println("<<<<<<   >>>>>>>>>>>>>>>>> TEST <<<<<<<<<<<<<<<<<<   >>>>>>");
-/*        Long userCount = userService.countUsers();
-        String newUserName = "Mark" + userCount + "@yahoo.co.uk";
-        String password = "hellothere";
-
-        userService.createUser(newUserName, password, "ADMIN");
-        Long expectedUserCount = userCount + 1;
-        assertEquals(expectedUserCount, userService.countUsers());*/
-        assertEquals(1, 1);
+        //userService.createUser("admin", "p", "ADMIN");
+        Long userCount = userService.countUsers();
+        String newUserName = "admin" + userCount;
+        userService.createUser(newUserName, "p", "ADMIN");
+        System.out.println(userCount);
+        Long expectedCount = userCount + 1;
+        assertEquals(expectedCount, userService.countUsers());
     }
 
 /*    @Test

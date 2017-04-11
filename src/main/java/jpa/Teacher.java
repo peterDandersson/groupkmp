@@ -10,8 +10,11 @@ import java.util.Set;
 @DiscriminatorValue("TEACHER")
 public class Teacher extends User_ {
 
+/*
     @OneToMany
     private Set<Course> courses;
+    */
+
 
     public Teacher(String email, String password, String firstName, String lastName, String address) {
         super(email, password, firstName, lastName, address);

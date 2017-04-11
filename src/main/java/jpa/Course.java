@@ -13,7 +13,8 @@ public class Course {
 
     private Date startDate;
     private Date endDate;
-
-
     //private Set<Day> days;
+
+    public Course() {}
+
 }

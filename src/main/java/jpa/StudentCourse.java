@@ -14,4 +14,6 @@ public class StudentCourse {
     //private Course course;
     //private Set<Attendance> attendance;
     private boolean isActive;
+
+    public StudentCourse() {}
 }
