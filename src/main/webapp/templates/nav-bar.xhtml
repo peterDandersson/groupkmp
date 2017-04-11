@@ -41,15 +41,15 @@
 
         <div id="nav-bar-dev">
             <h:link outcome="dev-links" style="text-decoration: none">
-                <span class="nav-label">devLinks</span>
+                <span class="nav-label" >devLinks</span>
             </h:link>
         </div>
 
         <div id="nav-bar-log-out">
             <c:if test="#{userBean.loggedIn}">
-                <h:link outcome="login" style="text-decoration: none">
-                    <span class="nav-label">Log out</span>
-                </h:link>
+                <h:form>
+                    <h:commandButton action="#{userBean.logOut}" value="Log out" style="border: none; background-color: inherit; color: white;" />
+                </h:form>
             </c:if>
         </div>
     </div>
