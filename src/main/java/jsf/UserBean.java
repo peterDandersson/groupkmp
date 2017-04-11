@@ -37,6 +37,10 @@ public class UserBean {
         return "createUser";
     }
 
+    public boolean isLoggedIn() {
+        return user != null;
+    }
+
     public boolean isStudent() {
         return user != null && user.getRole().equals("STUDENT");
     }

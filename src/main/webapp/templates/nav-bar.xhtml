@@ -10,28 +10,28 @@
     <div id="nav-bar">
         <div id="nav-bar-logo"> KMP </div>
         <div id="nav-bar-courses">
-            <c:if test="#{testEJB.admin}">
+            <c:if test="#{userBean.admin}">
                 <h:link outcome="add-user" style="text-decoration: none">
                     <span class="nav-label">Course</span>
                 </h:link>
             </c:if>
         </div>
         <div id="nav-bar-teachers">
-            <c:if test="#{testEJB.admin}">
+            <c:if test="#{userBean.admin}">
                 <h:link outcome="teacher" style="text-decoration: none">
                     <span class="nav-label">Teachers</span>
                 </h:link>
             </c:if>
         </div>
         <div id="nav-bar-students">
-            <c:if test="#{testEJB.admin}">
+            <c:if test="#{userBean.admin}">
                 <h:link outcome="student" style="text-decoration: none">
                     <span class="nav-label">Students</span>
                 </h:link>
             </c:if>
         </div>
         <div id="nav-bar-stats">
-            <c:if test="#{testEJB.admin}">
+            <c:if test="#{userBean.admin}">
                 <h:link outcome="login" style="text-decoration: none">
                     <span class="nav-label">Stats</span>
                 </h:link>
@@ -46,7 +46,7 @@
         </div>
 
         <div id="nav-bar-log-out">
-            <c:if test="#{testEJB.loggedIn}">
+            <c:if test="#{userBean.loggedIn}">
                 <h:link outcome="login" style="text-decoration: none">
                     <span class="nav-label">Log out</span>
                 </h:link>
