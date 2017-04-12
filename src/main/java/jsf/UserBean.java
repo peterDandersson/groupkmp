@@ -30,11 +30,22 @@ public class UserBean {
         return user.getRole().toLowerCase() + "?faces-redirect=true";
     }
 
+    public String logOut(){
+        user = null;
+        email = "";
+        password = "";
+        return "login";
+    }
+
     public String createUser() {
         Long id = userService.createUser(email, password, role);
         setEmail("");
         setPassword("");
         return "createUser";
+    }
+
+    public boolean isLoggedIn() {
+        return user != null;
     }
 
     public boolean isStudent() {
