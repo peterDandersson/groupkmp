@@ -25,8 +25,10 @@ public class CoursesBean {
     private int maxStudents;
 
     public String createCourse() {
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ create/update");
+        System.out.println("   " + id);
         if (getId()==null) {
-            setId(courseService.createCourse(courseName, description));
+            courseService.createCourse(courseName, description);
         }
         else {
             updateCourse(getId());
@@ -37,7 +39,7 @@ public class CoursesBean {
         return "admin";
     }
 
-    public String removeCourse(Long id){
+    public String removeCourse(Long id) {
         courseService.removeCourse(id);
         return "admin";
     }
@@ -47,17 +49,21 @@ public class CoursesBean {
         return "admin";
     }
 
-    public String editCourse(Long id){
+    public String editCourse(Long id) {
         Course course = courseService.getCourse(id);
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println(course.toString());
-        setId(course.getId());
+        System.out.println(course.getId());
+        System.out.println(id);
+        setId(id);
+        System.out.println(getId());
+
         setCourseName(course.getCourseName());
         setDescription(course.getDescription());
         return "admin";
     }
 
-    public String getSubmitButtonLabel(){
+    public String getSubmitButtonLabel() {
         if (getId()==null)
             return "Add";
         else

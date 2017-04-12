@@ -12,6 +12,7 @@
             <h:inputText value="#{coursesBean.courseName}"/>
             <h:outputLabel value="Description:"/>
             <h:inputTextarea rows="10" value="#{coursesBean.description}"/>
+            <h:inputHidden value="#{coursesBean.id}"/>
         </h:panelGrid>
 
         <h:commandButton action="#{coursesBean.createCourse()}" value="#{coursesBean.submitButtonLabel}">
