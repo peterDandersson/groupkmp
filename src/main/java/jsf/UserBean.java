@@ -27,6 +27,8 @@ public class UserBean {
 
     public String logIn(){
         user = userService.logIn(email, password);
+        setEmail("");
+        setPassword("");
         return user.getRole().toLowerCase() + "?faces-redirect=true";
     }
 

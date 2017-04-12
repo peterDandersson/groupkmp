@@ -12,8 +12,8 @@ public class Attendance {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    private StudentCourse student;
+/*    @OneToOne
+    private StudentCourse student;*/
   
     //private Day day;
 
