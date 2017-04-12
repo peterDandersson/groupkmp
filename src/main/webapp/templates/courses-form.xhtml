@@ -14,8 +14,8 @@
             <h:inputTextarea rows="10" value="#{coursesBean.description}"/>
         </h:panelGrid>
 
-        <h:commandButton  value="klicka">
-            <f:ajax execute="@form" listener="#{coursesBean.createCourse()}" />
+        <h:commandButton action="#{coursesBean.createCourse()}" value="klicka">
+            <!--f:ajax execute="@form" listener="#{coursesBean.createCourse()}" /-->
         </h:commandButton>
     </h:form>
 </f:view>

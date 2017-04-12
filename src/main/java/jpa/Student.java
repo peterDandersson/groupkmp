@@ -12,8 +12,8 @@ public class Student extends User_ {
 
     private boolean naughty;
 
-    @OneToMany
-    private Set<StudentCourse> studentCourses;
+/*    @OneToMany
+    private Set<StudentCourse> studentCourses;*/
 
     public Student(String email, String password, String firstName, String lastName, String address) {
         super(email, password, firstName, lastName, address);

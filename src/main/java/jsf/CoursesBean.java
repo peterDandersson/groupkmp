@@ -30,9 +30,10 @@ public class CoursesBean {
         return "admin";
     }
 
-    public void removeCourse(Long id){
+    public String removeCourse(Long id){
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         courseService.removeCourse(id);
+        return "admin";
     }
 
     public List<Course> getAllCourses(){
