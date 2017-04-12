@@ -6,15 +6,35 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
+    <style>
+        /*table {border-spacing: 0px;}*/
+        table {
+            border-collapse: separate;
+        }
+        tr.even-row {background-color: #daecff; }
+        tr.even-row {background-color: #ddd; }
+        tr.odd-row {background-color: #eee; }
+        td {padding: 10px;}
+        /*tr.even-row td, tr.odd-row td {padding: 10px;}
+        tr.even-row:first-child td:first-child, tr.even-row:first-child td:first-child { border-top-left-radius: 10px; margin-top: 15px; }
+        tr:first-child td:last-child { border-top-right-radius: 10px; }
+        tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+        tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+        td { border-: 25px 0px; }
+        */
+    </style>
     <h:panelGrid columns="1">
-        <h:dataTable id="tbl1" value="#{coursesBean.allCourses}" var="p">
+        <h:dataTable id="courses-table" value="#{coursesBean.allCourses}" var="course" rowClasses="even-row, odd-row">
             <h:column >
                 <f:facet name="header">Name</f:facet>
-                <h:outputText id="id" value="#{p.courseName}"/>
+                <h:outputText id="id" value="#{course.courseName}"/>
             </h:column>
             <h:column >
                 <f:facet name="header">Description</f:facet>
-                <h:outputText value="#{p.description}"/>
+                <h:outputText value="#{course.description}"/>
+            </h:column>
+            <h:column >
+                <h:commandButton value="Remove" action="#{coursesBean.removeCourse(course.id)}"/>
             </h:column>
         </h:dataTable>
     </h:panelGrid>

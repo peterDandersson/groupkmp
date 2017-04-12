@@ -13,8 +13,8 @@ public class StudentCourse {
 
     @ManyToOne
     private Student student;
-    @ManyToOne
-    private Course course;
+/*    @ManyToOne
+    private Course course;*/
     private boolean isActive;
 
     //private Set<Attendance> attendance;
@@ -35,13 +35,13 @@ public class StudentCourse {
         this.student = student;
     }
 
-    public Course getCourse() {
+/*    public Course getCourse() {
         return course;
     }
 
     public void setCourse(Course course) {
         this.course = course;
-    }
+    }*/
 
     public boolean isActive() {
         return isActive;

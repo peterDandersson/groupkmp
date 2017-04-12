@@ -32,6 +32,12 @@ public class CourseService {
         return course.getId();
     }
 
+    public void removeCourse(Long id) {
+        // Course course = getCourse(id);
+        Course course = em.find(Course.class, id);
+        em.remove(course);
+    }
+
     public Long countCourses() {
         List<Long> c = em.createNamedQuery("countCourses").getResultList();
         Long i = c.get(0);

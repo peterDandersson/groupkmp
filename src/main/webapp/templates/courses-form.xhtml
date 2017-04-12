@@ -7,15 +7,16 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <h:form>
-        <h:outputLabel value="Course Name:"/>
-        <h:inputText value="#{coursesBean.courseName}"/>
-        <br/>
-        <h:outputLabel value="Description:"/>
-        <h:inputText value="#{coursesBean.description}"/>
-        <br/>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Course Name:"/>
+            <h:inputText value="#{coursesBean.courseName}"/>
+            <h:outputLabel value="Description:"/>
+            <h:inputTextarea rows="10" value="#{coursesBean.description}"/>
+        </h:panelGrid>
 
-        <br/>
-        <h:commandButton action="#{coursesBean.createCourse}" value="klicka"/>
+        <h:commandButton  value="klicka">
+            <f:ajax execute="@form" listener="#{coursesBean.createCourse()}" />
+        </h:commandButton>
     </h:form>
 </f:view>
 </html>
