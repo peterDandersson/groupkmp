@@ -27,10 +27,6 @@
         <h:panelGrid columns="1">
             <h:dataTable id="courses-table" value="#{coursesBean.allCourses}" var="course" rowClasses="even-row, odd-row">
                 <h:column >
-                    <f:facet name="header">Id</f:facet>
-                    <h:outputText value="#{course.id}"/>
-                </h:column>
-                <h:column >
                     <f:facet name="header">Name</f:facet>
                     <h:outputText id="id" value="#{course.courseName}"/>
                 </h:column>
@@ -41,7 +37,7 @@
                 <h:column >
                     <h:commandButton value="Remove" action="#{coursesBean.removeCourse(course.id)}"/>
                 </h:column>
-                <h:column >
+                <h:column>
                     <h:commandButton value="Edit" action="#{coursesBean.editCourse(course.id)}"/>
                 </h:column>
             </h:dataTable>
