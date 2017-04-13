@@ -1,8 +1,6 @@
 package ejb;
 
-import jpa.Admin;
-import jpa.Student;
-import jpa.Teacher;
+import jpa.*;
 import jpa.Student;
 
 import javax.ejb.EJB;
@@ -43,8 +41,27 @@ public class StudentService {
         return students;
     }
 
+    public void updateStudent(Long id, String email, String password) {
+        Student student = em.find(Student.class, id);
+        student.setEmail(email);
+        student.setPassword(password);
+        em.merge(student);
+    }
 
     public void removeStudent(Long id) {
         userService.removeUser(id);
+    }
+
+    public void registerForCourse(Student student, Course course) {
+        // check capacity of course not exceeded;
+
+
+/*        StudentCourse studentCourse = new StudentCourse(student, course);
+        student.getStudentCourses().add(studentCourse);
+        em.merge(student);*/
+        for(StudentCourse sc : student.getStudentCourses()) {
+            System.out.println(sc.getCourse().getCourseName());
+        }
+        //System.out.println(student.getStudentCourses());
     }
 }

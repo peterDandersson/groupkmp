@@ -58,6 +58,7 @@ public class UserBean {
     }
 
     public String register(Course course) {
+        studentService.registerForCourse((Student) user, course);
         return "/student" + "?faces-redirect=true";
     }
 

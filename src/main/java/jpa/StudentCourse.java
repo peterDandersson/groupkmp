@@ -11,13 +11,23 @@ public class StudentCourse {
     @GeneratedValue
     private Long id;
 
-/*    @ManyToOne
-    private Student student;*/
-/*    @ManyToOne
-    private Course course;*/
+    @ManyToOne
+    private Student student;
+    @ManyToOne
+    private Course course;
+
     private boolean isActive;
 
     //private Set<Attendance> attendance;
+
+    public StudentCourse() {
+    }
+
+    public StudentCourse(Student student, Course course) {
+        setStudent(student);
+        setCourse(course);
+        setActive(true);
+    }
 
     public Long getId() {
         return id;
@@ -27,21 +37,21 @@ public class StudentCourse {
         this.id = id;
     }
 
-/*    public Student getStudent() {
+    public Student getStudent() {
         return student;
     }
 
     public void setStudent(Student student) {
         this.student = student;
-    }*/
+    }
 
-/*    public Course getCourse() {
+    public Course getCourse() {
         return course;
     }
 
     public void setCourse(Course course) {
         this.course = course;
-    }*/
+    }
 
     public boolean isActive() {
         return isActive;

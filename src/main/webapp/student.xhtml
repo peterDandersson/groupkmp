@@ -10,11 +10,14 @@
     <ui:define name="main-panel">
         <div id="main-container">
             <h:panelGroup rendered="#{userBean.isStudent()}">
+                Courses you are registered for:
                 <br />
-                <ui:decorate template="/templates/courses-table.xhtml">
+                <ui:decorate template="/templates/student-courses-table.xhtml">
                 </ui:decorate>
                 <br />
-                <ui:decorate template="/templates/courses-form.xhtml">
+                Other Courses:
+                <br />
+                <ui:decorate template="/templates/courses-table.xhtml">
                 </ui:decorate>
             </h:panelGroup>
             <h:panelGroup rendered="#{!userBean.isStudent()}">

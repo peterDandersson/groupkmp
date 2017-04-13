@@ -3,7 +3,7 @@ package jpa;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
+@Entity()
 @NamedQueries({
         @NamedQuery(name = "getStudent", query = "SELECT s FROM Student s WHERE s.id = :id"),
         @NamedQuery(name = "getStudents", query = "SELECT s FROM Student s")
@@ -13,8 +13,8 @@ public class Student extends User_ {
 
     private boolean naughty;
 
-/*    @OneToMany
-    private Set<StudentCourse> studentCourses;*/
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<StudentCourse> studentCourses;
 
     public Student(String email, String password, String firstName, String lastName, String address) {
         super(email, password, firstName, lastName, address);
@@ -36,5 +36,13 @@ public class Student extends User_ {
                 ", naughty='" + naughty + '\'' +
                 ", role=" + getDecriminatorValue() +
                 '}';
+    }
+
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 }

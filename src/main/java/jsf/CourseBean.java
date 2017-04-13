@@ -26,8 +26,6 @@ public class CourseBean {
     private int maxStudents;
 
     public String createCourse() {
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ create/update");
-        System.out.println("   " + id);
         if (getId()==null) {
             courseService.createCourse(courseName, description);
         }

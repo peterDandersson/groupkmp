@@ -33,7 +33,12 @@ public class StudentBean {
 
     public String createStudent() {
         try {
-            Long id = studentService.createStudent(email, password);
+            if (getId()==null) {
+                studentService.createStudent(email, password);
+            }
+            else {
+                updateStudent(getId());
+            }
         } catch (EJBException e) {
             // Do nothing
             // Pop-up message - email already exists.
@@ -47,11 +52,12 @@ public class StudentBean {
         studentService.removeStudent(id);
         return "admin/students";
     }
-/*
+
+
     public String updateStudent(Long id) {
-        userService.updateUser(getId(), getEmail(), getPassword());
+        studentService.updateStudent(getId(), getEmail(), getPassword());
         return "admin/students";
-    }*/
+    }
 
     public String editStudent(Long id) {
         Student student = studentService.getStudent(id);

@@ -21,8 +21,9 @@ public class Course {
     private Date startDate;
     private Date endDate;
     private int maxStudents;
-/*    @OneToMany
-    private Set<StudentCourse> studentCourse;*/
+
+    @OneToMany
+    private Set<StudentCourse> studentCourse;
 
     public Course() {
     }
@@ -85,7 +86,15 @@ public class Course {
         this.maxStudents = maxStudents;
     }
 
-/*    public Set<StudentCourse> getStudentCourse() {
+    public Set<StudentCourse> getStudentCourse() {
+        return studentCourse;
+    }
+
+    public void setStudentCourse(Set<StudentCourse> studentCourse) {
+        this.studentCourse = studentCourse;
+    }
+
+    /*    public Set<StudentCourse> getStudentCourse() {
         return studentCourse;
     }
 
