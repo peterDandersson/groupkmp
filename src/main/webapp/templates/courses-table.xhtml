@@ -34,11 +34,16 @@
                     <f:facet name="header">Description</f:facet>
                     <h:outputText value="#{course.description}"/>
                 </h:column>
-                <h:column >
-                    <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"/>
-                </h:column>
+                <h:panelGroup rendered="#{userBean.isAdmin()}">
+                    <h:column >
+                        <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"/>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
+                    </h:column>
+                </h:panelGroup>
                 <h:column>
-                    <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
+                    <h:commandLink value="Register" action="#{courseBean.register(userBean.register(course))}" />
                 </h:column>
             </h:dataTable>
         </h:panelGrid>

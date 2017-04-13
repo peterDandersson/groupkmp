@@ -1,6 +1,10 @@
 package jsf;
 
+import ejb.AdminService;
+import ejb.StudentService;
 import ejb.UserService;
+import jpa.Course;
+import jpa.Student;
 import jpa.User_;
 
 import javax.ejb.EJB;
@@ -11,6 +15,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.xml.ws.Response;
 import java.io.IOException;
+import java.util.List;
 
 @ManagedBean
 @SessionScoped
@@ -18,6 +23,12 @@ public class UserBean {
 
     @EJB
     UserService userService;
+
+    @EJB
+    AdminService adminService;
+
+    @EJB
+    StudentService studentService;
 
     private String email;
     private String password;
@@ -44,6 +55,10 @@ public class UserBean {
         setEmail("");
         setPassword("");
         return "createUser";
+    }
+
+    public String register(Course course) {
+        return "/student" + "?faces-redirect=true";
     }
 
     public boolean isLoggedIn() {
@@ -91,18 +106,39 @@ public class UserBean {
 
     }
 
-    public String userRole() {
-        return user.getRole();
+    public User_ getUser() {
+        return user;
     }
 
+    public void setUser(User_ user) {
+        this.user = user;
+    }
+
+/*    public String userRole() {
+        return user.getRole();
+    }*/
+
+    /*
+    Convenience methods used only during developement.
+     */
+
     public String autoLogin() {
-        user = userService.getAdmin();
+        user = adminService.getAdmin();
         return "admin";
     }
 
-    public String devStudentsPage() {
+    public String autoLoginAsStudent() {
+        user = studentService.getFirstStudent();
+        return "student";
+    }
+
+    public String adminStudentsPage() {
         autoLogin();
         return "admin/students" + "?faces-redirect=true";
     }
 
+    public String studentCoursesPage() {
+        autoLoginAsStudent();
+        return "student" + "?faces-redirect=true";
+    }
 }

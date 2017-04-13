@@ -9,9 +9,17 @@
     <ui:param name="pageTitle" value="Studen"/>
     <ui:define name="main-panel">
         <div id="main-container">
-            <f:view>
-                <h:outputLabel value="Student -------- #{userBean.userInfo}"/>
-            </f:view>
+            <h:panelGroup rendered="#{userBean.isStudent()}">
+                <br />
+                <ui:decorate template="/templates/courses-table.xhtml">
+                </ui:decorate>
+                <br />
+                <ui:decorate template="/templates/courses-form.xhtml">
+                </ui:decorate>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{!userBean.isStudent()}">
+                <h:outputLabel value="denied"/>
+            </h:panelGroup>
         </div>
     </ui:define>
 </ui:composition>

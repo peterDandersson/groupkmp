@@ -2,6 +2,7 @@ package jsf;
 
 import ejb.CourseService;
 import jpa.Course;
+import jpa.Student;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

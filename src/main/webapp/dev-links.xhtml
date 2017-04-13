@@ -19,7 +19,10 @@
                 <h:link value="Add user" outcome="add-user"/>
                 <br />
                 <h:form>
-                    <h:commandLink value="Admin Students Page" action="#{userBean.devStudentsPage()}"/>
+                    <h:commandLink value="Admin Students Page" action="#{userBean.adminStudentsPage()}"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Students Courses Page" action="#{userBean.studentCoursesPage()}"/>
                 </h:form>
                 <h:link value="Admin" outcome="admin"/>
                 <br />

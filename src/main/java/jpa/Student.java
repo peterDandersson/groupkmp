@@ -5,7 +5,8 @@ import java.util.Set;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "getStudent", query = "SELECT s FROM Student s WHERE s.id = :id")
+        @NamedQuery(name = "getStudent", query = "SELECT s FROM Student s WHERE s.id = :id"),
+        @NamedQuery(name = "getStudents", query = "SELECT s FROM Student s")
 })
 @DiscriminatorValue("STUDENT")
 public class Student extends User_ {

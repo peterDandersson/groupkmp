@@ -32,10 +32,14 @@ public class CourseService {
         return course.getId();
     }
 
-    public void removeCourse(Long id) {
-        // Course course = getCourse(id);
-        Course course = em.find(Course.class, id);
-        em.remove(course);
+
+    public Course getCourse(Long id) {
+        Course course = (Course) em.createNamedQuery("getCourse").setParameter("id", id).getSingleResult();
+        return course;
+    }
+
+    public List<Course> getAllCourses() {
+        return em.createNamedQuery("getAllCourses").getResultList();
     }
 
     public void updateCourse(Long id, String courseName, String description) {
@@ -45,19 +49,18 @@ public class CourseService {
         em.merge(course);
     }
 
+    public void removeCourse(Long id) {
+        Course course = getCourse(id);
+        em.remove(course);
+    }
+
+
+
+
     public Long countCourses() {
         List<Long> c = em.createNamedQuery("countCourses").getResultList();
         Long i = c.get(0);
         return i;
-    }
-
-    public Course getCourse(Long id) {
-        Course course = (Course) em.createNamedQuery("getCourse").setParameter("id", id).getSingleResult();
-        return course;
-    }
-
-    public List<Course> getAllCourses() {
-        return em.createNamedQuery("getAllCourses").getResultList();
     }
 
 }
