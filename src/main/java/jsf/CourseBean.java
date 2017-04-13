@@ -12,7 +12,7 @@ import java.util.List;
 
 @ManagedBean
 @RequestScoped
-public class CoursesBean {
+public class CourseBean {
 
     @EJB
     CourseService courseService;

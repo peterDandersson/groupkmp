@@ -100,4 +100,9 @@ public class UserBean {
         return "admin";
     }
 
+    public String devStudentsPage() {
+        autoLogin();
+        return "admin/students" + "?faces-redirect=true";
+    }
+
 }
