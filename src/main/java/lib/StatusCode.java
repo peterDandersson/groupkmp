@@ -1,0 +1,9 @@
+package lib;
+
+public enum StatusCode {
+    ALREADY_REGISTERED,
+    COURSE_FULL,
+    SUCCESSFULLY_REGISTERED,
+    DEREGISTERED,
+    STUDENT_NOT_ON_COURSE
+}

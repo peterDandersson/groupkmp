@@ -25,39 +25,21 @@
         */
     </style>
     <h:form>
+        <h:inputHidden value="#{courseBean.id}"/>
         <h:panelGrid columns="1">
-            <c:set var="students" value="#{studentBean.allStudents}" />
-            <c:if test="#{context == 'attendance'}">
-                <c:set var="students" value="#{courseBean.students}" />
-                <c:set var="noResultsMessage" value="There are no students on this course." />
-            </c:if>
+            <h:outputText value="context: #{context}" />
+            <c:set var="students" value="#{courseBean.students}" />
+
             <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row">
                 <h:column >
                     <f:facet name="header">Email</f:facet>
                     <h:outputText id="id" value="#{student.email}"/>
                 </h:column>
-                <h:column >
-                    <f:facet name="header">Password</f:facet>
-                    <h:outputText value="#{student.password}"/>
-                </h:column>
-                <h:column >
-                    <f:facet name="header">First Name</f:facet>
-                    <h:outputText value="#{student.firstName}"/>
-                </h:column>
-                <h:column >
-                    <f:facet name="header">Role</f:facet>
-                    <h:outputText value="#{student.role}"/>
-                </h:column>
-                <h:column >
-                    <f:facet name="header">Login</f:facet>
-                    <h:commandLink value="Auto Login" action="#{userBean.autoStudentLogin(student.id)}" />
-                </h:column>
-                <h:column >
-                    <h:commandButton value="Remove" action="#{studentBean.removeUser(student.id)}"/>
-                </h:column>
                 <h:column>
-                    <h:commandButton value="Edit" action="#{studentBean.editStudent(student.id)}"/>
+                    <f:facet name="header">Present</f:facet>
+                    <h:selectBooleanCheckbox value="#{student.getStudentCourse(courseBean.id).isActive()}" />
                 </h:column>
+
             </h:dataTable>
         </h:panelGrid>
     </h:form>

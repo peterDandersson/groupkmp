@@ -6,18 +6,26 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="/templates/site-template.xhtml">
-    <ui:param name="pageTitle" value="Studen"/>
+
+
+    <ui:param name="pageTitle" value="Student"/>
     <ui:define name="main-panel">
         <div id="main-container">
+            <!--h:outputText value="#{userBean.user}" /><br /-->
+
             <h:panelGroup rendered="#{userBean.isStudent()}">
-                Courses you are registered for:
-                <br />
-                <ui:decorate template="/templates/student-courses-table.xhtml">
-                </ui:decorate>
-                <br />
-                Other Courses:
-                <br />
+                <br/>
+                <h:outputText styleClass="tableTitle" value="Courses you are registered for:" />
+                <br/>
                 <ui:decorate template="/templates/courses-table.xhtml">
+                    <ui:param name="context" value="studentRegisteredCourses" />
+                </ui:decorate>
+                <br/>
+
+                <br/>
+                <h:outputText styleClass="tableTitle" value="Other Courses:" />
+                <ui:decorate template="/templates/courses-table.xhtml">
+                    <ui:param name="context" value="studentOtherCourses" />
                 </ui:decorate>
             </h:panelGroup>
             <h:panelGroup rendered="#{!userBean.isStudent()}">

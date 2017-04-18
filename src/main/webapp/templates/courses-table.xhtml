@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <style>
@@ -25,7 +26,7 @@
         }
 
         td {
-            padding: 10px;
+            padding: 2px;
         }
 
         /*tr.even-row td, tr.odd-row td {padding: 10px;}
@@ -37,8 +38,29 @@
         */
     </style>
     <h:form>
-        <h:panelGrid columns="1">
-            <h:dataTable id="courses-table" value="#{courseBean.allCourses}" var="course"
+        <!--c:set var="courses" value="#{courseBean.allCourses}" /-->
+        <c:if test="#{context == 'studentRegisteredCourses'}">
+            <c:set var="courses" value="#{userBean.courses}" />
+            <c:set var="noResultsMessage" value="You are not registered for any courses." />
+        </c:if>
+        <c:if test="#{context == 'studentOtherCourses'}">
+            <c:set var="courses" value="#{userBean.otherCourses}" />
+            <c:set var="noResultsMessage" value="There are no other courses to choose from." />
+        </c:if>
+        <c:if test="#{context == 'adminAllCourses'}">
+            <c:set var="courses" value="#{courseBean.allCourses}" />
+            <c:set var="noResultsMessage" value="There are no courses." />
+        </c:if>
+        <c:if test="#{context == 'attendance'}">
+            <c:set var="courses" value="#{courseBean.allCourses}" />
+            <c:set var="noResultsMessage" value="There are no courses." />
+        </c:if>
+        <h:panelGroup rendered="#{courses.size() == 0}">
+            <h:outputText value="#{noResultsMessage}" />
+        </h:panelGroup>
+
+        <h:panelGrid columns="1" rendered="#{courses.size() > 0}">
+            <h:dataTable id="courses-table" value="#{courses}" var="course"
                          rowClasses="even-row, odd-row">
                 <h:column>
                     <f:facet name="header">Course Name</f:facet>
@@ -48,14 +70,39 @@
                     <f:facet name="header">Description</f:facet>
                     <h:outputText value="#{course.description}"/>
                 </h:column>
-                <h:column rendered="#{userBean.isAdmin()}">
+                <h:column>
+                    <f:facet name="header">Take up</f:facet>
+                    <h:outputText value="#{course.studentCount}/#{course.maxStudents}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    <h:outputText value="#{course.id}"/>
+                </h:column>
+                <h:column rendered="#{context == 'adminAllCourses'}">
                         <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"/>
                 </h:column>
-                <h:column rendered="#{userBean.isAdmin()}">
+                <h:column rendered="#{context == 'adminAllCourses'}">
                         <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 </h:column>
-                <h:column rendered="#{userBean.isStudent()}">
-                        <h:commandLink value="Register" action="#{userBean.register(course)}"/>
+                <h:column rendered="#{context == 'attendance'}">
+                    <h:commandLink value="Take Attendance" action="#{courseBean.takeAttendance(course.id)}"/>
+                </h:column>
+                <h:column rendered="#{context == 'studentOtherCourses'}">
+                    <h:commandLink value="Register" action="#{userBean.register(course.id)}"/>
+                </h:column>
+
+                <c:set var="hide" value="#{(context == 'studentOtherCourses') and (not course.isFull())}" />
+                <!--h:column rendered="${(context == 'studentOtherCourses') and (!course.isFull)}"-->
+                <h:column rendered="false">
+                    <c:if test="${course.isFull()}">
+                        <h:commandLink value="Register" action="#{userBean.register(course.id)}"/>
+                    </c:if>
+                    <c:if test="#{!course.isFull()}">
+                        <h:commandLink value="Bloob" action="#{userBean.register(course.id)}"/>
+                    </c:if>
+                </h:column>
+                <h:column rendered="#{(userBean.isStudent()) and (context == 'studentRegisteredCourses')}">
+                    <h:commandLink value="Remove" action="#{userBean.deregister(course.id)}"/>
                 </h:column>
             </h:dataTable>
         </h:panelGrid>

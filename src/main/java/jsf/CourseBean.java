@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,13 +51,7 @@ public class CourseBean {
 
     public String editCourse(Long id) {
         Course course = courseService.getCourse(id);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println(course.toString());
-        System.out.println(course.getId());
-        System.out.println(id);
         setId(id);
-        System.out.println(getId());
-
         setCourseName(course.getCourseName());
         setDescription(course.getDescription());
         return "admin";
@@ -120,4 +115,25 @@ public class CourseBean {
     public void setMaxStudents(int maxStudents) {
         this.maxStudents = maxStudents;
     }
+
+    public int getStudentCount() {
+        return maxStudents;
+    }
+
+    public boolean isFull(Long id) {
+        return courseService.isFull(id);
+    }
+
+    public String takeAttendance(Long course_id) {
+        setId(course_id);
+        return "attendance";
+    }
+
+    public List<Student> getStudents() {
+        if (getId() == null) {
+            return new ArrayList<>();
+        }
+        return courseService.getStudents(getId());
+    }
+
 }

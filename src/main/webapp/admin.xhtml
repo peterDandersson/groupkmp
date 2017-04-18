@@ -18,7 +18,9 @@
         <div id="main-container">
             <h:panelGroup rendered="#{userBean.isAdmin()}">
                 <br />
+                <h:outputText styleClass="tableTitle" value="Other Courses:" />
                 <ui:decorate template="/templates/courses-table.xhtml">
+                    <ui:param name="context" value="adminAllCourses" />
                 </ui:decorate>
                 <br />
                 <ui:decorate template="/templates/courses-form.xhtml">

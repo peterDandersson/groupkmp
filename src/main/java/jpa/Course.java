@@ -2,12 +2,14 @@ package jpa;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "getCourse", query="SELECT c FROM Course c WHERE c.id = :id"),
-        @NamedQuery(name = "getAllCourses", query="SELECT c FROM Course c"),
+        @NamedQuery(name = "getAllCourses", query="SELECT c FROM Course c ORDER BY c.courseName"),
         @NamedQuery(name = "countCourses", query="SELECT COUNT(c) FROM Course c")
 })
 public class Course {
@@ -22,8 +24,10 @@ public class Course {
     private Date endDate;
     private int maxStudents;
 
-    @OneToMany
-    private Set<StudentCourse> studentCourse;
+
+    //@OneToMany(mappedBy = "course", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+    @OneToMany(mappedBy = "course")
+    private Set<StudentCourse> studentCourses = new HashSet<StudentCourse>();
 
     public Course() {
     }
@@ -35,8 +39,6 @@ public class Course {
         this.endDate = endDate;
         this.maxStudents = maxStudents;
     }
-
-    //private Set<Day> days;
 
     public Long getId() {
         return id;
@@ -86,19 +88,35 @@ public class Course {
         this.maxStudents = maxStudents;
     }
 
-    public Set<StudentCourse> getStudentCourse() {
-        return studentCourse;
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
     }
 
-    public void setStudentCourse(Set<StudentCourse> studentCourse) {
-        this.studentCourse = studentCourse;
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 
-    /*    public Set<StudentCourse> getStudentCourse() {
-        return studentCourse;
+    public void addStudentCourse(StudentCourse studentCourse) {
+        studentCourses.add(studentCourse);
     }
 
-    public void setStudentCourse(Set<StudentCourse> studentCourse) {
-        this.studentCourse = studentCourse;
-    }*/
+    public void removeStudentCourse(StudentCourse studentCourse) {
+        Set updatedStudentCourses = getStudentCourses().
+                stream().
+                filter(sc -> sc.getId() != studentCourse.getId()).
+                collect(Collectors.toSet());
+        setStudentCourses(updatedStudentCourses);
+    }
+
+    public int getStudentCount() {
+        return studentCourses.size();
+    }
+
+    public boolean isFull() {
+        return getStudentCount() >= getMaxStudents();
+    }
+
+    public Set<Student> getStudents() {
+        return getStudentCourses().stream().map(sc -> sc.getStudent()).collect(Collectors.toSet());
+    }
 }

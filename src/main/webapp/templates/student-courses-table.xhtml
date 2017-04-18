@@ -38,7 +38,9 @@
     </style>
     <h:form>
         <h:panelGrid columns="1">
-            <h:dataTable id="courses-table" value="#{courseBean.allCourses}" var="course"
+            <!--h:dataTable id="courses-table" value="#{courseBean.allCourses}" var="course"
+                         rowClasses="even-row, odd-row"-->
+            <h:dataTable id="courses-table" value="#{userBean.courses}" var="course"
                          rowClasses="even-row, odd-row">
                 <h:column>
                     <f:facet name="header">Course Name</f:facet>

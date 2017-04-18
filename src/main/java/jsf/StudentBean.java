@@ -61,13 +61,7 @@ public class StudentBean {
 
     public String editStudent(Long id) {
         Student student = studentService.getStudent(id);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-/*        System.out.println(course.toString());
-        System.out.println(course.getId());
-        System.out.println(id);*/
         setId(id);
-        //System.out.println(getId());
-
         setEmail(student.getEmail());
         setPassword(student.getPassword());
         return "admin";
