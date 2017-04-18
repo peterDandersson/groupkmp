@@ -125,17 +125,6 @@ public class CourseBean {
         return courseService.isFull(id);
     }
 
-    public String takeAttendance(Long course_id) {
-        setId(course_id);
-        Day day = courseService.findDay(course_id, new Date());
-        return "attendance";
-    }
 
-    public List<Student> getStudents() {
-        if (getId() == null) {
-            return new ArrayList<>();
-        }
-        return courseService.getStudents(getId());
-    }
 
 }

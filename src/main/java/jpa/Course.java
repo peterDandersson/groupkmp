@@ -4,11 +4,10 @@ import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static lib.Helpers.truncateDate;
 
 @Entity
 @NamedQueries({
@@ -124,29 +123,22 @@ public class Course {
     }
 
     public Set<Student> getStudents() {
-        return getStudentCourses().stream().map(sc -> sc.getStudent()).collect(Collectors.toSet());
+        return getStudentCourses()
+                .stream()
+                .map(sc -> sc.getStudent())
+                .collect(Collectors.toSet());
     }
 
     public Set<Day> getDays() {
         return days;
     }
 
-    public Day getDay(java.util.Date date) {
-        long millis = date.toInstant().toEpochMilli();
-        java.sql.Date sqlDate = new java.sql.Date(millis);
-        //java.util.Date d  = new SimpleDateFormat();
-        SimpleDateFormat dd  = new SimpleDateFormat("y M d");
-        java.util.Date truncated;
-        try {
-            truncated = dd.parse(dd.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //d.applyLocalizedPattern("");
-        //date.
+    public Day getDay(Date date) {
+        Date truncatedDate = truncateDate(date);
         Optional<Day> day = days
                 .stream()
-                .filter(d -> d.getDate().equals(sqlDate))
+                .filter(d -> d.getDate()
+                .equals(truncatedDate))
                 .findFirst();
         return day.isPresent() ? day.get() : null;
     }

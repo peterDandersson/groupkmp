@@ -1,6 +1,9 @@
 package jpa;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NamedQueries({
@@ -46,6 +49,12 @@ public class StudentCourse {
 
     @Column(name = "active")
     private boolean active;
+
+    // The date a student ends the course if it is before the course's end date.
+    private Date endDate;
+
+    @OneToMany(mappedBy = "studentCourse")
+    private Set<Attendance> attendances = new HashSet<>();
 
     //private Set<Attendance> attendance;
 
@@ -120,5 +129,21 @@ public class StudentCourse {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Set<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(Set<Attendance> attendances) {
+        this.attendances = attendances;
     }
 }

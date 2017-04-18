@@ -17,8 +17,7 @@ public class Student extends User_ {
 
     //@OneToMany(mappedBy = "student", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     @OneToMany(mappedBy = "student")
-    // some comment
-    private Set<StudentCourse> studentCourses = new HashSet<StudentCourse>();
+    private Set<StudentCourse> studentCourses = new HashSet<>();
 
 
     public Student(String email, String password, String firstName, String lastName, String address) {

@@ -25,10 +25,10 @@
         */
     </style>
     <h:form>
-        <h:inputHidden value="#{courseBean.id}"/>
+        <h:inputHidden value="#{attendanceBean.courseId}"/>
         <h:panelGrid columns="1">
             <h:outputText value="context: #{context}" />
-            <c:set var="students" value="#{courseBean.students}" />
+            <c:set var="students" value="#{attendanceBean.students}" />
 
             <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row">
                 <h:column >

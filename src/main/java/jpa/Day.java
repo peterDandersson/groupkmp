@@ -2,6 +2,8 @@ package jpa;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Day {
@@ -17,7 +19,8 @@ public class Day {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    //private Set<Attendance> attendances;
+    @OneToMany(mappedBy = "day")
+    private Set<Attendance> attendances = new HashSet<>();
 
     public Day() {}
 
@@ -50,4 +53,11 @@ public class Day {
         this.course = course;
     }
 
+    public Set<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(Set<Attendance> attendances) {
+        this.attendances = attendances;
+    }
 }
