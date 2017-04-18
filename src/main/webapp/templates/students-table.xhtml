@@ -27,11 +27,14 @@
     <h:form>
         <h:panelGrid columns="1">
             <c:set var="students" value="#{studentBean.allStudents}" />
-            <c:if test="#{context == 'attendance'}">
+            <c:set var="noResultsMessage" value="There are no students at the moment" />
+            <!--c:if test="#{context == 'attendance'}">
                 <c:set var="students" value="#{courseBean.students}" />
                 <c:set var="noResultsMessage" value="There are no students on this course." />
-            </c:if>
-            <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row">
+            </c:if-->
+            <h:outputText rendered="#{students.size() == 0}" value="#{noResultsMessage}" />
+
+            <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row" rendered="#{students.size() > 0}">
                 <h:column >
                     <f:facet name="header">Email</f:facet>
                     <h:outputText id="id" value="#{student.email}"/>

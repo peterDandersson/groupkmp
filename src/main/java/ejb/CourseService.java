@@ -81,8 +81,24 @@ public class CourseService {
     public List<Student> getStudents(Long course_id) {
         Course course = getCourse(course_id);
         List<Student> students = new ArrayList<>(course.getStudents());
-        students.stream().sorted(new StudentComparator());
+        students.sort(new StudentComparator());
         return students;
     }
 
+    public Day createDay(Course course, Date date) {
+        Day day = new Day(course, date);
+        course.addDay(day);
+        em.persist(day);
+        em.merge(course);
+        return day;
+    }
+
+    public Day findDay(Long course_id, Date date) {
+        Course course = getCourse(course_id);
+        Day day = course.getDay(date);
+        if (day == null) {
+            day = createDay(course, date);
+        }
+        return day;
+    }
 }

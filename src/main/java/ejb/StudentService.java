@@ -65,20 +65,15 @@ public class StudentService {
     }
 
     public List<Course> getCourses(Student student) {
-        //Student student = getStudent(id);
-        //Set<Long> courses = student.getCourseIds();
         Set<Course> courses = student.getCourses();
         return courses.stream().sorted(new CourseComparator()).collect(Collectors.toList());
-        //return student.getCourses();
     }
 
     public List<Course> getOtherCourses(Student student) {
         Set<Long> registeredCourseIds = student.getCourseIds();
         Set<Long> allCourseIds = courseService.getAllCourseIds();
         allCourseIds.removeAll(registeredCourseIds);
-        //allCourses.stream().sorted(new CourseComparator());
         return allCourseIds.stream()
-                //.map(id -> new CourseDomain(courseService.getCourse(id)))
                 .map(id -> courseService.getCourse(id))
                 .filter(course -> !course.isFull())
                 .sorted(new CourseComparator())
@@ -86,7 +81,6 @@ public class StudentService {
     }
 
     public StatusCode registerForCourse(Student student, Long course_id) {
-        // check capacity of course not exceeded;
         Course course = courseService.getCourse(course_id);
 
         if (student.isRegisteredForCourse(course)) {

@@ -130,14 +130,6 @@ public class UserBean {
         return null;
     }
 
-/*    public String userRole() {
-        return user.getRole();
-    }*/
-
-    /*
-    Convenience methods used only during developement.
-     */
-
     public String autoLogin() {
         user = adminService.getAdmin();
         return "/admin";

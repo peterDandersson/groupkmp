@@ -2,6 +2,7 @@ package jsf;
 
 import ejb.CourseService;
 import jpa.Course;
+import jpa.Day;
 import jpa.Student;
 
 import javax.ejb.EJB;
@@ -126,6 +127,7 @@ public class CourseBean {
 
     public String takeAttendance(Long course_id) {
         setId(course_id);
+        Day day = courseService.findDay(course_id, new Date());
         return "attendance";
     }
 

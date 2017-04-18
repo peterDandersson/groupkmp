@@ -48,7 +48,7 @@
         <div id="nav-bar-log-out">
             <c:if test="#{userBean.loggedIn}">
                 <h:form>
-                    <h:commandButton action="#{userBean.logOut}" value="Log out" style="border: none; background-color: inherit; color: white;" />
+                    <h:commandButton action="#{userBean.logOut}" value="Log out (#{userBean.user.getEmail()})" style="border: none; background-color: inherit; color: white;" />
                 </h:form>
             </c:if>
         </div>

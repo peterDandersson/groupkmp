@@ -1,8 +1,12 @@
 package jpa;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,8 +24,8 @@ public class Course {
     private String courseName;
     @Column(length = 3000)
     private String description;
-    private Date startDate;
-    private Date endDate;
+    private java.util.Date startDate;
+    private java.util.Date endDate;
     private int maxStudents;
 
 
@@ -29,10 +33,13 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private Set<StudentCourse> studentCourses = new HashSet<StudentCourse>();
 
+    @OneToMany(mappedBy = "course")
+    private Set<Day> days = new HashSet<Day>();
+
     public Course() {
     }
 
-    public Course(String courseName, String description, Date startDate, Date endDate, int maxStudents) {
+    public Course(String courseName, String description, java.util.Date startDate, java.util.Date endDate, int maxStudents) {
         this.courseName = courseName;
         this.description = description;
         this.startDate = startDate;
@@ -64,19 +71,19 @@ public class Course {
         this.description = description;
     }
 
-    public Date getStartDate() {
+    public java.util.Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(java.util.Date startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public java.util.Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(java.util.Date endDate) {
         this.endDate = endDate;
     }
 
@@ -101,10 +108,10 @@ public class Course {
     }
 
     public void removeStudentCourse(StudentCourse studentCourse) {
-        Set updatedStudentCourses = getStudentCourses().
-                stream().
-                filter(sc -> sc.getId() != studentCourse.getId()).
-                collect(Collectors.toSet());
+        Set updatedStudentCourses = getStudentCourses()
+                .stream()
+                .filter(sc -> sc.getId() != studentCourse.getId())
+                .collect(Collectors.toSet());
         setStudentCourses(updatedStudentCourses);
     }
 
@@ -118,5 +125,37 @@ public class Course {
 
     public Set<Student> getStudents() {
         return getStudentCourses().stream().map(sc -> sc.getStudent()).collect(Collectors.toSet());
+    }
+
+    public Set<Day> getDays() {
+        return days;
+    }
+
+    public Day getDay(java.util.Date date) {
+        long millis = date.toInstant().toEpochMilli();
+        java.sql.Date sqlDate = new java.sql.Date(millis);
+        //java.util.Date d  = new SimpleDateFormat();
+        SimpleDateFormat dd  = new SimpleDateFormat("y M d");
+        java.util.Date truncated;
+        try {
+            truncated = dd.parse(dd.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //d.applyLocalizedPattern("");
+        //date.
+        Optional<Day> day = days
+                .stream()
+                .filter(d -> d.getDate().equals(sqlDate))
+                .findFirst();
+        return day.isPresent() ? day.get() : null;
+    }
+
+    public void setDays(Set<Day> days) {
+        this.days = days;
+    }
+
+    public void addDay(Day day) {
+        days.add(day);
     }
 }
