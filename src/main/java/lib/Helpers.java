@@ -18,6 +18,8 @@ public class Helpers {
         }
     }
 
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     /**
      * Sets the hours, minutes and seconds in a date to zero.
      * eg Tue Apr 18 23:44:41 CEST 2017 becomes Tue Apr 18 00:00:00 CEST 2017
@@ -25,13 +27,18 @@ public class Helpers {
      * @return
      */
     public static Date truncateDate(Date date) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("y:M:d");
-        Date truncatedDate = null;
+        return stringToDate(dateToString(date));
+    }
+
+    public static String dateToString(Date date) {
+        return dateFormat.format(date);
+    }
+
+    public static Date stringToDate(String dateStr) {
         try {
-            truncatedDate = dateFormatter.parse(dateFormatter.format(date));
+            return dateFormat.parse(dateStr);
         } catch (ParseException e) {
-            // No exception will be given since the formatted string is derived from a date instance.
+            return null;
         }
-        return truncatedDate;
     }
 }

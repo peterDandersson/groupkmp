@@ -29,7 +29,7 @@ public class CourseService {
         return id;
     }
 
-    public Long createCourse(String courseName, String description, Date startDate, Date endDate, int maxStudents){
+    public Long createCourse(String courseName, String description, Date startDate, Date endDate, int maxStudents) {
         Course course = new Course(courseName, description, startDate, endDate, maxStudents);
         em.persist(course);
         return course.getId();
@@ -56,10 +56,13 @@ public class CourseService {
         return getAllCourses().stream().map(course -> course.getId()).collect(Collectors.toSet());
     }
 
-    public void updateCourse(Long id, String courseName, String description) {
+    public void updateCourse(Long id, String courseName, String description, Date startDate, Date endDate, int maxStudents) {
         Course course = em.find(Course.class, id);
         course.setCourseName(courseName);
         course.setDescription(description);
+        course.setStartDate(startDate);
+        course.setEndDate(endDate);
+        course.setMaxStudents(maxStudents);
         em.merge(course);
     }
 

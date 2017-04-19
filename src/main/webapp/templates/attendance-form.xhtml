@@ -24,23 +24,31 @@
         td { border-: 25px 0px; }
         */
     </style>
-    <h:form>
-        <h:inputHidden value="#{attendanceBean.courseId}"/>
-        <h:panelGrid columns="1">
+    <h:form id="attendance-form">
+        <h:outputText value="#{attendanceBean.date}" />
+        <!--h:inputHidden value="#{attendanceBean.courseId}"/-->
+        <c:set var="students" value="#{attendanceBean.studentCounter}" />
+
+        <h:panelGrid columns="1" rendered="#{students.size() > 0}">
             <h:outputText value="context: #{context}" />
-            <c:set var="students" value="#{attendanceBean.students}" />
 
             <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row">
                 <h:column >
                     <f:facet name="header">Email</f:facet>
-                    <h:outputText id="id" value="#{student.email}"/>
+                    <h:outputText id="id" value="#{student.key.email}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Present</f:facet>
-                    <h:selectBooleanCheckbox value="#{attendanceBean.attendances[students.indexOf(student)]}" />
+                    <h:selectBooleanCheckbox value="#{attendanceBean.attendances[student.value]}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Present</f:facet>
+                    <h:outputText value="#{student.value}" />
                 </h:column>
 
             </h:dataTable>
+            <h:commandButton value="Save"
+                             action="#{attendanceBean.saveAttendance()}" />
         </h:panelGrid>
     </h:form>
 </f:view>

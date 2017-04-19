@@ -20,8 +20,8 @@ public class Course {
     private String courseName;
     @Column(length = 3000)
     private String description;
-    private java.util.Date startDate;
-    private java.util.Date endDate;
+    private Date startDate;
+    private Date endDate;
     private int maxStudents;
 
 
@@ -72,7 +72,7 @@ public class Course {
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+        this.startDate = truncateDate(startDate);
     }
 
     public Date getEndDate() {
@@ -80,7 +80,7 @@ public class Course {
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+        this.endDate = truncateDate(endDate);
     }
 
     public int getMaxStudents() {

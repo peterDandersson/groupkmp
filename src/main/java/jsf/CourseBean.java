@@ -25,11 +25,17 @@ public class CourseBean {
     private String description;
     private Date startDate;
     private Date endDate;
-    private int maxStudents;
+    private int maxStudents = 2;
 
     public String createCourse() {
         if (getId()==null) {
-            courseService.createCourse(courseName, description);
+            courseService.createCourse(
+                    getCourseName(),
+                    getDescription(),
+                    getStartDate(),
+                    getEndDate(),
+                    getMaxStudents()
+            );
         }
         else {
             updateCourse(getId());
@@ -37,6 +43,10 @@ public class CourseBean {
         setId(null);
         setCourseName("");
         setDescription("");
+        setMaxStudents(2);
+        setStartDate(new Date());
+        setEndDate(new Date());
+
         return "admin";
     }
 
@@ -46,7 +56,7 @@ public class CourseBean {
     }
 
     public String updateCourse(Long id) {
-        courseService.updateCourse(getId(), getCourseName(), getDescription());
+        courseService.updateCourse(getId(), getCourseName(), getDescription(), getStartDate(), getEndDate(), getMaxStudents());
         return "admin";
     }
 
@@ -55,6 +65,9 @@ public class CourseBean {
         setId(id);
         setCourseName(course.getCourseName());
         setDescription(course.getDescription());
+        setMaxStudents(course.getMaxStudents());
+        setStartDate(course.getStartDate());
+        setEndDate(course.getEndDate());
         return "admin";
     }
 

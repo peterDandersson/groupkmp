@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
@@ -71,6 +72,14 @@
                     <h:outputText value="#{course.description}"/>
                 </h:column>
                 <h:column>
+                    <f:facet name="header">Start Date</f:facet>
+                    <h:outputText converter="groupkmp.DateConverter" value="#{course.startDate}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">End Date</f:facet>
+                    <h:outputText converter="groupkmp.DateConverter" value="#{course.endDate}"/>
+                </h:column>
+                <h:column>
                     <f:facet name="header">Take up</f:facet>
                     <h:outputText value="#{course.studentCount}/#{course.maxStudents}"/>
                 </h:column>
@@ -89,7 +98,10 @@
                     <h:outputText value="#{course.days.size()}" />
                 </h:column>
                 <h:column rendered="#{context == 'attendance'}">
-                    <h:commandLink value="Take Attendance" action="#{attendanceBean.takeAttendance(course.id)}"/>
+                    <!--h:commandLink value="Take Attendance" action="#{attendanceBean.takeAttendance(course.id)}"-->
+                    <h:commandLink value="Take Attendance">
+                        <f:ajax render="attendance-form courses-table" listener="#{attendanceBean.takeAttendance(course.id)}" />
+                    </h:commandLink>
                 </h:column>
                 <h:column rendered="#{context == 'studentOtherCourses'}">
                     <h:commandLink value="Register" action="#{userBean.register(course.id)}"/>

@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/site-template.xhtml">
@@ -22,6 +23,18 @@
                 <ui:decorate template="/templates/courses-table.xhtml">
                     <ui:param name="context" value="attendance" />
                 </ui:decorate>
+                <h:form>
+                    <!--p:calendar value="#{attendanceBean.date}" mode="inline">
+                        <f:ajax event="dateSelect" listener="#{attendanceBean.onDateSelect}" />
+                        <f:ajax event="change"
+                        render="attendance-form"
+                        listener="#{attendanceBean.takeAttendance(course.id)}" />
+                    </p:calendar-->
+                    <!--p:outputLabel for="event" value="Select Event:" /-->
+                    <p:calendar value="#{attendanceBean.date}" mode="inline">
+                        <p:ajax event="dateSelect" listener="#{attendanceBean.onDateSelect}" update="attendance-form" />
+                    </p:calendar>
+                </h:form>
                 <ui:decorate template="/templates/attendance-form.xhtml">
                 </ui:decorate>
             </h:panelGroup>

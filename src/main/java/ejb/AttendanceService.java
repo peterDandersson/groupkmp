@@ -110,4 +110,21 @@ public class AttendanceService {
         attendances.sort(new AttendanceComparator());
         return attendances;
     }
+
+    public List<Boolean> getPrestentList(Long courseId, Date date) {
+        return getAttendances(courseId, date)
+                .stream()
+                .map(a -> a.isPresent())
+                .collect(Collectors.toList());
+    }
+
+    public void setAttendances(Long courseId, Date date, List<Boolean> presentList) {
+        List<Attendance> attendances = getAttendances(courseId, date);
+        for (int i=0; i<attendances.size(); i++) {
+            Attendance attendance = attendances.get(i);
+            attendance.setPresent(presentList.get(i));
+            em.merge(attendance);
+        }
+    }
+
 }
