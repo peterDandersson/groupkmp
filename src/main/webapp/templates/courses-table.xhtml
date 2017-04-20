@@ -15,19 +15,23 @@
         }
 
         tr.even-row {
-            background-color: #daecff;
-        }
-
-        tr.even-row {
-            background-color: #ddd;
+            background-color: #e3e3e3;
         }
 
         tr.odd-row {
             background-color: #eee;
         }
 
-        td {
-            padding: 2px;
+        tr.selected-row {
+            background-color: #ffa;
+        }
+
+        .ui-datatable table {
+            width: auto;
+        }
+
+        .ui-panelgrid td.ui-panelgrid-cell {
+            padding: 0px;
         }
 
         /*tr.even-row td, tr.odd-row td {padding: 10px;}
@@ -59,51 +63,44 @@
             <h:outputText value="#{noResultsMessage}" />
         </h:panelGroup>
 
-        <h:panelGrid columns="1" rendered="#{courses.size() > 0}">
-            <h:outputText value="#{attendanceBean.test}" />
-            <h:outputText value="#{attendanceBean.courseId}" />
-
-
-            <h:dataTable binding="#{table}" value="#{courses}" var="course"
-                         rowClasses="even-row, odd-row">
-                <h:column>
-                    <h:outputText value="#{table.rowIndex}" />
-                </h:column>
-                <h:column>
+        <p:panelGrid columns="1" rendered="#{courses.size() > 0}">
+            <p:dataTable binding="#{table}" value="#{courses}" var="course"
+                         rowStyleClass="#{attendanceBean.getRowClass(table.rowIndex, context)}" >
+                <p:column>
                     <f:facet name="header">Course Name</f:facet>
                     <h:outputText id="id" value="#{course.courseName}"/>
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column>
                     <f:facet name="header">Description</f:facet>
                     <h:outputText value="#{course.description}"/>
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column>
                     <f:facet name="header">Start Date</f:facet>
                     <h:outputText converter="groupkmp.DateConverter" value="#{course.startDate}"/>
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column>
                     <f:facet name="header">End Date</f:facet>
                     <h:outputText converter="groupkmp.DateConverter" value="#{course.endDate}"/>
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column>
                     <f:facet name="header">Take up</f:facet>
                     <h:outputText value="#{course.studentCount}/#{course.maxStudents}"/>
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column>
                     <f:facet name="header">ID</f:facet>
                     <h:outputText value="#{course.id}"/>
-                </h:column>
-                <h:column rendered="#{context == 'adminAllCourses'}">
+                </p:column>
+                <p:column rendered="#{context == 'adminAllCourses'}">
                         <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"/>
-                </h:column>
-                <h:column rendered="#{context == 'adminAllCourses'}">
+                </p:column>
+                <p:column rendered="#{context == 'adminAllCourses'}">
                         <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
-                </h:column>
-                <h:column rendered="#{context == 'attendance'}">
+                </p:column>
+                <p:column rendered="#{context == 'attendance'}">
                     <f:facet name="header">Days</f:facet>
                     <h:outputText value="#{course.days.size()}" />
-                </h:column>
-                <h:column rendered="#{context == 'attendance'}">
+                </p:column>
+                <p:column rendered="#{context == 'attendance'}">
                     <!--h:commandLink value="Take Attendance" action="#{attendanceBean.takeAttendance(course.id)}"-->
                     <h:commandLink value="Take Attendance">
                         <!--f:ajax listener="#{attendanceBean.takeAttendance(course.id)}" render="attendance-form course-form" /-->
@@ -112,29 +109,26 @@
                         <!--f:ajax execute="courses-table" render="courses-table" /-->
                         <f:ajax render="@form" />
                     </h:commandLink>
-                </h:column>
-                <h:column rendered="#{context == 'attendance'}">
-                        <h:outputText id="star" value="#{attendanceBean.selections[table.rowIndex]}" />
-                </h:column>
-                <h:column rendered="#{context == 'studentOtherCourses'}">
+                </p:column>
+                <p:column rendered="#{context == 'studentOtherCourses'}">
                     <h:commandLink value="Register" action="#{userBean.register(course.id)}"/>
-                </h:column>
+                </p:column>
 
                 <c:set var="hide" value="#{(context == 'studentOtherCourses') and (not course.isFull())}" />
-                <!--h:column rendered="${(context == 'studentOtherCourses') and (!course.isFull)}"-->
-                <!--h:column rendered="false">
+                <!--p:column rendered="${(context == 'studentOtherCourses') and (!course.isFull)}"-->
+                <!--p:column rendered="false">
                     <c:if test="${course.isFull()}">
                         <h:commandLink value="Register" action="#{userBean.register(course.id)}"/>
                     </c:if>
                     <c:if test="#{!course.isFull()}">
                         <h:commandLink value="Bloob" action="#{userBean.register(course.id)}"/>
                     </c:if>
-                </h:column-->
-                <h:column rendered="#{(userBean.isStudent()) and (context == 'studentRegisteredCourses')}">
+                </p:column-->
+                <p:column rendered="#{(userBean.isStudent()) and (context == 'studentRegisteredCourses')}">
                     <h:commandLink value="Deregister" action="#{userBean.deregister(course.id)}"/>
-                </h:column>
-            </h:dataTable>
-        </h:panelGrid>
+                </p:column>
+            </p:dataTable>
+        </p:panelGrid>
     </h:form>
 </f:view>
 </html>

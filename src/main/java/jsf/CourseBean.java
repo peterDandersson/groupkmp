@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class CourseBean {
 
     @EJB
