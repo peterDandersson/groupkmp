@@ -54,12 +54,11 @@ public class StudentCourse {
     private boolean active;
 
     // The date a student ends the course if it is before the course's end date.
+    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     @OneToMany(mappedBy = "studentCourse")
     private Set<Attendance> attendances = new HashSet<>();
-
-    //private Set<Attendance> attendance;
 
     public StudentCourse() {
     }
@@ -69,38 +68,6 @@ public class StudentCourse {
         setCourse(course);
         setActive(true);
     }
-
-/*    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }*/
-
-/*    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }*/
-
-/*    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }*/
 
     public Long getId() {
         return id;

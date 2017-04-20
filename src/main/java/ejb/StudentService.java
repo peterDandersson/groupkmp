@@ -11,11 +11,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static lib.StatusCode.*;
+import static lib.Helpers.*;
 
 @Local
 @Stateless
@@ -106,12 +108,14 @@ public class StudentService {
 
         if (student.isRegisteredForCourse(course)) {
             StudentCourse studentCourse = student.getStudentCourse(course);
-            student.removeStudentCourse(studentCourse);
+/*            student.removeStudentCourse(studentCourse);
             course.removeStudentCourse(studentCourse);
             em.merge(student);
-            em.merge(course);
-            StudentCourse sc = em.merge(studentCourse);
-            em.remove(sc);
+            em.merge(course);*/
+            studentCourse.setEndDate(truncateDate(new Date()));
+            em.merge(studentCourse);
+            //StudentCourse sc = em.merge(studentCourse);
+            //em.remove(sc);
             return DEREGISTERED;
         }
         else {

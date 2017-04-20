@@ -109,16 +109,16 @@
 
                 <c:set var="hide" value="#{(context == 'studentOtherCourses') and (not course.isFull())}" />
                 <!--h:column rendered="${(context == 'studentOtherCourses') and (!course.isFull)}"-->
-                <h:column rendered="false">
+                <!--h:column rendered="false">
                     <c:if test="${course.isFull()}">
                         <h:commandLink value="Register" action="#{userBean.register(course.id)}"/>
                     </c:if>
                     <c:if test="#{!course.isFull()}">
                         <h:commandLink value="Bloob" action="#{userBean.register(course.id)}"/>
                     </c:if>
-                </h:column>
+                </h:column-->
                 <h:column rendered="#{(userBean.isStudent()) and (context == 'studentRegisteredCourses')}">
-                    <h:commandLink value="Remove" action="#{userBean.deregister(course.id)}"/>
+                    <h:commandLink value="Deregister" action="#{userBean.deregister(course.id)}"/>
                 </h:column>
             </h:dataTable>
         </h:panelGrid>

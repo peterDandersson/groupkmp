@@ -41,11 +41,6 @@
                     <f:facet name="header">Present</f:facet>
                     <h:selectBooleanCheckbox value="#{attendanceBean.attendances[student.value]}" />
                 </h:column>
-                <h:column>
-                    <f:facet name="header">Present</f:facet>
-                    <h:outputText value="#{student.value}" />
-                </h:column>
-
             </h:dataTable>
             <h:commandButton value="Save"
                              action="#{attendanceBean.saveAttendance()}" />
