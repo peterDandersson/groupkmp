@@ -4,12 +4,15 @@ import ejb.AttendanceService;
 import ejb.CourseService;
 import javafx.util.Pair;
 import jpa.Attendance;
+import jpa.Course;
 import jpa.Student;
 import org.primefaces.event.SelectEvent;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -18,6 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static lib.Helpers.dateToString;
+import static lib.Helpers.truncateDate;
 
 @ManagedBean
 @ViewScoped
@@ -29,20 +35,64 @@ public class AttendanceBean implements Serializable {
     @EJB
     CourseService courseService;
 
-    Long courseId;
-    Date date = new Date();
-    List<Boolean> attendances;
+    @ManagedProperty(value="#{courseBean}")
+    private CourseBean courseBean;
+
+    private Long courseId;
+    private Date date = new Date();
+    private List<Boolean> attendances;
+    private List<String> selections;
+
+    private boolean test = false;
+    public boolean isTest() {
+        return test;
+    }
+    public void setTest(boolean test) {
+        this.test = test;
+    }
+
+    @PostConstruct
+    public void init() {
+        getCourseBean().getAllCourses();
+        setCourseId(getCourseBean().getSelectedId());
+        setSelections();
+    }
+
+    public void setSelections() {
+        System.out.println("########################################## SET SELECTIONS #######");
+        selections = new ArrayList<>();
+        for (Long courseId : courseService.getAllCourseIds()) {
+            selections.add(courseId == getCourseId() ? "*" : "");
+        }
+    }
+
+    public List<String> getSelections() {
+        return selections;
+    }
 
     public Long getCourseId() {
         return courseId;
     }
 
     public void setCourseId(Long courseId) {
+        System.out.println("ttttttttttttttttttttttttttttttttttttttttt setting course id ffffffffffffffffffffffffffff " + courseId);
         this.courseId = courseId;
     }
 
     public Date getDate() {
         return date;
+    }
+
+    public String getDateStr() {
+        return dateToString(date);
+    }
+
+    public CourseBean getCourseBean() {
+        return courseBean;
+    }
+
+    public void setCourseBean(CourseBean courseBean) {
+        this.courseBean = courseBean;
     }
 
     public void setDate(Date date) {
@@ -54,28 +104,27 @@ public class AttendanceBean implements Serializable {
     }
 
     public void setAttendances(List<Boolean> attendances) {
-        System.out.println("########################################## SET ATTENDANCE #######");
-/*        this.attendances = new ArrayList<>();
-        for(Boolean attendance: attendances) {
-            this.attendances.add(attendance);
-        }*/
         this.attendances = attendances;
     }
 
     public void takeAttendance(Long courseId) {
-        System.out.println("================== Take attendance ================");
+        System.out.println("================== Take attendance 1================");
         setCourseId(courseId);
+        System.out.println(getCourseId());
         //Day day = attendanceService.getOrCreateDay(course_id, new Date());
         takeAttendance();
         //return "attendance";
     }
 
     public void takeAttendance() {
-        System.out.println("================== Take attendance ================");
+        System.out.println("================== Take attendance 2================");
         //Day day = attendanceService.getOrCreateDay(course_id, new Date());
         attendanceService.createAllAttendanceRecords(getCourseId(), getDate());
         setAttendances(fetchAttendances());
         debugAttendances();
+        setSelections();
+        debugSelections();
+        setTest(!isTest());
         //return "attendance";
     }
 
@@ -117,6 +166,14 @@ public class AttendanceBean implements Serializable {
             System.out.println(attendance);
         }
         System.out.println("=======");
+    }
+
+    private void debugSelections() {
+        System.out.println("======= Selection " + getSelections().size());
+        for (String selection : getSelections()) {
+            System.out.println("-> " + selection);
+        }
+        System.out.println("======= Selection");
     }
 
     public void onDateSelect(SelectEvent event) {

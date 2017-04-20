@@ -25,12 +25,12 @@
         */
     </style>
     <h:form id="attendance-form">
-        <h:outputText value="#{attendanceBean.date}" />
+        <h:outputText value="#{attendanceBean.test}" />
+        <h:outputText value="Attendance for #{attendanceBean.dateStr}" />
         <!--h:inputHidden value="#{attendanceBean.courseId}"/-->
         <c:set var="students" value="#{attendanceBean.studentCounter}" />
 
         <h:panelGrid columns="1" rendered="#{students.size() > 0}">
-            <h:outputText value="context: #{context}" />
 
             <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row">
                 <h:column >

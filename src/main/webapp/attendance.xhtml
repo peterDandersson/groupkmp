@@ -12,6 +12,13 @@
     <!--f:metadata>
         <f:viewParam id="id" name="id" value="#{userBean.userRole()}" validator="#{myBean.validate}"/>
     </f:metadata-->
+    <h:outputStylesheet>
+        <style>
+            #cal {
+                margin: 100px;
+            }
+        </style>
+    </h:outputStylesheet>
 
     <ui:param name="pageTitle" value="Admin"/>
 
@@ -31,7 +38,7 @@
                         listener="#{attendanceBean.takeAttendance(course.id)}" />
                     </p:calendar-->
                     <!--p:outputLabel for="event" value="Select Event:" /-->
-                    <p:calendar value="#{attendanceBean.date}" mode="inline">
+                    <p:calendar id="cal" value="#{attendanceBean.date}" mode="inline">
                         <p:ajax event="dateSelect" listener="#{attendanceBean.onDateSelect}" update="attendance-form" />
                     </p:calendar>
                 </h:form>

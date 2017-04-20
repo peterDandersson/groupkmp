@@ -38,8 +38,7 @@
         td { border-: 25px 0px; }
         */
     </style>
-    <h:form>
-        <!--c:set var="courses" value="#{courseBean.allCourses}" /-->
+    <h:form id="courses-table">
         <c:if test="#{context == 'studentRegisteredCourses'}">
             <c:set var="courses" value="#{userBean.courses}" />
             <c:set var="noResultsMessage" value="You are not registered for any courses." />
@@ -61,8 +60,15 @@
         </h:panelGroup>
 
         <h:panelGrid columns="1" rendered="#{courses.size() > 0}">
-            <h:dataTable id="courses-table" value="#{courses}" var="course"
+            <h:outputText value="#{attendanceBean.test}" />
+            <h:outputText value="#{attendanceBean.courseId}" />
+
+
+            <h:dataTable binding="#{table}" value="#{courses}" var="course"
                          rowClasses="even-row, odd-row">
+                <h:column>
+                    <h:outputText value="#{table.rowIndex}" />
+                </h:column>
                 <h:column>
                     <f:facet name="header">Course Name</f:facet>
                     <h:outputText id="id" value="#{course.courseName}"/>
@@ -100,8 +106,15 @@
                 <h:column rendered="#{context == 'attendance'}">
                     <!--h:commandLink value="Take Attendance" action="#{attendanceBean.takeAttendance(course.id)}"-->
                     <h:commandLink value="Take Attendance">
-                        <f:ajax render="attendance-form courses-table" listener="#{attendanceBean.takeAttendance(course.id)}" />
+                        <!--f:ajax listener="#{attendanceBean.takeAttendance(course.id)}" render="attendance-form course-form" /-->
+                        <f:ajax listener="#{attendanceBean.takeAttendance(course.id)}" />
+                        <f:ajax render="attendance-form" />
+                        <!--f:ajax execute="courses-table" render="courses-table" /-->
+                        <f:ajax render="@form" />
                     </h:commandLink>
+                </h:column>
+                <h:column rendered="#{context == 'attendance'}">
+                        <h:outputText id="star" value="#{attendanceBean.selections[table.rowIndex]}" />
                 </h:column>
                 <h:column rendered="#{context == 'studentOtherCourses'}">
                     <h:commandLink value="Register" action="#{userBean.register(course.id)}"/>

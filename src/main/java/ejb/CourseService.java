@@ -52,8 +52,8 @@ public class CourseService {
         return em.createNamedQuery("getAllCourses").getResultList();
     }
 
-    public Set<Long> getAllCourseIds() {
-        return getAllCourses().stream().map(course -> course.getId()).collect(Collectors.toSet());
+    public List<Long> getAllCourseIds() {
+        return getAllCourses().stream().map(course -> course.getId()).collect(Collectors.toList());
     }
 
     public void updateCourse(Long id, String courseName, String description, Date startDate, Date endDate, int maxStudents) {

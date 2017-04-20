@@ -9,18 +9,20 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class CourseBean {
 
     @EJB
     CourseService courseService;
 
     private Long id;
+    private Long selectedId;
     private String courseName;
     private String description;
     private Date startDate;
@@ -79,7 +81,11 @@ public class CourseBean {
     }
 
     public List<Course> getAllCourses(){
-        return courseService.getAllCourses();
+        List<Course> courses = courseService.getAllCourses();
+        if (courses.size() > 0) {
+            setSelectedId(courses.get(0).getId());
+        }
+        return courses;
     }
 
     public Long getId() {
@@ -88,6 +94,14 @@ public class CourseBean {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getSelectedId() {
+        return selectedId;
+    }
+
+    public void setSelectedId(Long selectedId) {
+        this.selectedId = selectedId;
     }
 
     public String getCourseName() {

@@ -73,7 +73,7 @@ public class StudentService {
 
     public List<Course> getOtherCourses(Student student) {
         Set<Long> registeredCourseIds = student.getCourseIds();
-        Set<Long> allCourseIds = courseService.getAllCourseIds();
+        List<Long> allCourseIds = courseService.getAllCourseIds();
         allCourseIds.removeAll(registeredCourseIds);
         return allCourseIds.stream()
                 .map(id -> courseService.getCourse(id))
