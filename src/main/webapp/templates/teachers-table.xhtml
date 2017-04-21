@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <style>
+        /*table {border-spacing: 0px;}*/
+        table {
+            border-collapse: separate;
+        }
+        tr.even-row {background-color: #daecff; }
+        tr.even-row {background-color: #ddd; }
+        tr.odd-row {background-color: #eee; }
+        td {padding: 10px;}
+        /*tr.even-row td, tr.odd-row td {padding: 10px;}
+        tr.even-row:first-child td:first-child, tr.even-row:first-child td:first-child { border-top-left-radius: 10px; margin-top: 15px; }
+        tr:first-child td:last-child { border-top-right-radius: 10px; }
+        tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+        tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+        td { border-: 25px 0px; }
+        */
+    </style>
+    <h:panelGrid columns="1">
+        <h:dataTable id="teachers-table" value="#{teachersBean.allTeachers}" var="teacher" rowClasses="even-row, odd-row">
+            <h:column >
+                <f:facet name="header">Last name</f:facet>
+                <h:outputText value="#{teacher.lastName}"/>
+            </h:column>
+            <h:column >
+                <f:facet name="header">First name</f:facet>
+                <h:outputText value="#{teacher.firstName}"/>
+            </h:column>
+            <h:column >
+                <f:facet name="header">Contact</f:facet>
+                <h:outputText value="#{teacher.email}"/>
+            </h:column>
+            <h:column >
+                <f:facet name="header">Courses</f:facet>
+                <h:outputText value="4"/>
+            </h:column>
+            <h:column >
+                <h:commandButton value="Remove" action="#{teachersBean.removeTeacher(teacher.id)}"/>
+            </h:column>
+            <h:column >
+                <h:commandButton value="Edit" action="#{teachersBean.edit(teacher)}"/>
+            </h:column>
+        </h:dataTable>
+        <h:commandButton value="Create New" action="#{teachersBean.create}"/>
+    </h:panelGrid>
+</f:view>
+</html>
