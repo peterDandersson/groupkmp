@@ -123,4 +123,28 @@ public class StudentService {
         }
 
     }
+
+    /**
+     * Has the student left the course early
+     * @param student
+     * @param courseId
+     * @return boolean - true if the student has left the course early, else false.
+     */
+    public boolean hasLeftCourse(Student student, Long courseId) {
+        Course course = courseService.getCourse(courseId);
+        return getLeavingDate(student, course) != null;
+
+    }
+
+    /**
+     * I the student leaves the course early
+     * @param student
+     * @param course
+     * @return
+     */
+    public Date getLeavingDate(Student student, Course course) {
+        StudentCourse studentCourse = student.getStudentCourse(course);
+        return studentCourse.getEndDate();
+    }
+
 }

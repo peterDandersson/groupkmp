@@ -10,7 +10,9 @@ import jpa.User_;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import java.util.List;
+import java.util.Map;
 
 @ManagedBean
 @SessionScoped

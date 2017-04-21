@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class CourseBean {
 
     @EJB
@@ -152,6 +152,8 @@ public class CourseBean {
         return courseService.isFull(id);
     }
 
-
+    public boolean getIsCourseCurrent(Long id) {
+        return courseService.isCourseCurrent(id);
+    }
 
 }

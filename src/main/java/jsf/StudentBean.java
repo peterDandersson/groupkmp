@@ -11,7 +11,9 @@ import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import java.util.List;
+import java.util.Map;
 
 @ManagedBean
 @RequestScoped
@@ -29,7 +31,15 @@ public class StudentBean {
     private String role;
 
     // private User_ user;
+    private UIComponent row;
 
+    public UIComponent getRow() {
+        return row;
+    }
+
+    public void setRow(UIComponent row) {
+        this.row = row;
+    }
 
     public String createStudent() {
         try {
@@ -110,4 +120,12 @@ public class StudentBean {
         this.role = role;
     }
 
+    public boolean getHasLeftCourse() {
+        Map<String, Object> attr = getRow().getAttributes();
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(getRow());
+        return true;
+/*        System.out.println(course);
+        return studentService.hasLeftCourse((Student) user, course.getId());*/
+    }
 }

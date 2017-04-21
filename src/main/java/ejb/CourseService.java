@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static lib.Helpers.truncateDate;
+
+
 @Local
 @Stateless
 public class CourseService {
@@ -87,5 +90,19 @@ public class CourseService {
         List<Student> students = new ArrayList<>(course.getStudents());
         students.sort(new StudentComparator());
         return students;
+    }
+
+    public boolean hasCourseStarted(Long courseId) {
+        Course course = getCourse(courseId);
+        return ((new Date()).after(course.getStartDate()));
+    }
+
+    public boolean hasCourseEnded(Long courseId) {
+        Course course = getCourse(courseId);
+        return truncateDate(new Date()).after(course.getEndDate());
+    }
+
+    public boolean isCourseCurrent(Long courseId) {
+        return hasCourseStarted(courseId) && !hasCourseEnded(courseId);
     }
 }

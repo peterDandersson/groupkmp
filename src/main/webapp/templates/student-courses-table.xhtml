@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <style>
@@ -40,8 +41,12 @@
         <h:panelGrid columns="1">
             <!--h:dataTable id="courses-table" value="#{courseBean.allCourses}" var="course"
                          rowClasses="even-row, odd-row"-->
-            <h:dataTable id="courses-table" value="#{userBean.courses}" var="course"
+            <h:dataTable binding="#{studentBean.row}" id="courses-table" value="#{userBean.courses}" var="course"
                          rowClasses="even-row, odd-row">
+                <!--c:set var="rowCount" value="#{mycourses.rowIndex}" /-->
+                <h:column>
+                    <!--h:outputText value="#{mycourses.rowIndex}" /-->
+                </h:column>
                 <h:column>
                     <f:facet name="header">Course Name</f:facet>
                     <h:outputText id="id" value="#{course.courseName}"/>
@@ -57,8 +62,21 @@
                         <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 </h:column>
                 <h:column rendered="#{(userBean.isStudent())}">
-                    <h:commandLink value="Deregister" action="#{userBean.deregister(course.id)}"/>
+                <!--h:column rendered="#{(userBean.isStudent())}"-->
+<!--
+                    <c:if test="#{not userBean.getHasLeftCourse(userBean.courses[rowCount])}">
+-->
+                    <!--c:if test="#{!studentBean.getHasLeftCourse()}">
+                        <h:commandLink value="Leave Course" action="#{userBean.deregister(course.id)}"/>
+                    </c:if-->
                 </h:column>
+                <h:column>
+                    <ui:decorate template="/templates/deregister.xhtml" />
+                        <!--ui:param name="courseId" value="#{course.id}" /-->
+                </h:column>
+                <!--h:column rendered="#{(userBean.isStudent()) and !userBean.getHasLeftCourse(userBean.courses[mycourses.rowIndex])}">
+                    <h:commandLink value="Deregister" action="#{userBean.deregister(course.id)}"/>
+                </h:column-->
             </h:dataTable>
         </h:panelGrid>
     </h:form>

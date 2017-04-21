@@ -35,9 +35,6 @@ public class AttendanceBean implements Serializable {
     @EJB
     CourseService courseService;
 
-    @ManagedProperty(value="#{courseBean}")
-    private CourseBean courseBean;
-
     private Long courseId;
     private Date date = new Date();
     private List<Boolean> attendances;
@@ -53,9 +50,11 @@ public class AttendanceBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        getCourseBean().getAllCourses();
-        setCourseId(getCourseBean().getSelectedId());
-        setSelections();
+        //getCourseBean().getAllCourses();
+        List<Course> courses = courseService.getAllCourses();
+        if (courses.size() > 0) {
+            setCourseId(courses.get(0).getId());
+        }
     }
 
     public void setSelections() {
@@ -85,14 +84,6 @@ public class AttendanceBean implements Serializable {
 
     public String getDateStr() {
         return dateToString(date);
-    }
-
-    public CourseBean getCourseBean() {
-        return courseBean;
-    }
-
-    public void setCourseBean(CourseBean courseBean) {
-        this.courseBean = courseBean;
     }
 
     public void setDate(Date date) {
