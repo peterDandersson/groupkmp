@@ -10,49 +10,59 @@
         <h:commandLink action="#{teachersBean.cancelPopup}">
             <div id="pop-up-outer"></div>
         </h:commandLink>
-        <div id="pop-up-inner">
-            <div>
-                <h:outputLabel value="First name:" />
-                <h:inputText value="#{teachersBean.editTeacherObj.firstName}"/>
-                <br />
-                <h:outputLabel value="Last name:" />
-                <h:inputText value="#{teachersBean.editTeacherObj.lastName}" />
-                <br />
-                <h:outputLabel value="Email:" />
-                <h:inputText value="#{teachersBean.editTeacherObj.email}"/>
-                <br />
-                <h:outputLabel value="Password:" />
-                <h:inputText value="#{teachersBean.editTeacherObj.password}" />
-                <br />
-                <h:outputLabel value="Address:" />
-                <h:inputTextarea value="#{teachersBean.editTeacherObj.address}" />
+        <div id="pop-up-inner-container">
+            <div id="pop-up-inner">
+                <h:panelGrid columns="2">
+                    <h:column >
+                        <h:outputText value="First name:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.firstName}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Last name:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.lastName}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Email:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.email}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Password:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputText value="#{teachersBean.editTeacherObj.password}"/>
+                    </h:column>
+                    <h:column >
+                        <h:outputText value="Address:"/>
+                    </h:column>
+                    <h:column>
+                        <h:inputTextarea value="#{teachersBean.editTeacherObj.address}"/>
+                    </h:column>
+                </h:panelGrid>
                 <br />
                 <h:outputLabel value="Courses:" />
-                <div style="overflow: scroll; height: 80px">
-                    <!--<c:if test="#{teachersBean.editTeacherObj.courses != null}">-->
-                <ui:repeat value="#{teachersBean.courseList}" var="course" >
-                    <h:outputLabel value="#{course.courseName}" />
-                    <h:commandButton action="#{teachersBean.removeCourse(course.id)}" value="Remove" />
-                    <br />
-                </ui:repeat>
+                <div id="courses-box" >
 
-                <!--<h:panelGrid columns="1">
-                    <h:dataTable id="teachers-courses" value="#{teachersBean.editTeacherObj.courses}" var="course">
+                <h:panelGrid columns="2">
+                    <h:dataTable id="teachers-courses" value="#{teachersBean.courseList}" var="course">
                         <h:column >
-                            &lt;!&ndash;<f:facet name="header">Courses</f:facet>&ndash;&gt;
                             <h:outputText value="#{course.courseName}"/>
                         </h:column>
                         <h:column >
                             <h:commandButton value="Remove" action="#{teachersBean.removeCourse(course.id)}"/>
                         </h:column>
                     </h:dataTable>
-                </h:panelGrid>-->
+                </h:panelGrid>
 
-
-                  <!--</c:if>-->
               </div>
+
                 <h:outputLabel value="All Courses:" />
-                <br />
+
                 <h:selectOneMenu value="#{teachersBean.courseId}">
                     <f:selectItems value="#{teachersBean.allCourses}" var="c"
                                    itemLabel="#{c.courseName}" itemValue="#{c.id}" />
@@ -60,8 +70,10 @@
                 <h:commandButton value="Add Teacher to Course" action="#{teachersBean.addCourse(teachersBean.courseId)}" />
                 <br/>
                 <h:inputHidden value="#{teachersBean.editTeacherObj.id}"/>
-                <h:commandButton value="Save" action="#{teachersBean.saveTeacher(teachersBean.editTeacherObj)}" />
-                <h:commandButton value="Cancel" action="#{teachersBean.cancelPopup}" />
+                <div id="pop-up-btns">
+                    <h:commandButton value="Save" action="#{teachersBean.saveTeacher(teachersBean.editTeacherObj)}" />
+                    <h:commandButton value="Cancel" action="#{teachersBean.cancelPopup}" />
+                </div>
             </div>
         </div>
     </div>

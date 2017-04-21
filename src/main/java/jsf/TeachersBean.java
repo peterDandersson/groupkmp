@@ -8,6 +8,7 @@ import jpa.Teacher;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.view.ViewScoped;
 import java.util.*;
 
 @ManagedBean
@@ -96,6 +97,7 @@ public class TeachersBean {
 
     public String create(){
         editTeacherObj = new Teacher();
+        courseList = new ArrayList<>();
         popUp = true;
         return "teachers";
     }
