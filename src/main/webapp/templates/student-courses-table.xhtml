@@ -56,8 +56,8 @@
                 <h:column rendered="#{userBean.isAdmin()}">
                         <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 </h:column>
-                <h:column rendered="#{userBean.isStudent()}">
-                        <h:commandLink value="Register" action="#{userBean.register(course)}"/>
+                <h:column rendered="#{(userBean.isStudent())}">
+                    <h:commandLink value="Deregister" action="#{userBean.deregister(course.id)}"/>
                 </h:column>
             </h:dataTable>
         </h:panelGrid>
