@@ -6,12 +6,13 @@ import jpa.Course;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean
 @RequestScoped
-public class CoursesBean {
+public class CourseBean {
 
     @EJB
     CourseService courseService;
@@ -24,16 +25,49 @@ public class CoursesBean {
     private int maxStudents;
 
     public String createCourse() {
-        Long id = courseService.createCourse(courseName, description);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ create/update");
+        System.out.println("   " + id);
+        if (getId()==null) {
+            courseService.createCourse(courseName, description);
+        }
+        else {
+            updateCourse(getId());
+        }
+        setId(null);
         setCourseName("");
         setDescription("");
         return "admin";
     }
 
-    public String removeCourse(Long id){
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    public String removeCourse(Long id) {
         courseService.removeCourse(id);
         return "admin";
+    }
+
+    public String updateCourse(Long id) {
+        courseService.updateCourse(getId(), getCourseName(), getDescription());
+        return "admin";
+    }
+
+    public String editCourse(Long id) {
+        Course course = courseService.getCourse(id);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(course.toString());
+        System.out.println(course.getId());
+        System.out.println(id);
+        setId(id);
+        System.out.println(getId());
+
+        setCourseName(course.getCourseName());
+        setDescription(course.getDescription());
+        return "admin";
+    }
+
+    public String getSubmitButtonLabel() {
+        if (getId()==null)
+            return "Add";
+        else
+            return "Update";
     }
 
     public List<Course> getAllCourses(){
@@ -87,6 +121,4 @@ public class CoursesBean {
     public void setMaxStudents(int maxStudents) {
         this.maxStudents = maxStudents;
     }
-
-
 }

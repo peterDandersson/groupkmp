@@ -13,8 +13,14 @@
             <f:view>
                 <h:link value="Login" outcome="login"/>
                 <br />
+                <h:form>
+                    <h:commandLink value="Auto Login" action="#{userBean.autoLogin()}"/>
+                </h:form>
                 <h:link value="Add user" outcome="add-user"/>
                 <br />
+                <h:form>
+                    <h:commandLink value="Admin Students Page" action="#{userBean.devStudentsPage()}"/>
+                </h:form>
                 <h:link value="Admin" outcome="admin"/>
                 <br />
                 <h:link value="Stundent" outcome="student"/>

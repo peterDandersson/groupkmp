@@ -38,6 +38,13 @@ public class CourseService {
         em.remove(course);
     }
 
+    public void updateCourse(Long id, String courseName, String description) {
+        Course course = em.find(Course.class, id);
+        course.setCourseName(courseName);
+        course.setDescription(description);
+        em.merge(course);
+    }
+
     public Long countCourses() {
         List<Long> c = em.createNamedQuery("countCourses").getResultList();
         Long i = c.get(0);

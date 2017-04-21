@@ -17,7 +17,6 @@
     <ui:define name="main-panel">
         <div id="main-container">
             <h:panelGroup rendered="#{userBean.isAdmin()}">
-                <h:outputLabel value="Admin: #{userBean.userInfo}"/>
                 <br />
                 <ui:decorate template="/templates/courses-table.xhtml">
                 </ui:decorate>

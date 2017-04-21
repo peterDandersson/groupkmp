@@ -8,6 +8,7 @@ import jpa.User_;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -64,5 +65,17 @@ public class UserService {
         User_ user = query.getSingleResult();
 
         return user;
+    }
+
+    public User_ getAdmin() {
+        TypedQuery<User_> query = em.createQuery("SELECT u FROM User_ u", User_.class);
+        List<User_> users = query.getResultList();
+        for (User_ user: users) {
+            String role = user.getRole();
+            if (role.equals("ADMIN")) {
+                return user;
+            }
+        }
+        return null;
     }
 }
