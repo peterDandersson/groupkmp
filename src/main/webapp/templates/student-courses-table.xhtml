@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:custom="http://java.sun.com/jsf/composite/composite-components"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <style>
@@ -69,6 +70,9 @@
                     <!--c:if test="#{!studentBean.getHasLeftCourse()}">
                         <h:commandLink value="Leave Course" action="#{userBean.deregister(course.id)}"/>
                     </c:if-->
+                </h:column>
+                <h:column>
+                    <custom:deregister userId="#{userBean.user.id}" courseId="#{course.id}" />
                 </h:column>
                 <h:column>
                     <ui:decorate template="/templates/deregister.xhtml" />

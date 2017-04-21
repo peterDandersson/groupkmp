@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+<cc:interface componentType="groupkmp.components.QuestionView">
+    <cc:attribute name="courseId" type="java.lang.Long" required="true"/>
+    <cc:attribute name="userId" type="java.lang.Long" required="true"/>
+    <!--cc:clientBehavior name="click" targets="questionContainer:questionOptions:qop" event="click"/-->
+</cc:interface>
+
+<cc:implementation>
+    <f:view>
+        <h:form>
+            <h:outputText value="#{cc.attrs.courseId} #{cc.attrs.courseId}" />
+        </h:form>
+    </f:view>
+</cc:implementation>
+</html>
