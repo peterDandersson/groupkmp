@@ -19,7 +19,7 @@ public class Helpers {
     }
 
     /**
-     * Set the hours, minutes and seconds in a date to zero.
+     * Sets the hours, minutes and seconds in a date to zero.
      * eg Tue Apr 18 23:44:41 CEST 2017 becomes Tue Apr 18 00:00:00 CEST 2017
      * @param date
      * @return

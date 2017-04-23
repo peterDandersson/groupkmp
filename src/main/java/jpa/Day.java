@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static lib.Helpers.truncateDate;
+
 @Entity
 public class Day {
 
@@ -42,7 +44,7 @@ public class Day {
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = truncateDate(date);
     }
 
     public Course getCourse() {
@@ -59,5 +61,9 @@ public class Day {
 
     public void setAttendances(Set<Attendance> attendances) {
         this.attendances = attendances;
+    }
+
+    public boolean addAttendance(Attendance attendance) {
+        return getAttendances().add(attendance);
     }
 }

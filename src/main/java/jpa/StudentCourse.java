@@ -3,7 +3,10 @@ package jpa;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+
+import static lib.Helpers.truncateDate;
 
 @Entity
 @NamedQueries({
@@ -145,5 +148,24 @@ public class StudentCourse {
 
     public void setAttendances(Set<Attendance> attendances) {
         this.attendances = attendances;
+    }
+
+    /**
+     * Gets the attendance record for a particular student, on a particular course,
+     * for a given date.
+     * @param date
+     * @return
+     */
+    public Attendance getAttendance(Date date) {
+        Date truncatedDate = truncateDate(date);
+        Optional<Attendance> day = attendances
+                .stream()
+                .filter(a -> a.getDay().getDate().equals(truncatedDate))
+                .findFirst();
+        return day.isPresent() ? day.get() : null;
+    }
+
+    public boolean addAttendance(Attendance attendance) {
+        return getAttendances().add(attendance);
     }
 }

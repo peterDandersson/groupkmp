@@ -47,6 +47,7 @@ public class CourseService {
         return new Course1Domain(course);
     }*/
 
+
     public List<Course> getAllCourses() {
         return em.createNamedQuery("getAllCourses").getResultList();
     }

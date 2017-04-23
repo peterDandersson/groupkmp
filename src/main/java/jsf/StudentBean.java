@@ -109,4 +109,5 @@ public class StudentBean {
     public void setRole(String role) {
         this.role = role;
     }
+
 }

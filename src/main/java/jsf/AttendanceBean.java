@@ -2,6 +2,7 @@ package jsf;
 
 import ejb.AttendanceService;
 import ejb.CourseService;
+import jpa.Attendance;
 import jpa.Day;
 import jpa.Student;
 
@@ -23,6 +24,8 @@ public class AttendanceBean {
     CourseService courseService;
 
     Long courseId;
+    Date date;
+    List<Attendance> attendances;
 
     public Long getCourseId() {
         return courseId;
@@ -32,9 +35,28 @@ public class AttendanceBean {
         this.courseId = courseId;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(List<Attendance> attendances) {
+        System.out.println("########################################## SET ATTENDANCE #######");
+        this.attendances = attendances;
+    }
+
     public String takeAttendance(Long course_id) {
         setCourseId(course_id);
-        Day day = attendanceService.findDay(course_id, new Date());
+        //Day day = attendanceService.getOrCreateDay(course_id, new Date());
+        attendanceService.createAllAttendanceRecords(course_id, new Date());
+        setAttendances(fetchAttendances());
         return "attendance";
     }
 
@@ -43,5 +65,10 @@ public class AttendanceBean {
             return new ArrayList<>();
         }
         return courseService.getStudents(getCourseId());
+    }
+
+    public List<Attendance> fetchAttendances() {
+        setDate(new Date()); // Temporary - date will eventually be provided by a calendar.
+        return attendanceService.getAttendances(getCourseId(), getDate());
     }
 }

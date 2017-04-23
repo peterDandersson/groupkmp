@@ -1,9 +1,6 @@
 package jpa;
 
 import javax.persistence.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,7 +35,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseName, String description, java.util.Date startDate, java.util.Date endDate, int maxStudents) {
+    public Course(String courseName, String description, Date startDate, Date endDate, int maxStudents) {
         this.courseName = courseName;
         this.description = description;
         this.startDate = startDate;
@@ -70,19 +67,19 @@ public class Course {
         this.description = description;
     }
 
-    public java.util.Date getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(java.util.Date startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public java.util.Date getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(java.util.Date endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -102,10 +99,19 @@ public class Course {
         this.studentCourses = studentCourses;
     }
 
+    /**
+     * Add a student to a course.
+     * @param studentCourse
+     */
     public void addStudentCourse(StudentCourse studentCourse) {
         studentCourses.add(studentCourse);
     }
 
+    /**
+     * Romove a particular StudentCourse instance fro this course.
+     * (This is equivalent to a student leaving tthe course).
+     * @param studentCourse
+     */
     public void removeStudentCourse(StudentCourse studentCourse) {
         Set updatedStudentCourses = getStudentCourses()
                 .stream()
@@ -118,10 +124,19 @@ public class Course {
         return studentCourses.size();
     }
 
+    /**
+     * Returns true if no more students can register for the course (because it is full).
+     * @return
+     */
     public boolean isFull() {
         return getStudentCount() >= getMaxStudents();
     }
 
+
+    /**
+     * Gets all the students on the course.
+     * @return
+     */
     public Set<Student> getStudents() {
         return getStudentCourses()
                 .stream()
@@ -129,22 +144,45 @@ public class Course {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Gets all of the days for which attendance records exist for this course.
+     * @return
+     */
     public Set<Day> getDays() {
         return days;
     }
 
+    public void setDays(Set<Day> days) {
+        this.days = days;
+    }
+
+    /**
+     * Attempts to get an attendance record day for this course.
+     * Returns the day, or null if it is not present.
+     * @param date
+     * @return
+     */
     public Day getDay(Date date) {
         Date truncatedDate = truncateDate(date);
         Optional<Day> day = days
                 .stream()
-                .filter(d -> d.getDate()
-                .equals(truncatedDate))
+                .filter(d -> d.getDate().equals(truncatedDate))
                 .findFirst();
         return day.isPresent() ? day.get() : null;
     }
 
-    public void setDays(Set<Day> days) {
-        this.days = days;
+    /**
+     * Attempts to get a student course record for a particular student.
+     * If the student is not currently registered for this course null is returned.
+     * @param studentId
+     * @return
+     */
+    public StudentCourse getStudentCourse(Long studentId) {
+        Optional<StudentCourse> studentCourse = studentCourses
+                .stream()
+                .filter(sc -> sc.getStudent().getId().equals(studentId))
+                .findFirst();
+        return studentCourse.isPresent() ? studentCourse.get() : null;
     }
 
     public void addDay(Day day) {

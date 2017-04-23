@@ -24,6 +24,14 @@ public class Attendance {
 
     private boolean present;
 
+    public Attendance() {}
+
+    public Attendance(StudentCourse studentCourse, Day day) {
+        setStudentCourse(studentCourse);
+        setDay(day);
+        setPresent(false);
+    }
+
     public Long getId() {
         return id;
     }

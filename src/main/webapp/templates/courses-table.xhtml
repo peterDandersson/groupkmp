@@ -85,6 +85,10 @@
                         <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 </h:column>
                 <h:column rendered="#{context == 'attendance'}">
+                    <f:facet name="header">Days</f:facet>
+                    <h:outputText value="#{course.days.size()}" />
+                </h:column>
+                <h:column rendered="#{context == 'attendance'}">
                     <h:commandLink value="Take Attendance" action="#{attendanceBean.takeAttendance(course.id)}"/>
                 </h:column>
                 <h:column rendered="#{context == 'studentOtherCourses'}">

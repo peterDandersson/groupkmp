@@ -89,6 +89,10 @@ public class Student extends User_ {
         return getStudentCourses().stream().map(sc -> sc.getCourse().getId()).collect(Collectors.toSet());
     }
 
+    public int getCourseCount() {
+        return getStudentCourses().size();
+    }
+
     /**
      * Add a course to the set of courses that the student is registered for,
      * if possible, and return true.
