@@ -82,7 +82,7 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public StatusCode registerForCourse(Student student, Long course_id) {
+/*    public StatusCode registerForCourse(Student student, Long course_id) {
         Course course = courseService.getCourse(course_id);
 
         if (student.isRegisteredForCourse(course)) {
@@ -101,17 +101,17 @@ public class StudentService {
             return SUCCESSFULLY_REGISTERED;
         }
 
-    }
+    }*/
 
-    public StatusCode deregisterFromCourse(Student student, Long course_id) {
+/*    public StatusCode deregisterFromCourse(Student student, Long course_id) {
         Course course = courseService.getCourse(course_id);
 
         if (student.isRegisteredForCourse(course)) {
             StudentCourse studentCourse = student.getStudentCourse(course);
-/*            student.removeStudentCourse(studentCourse);
+*//*            student.removeStudentCourse(studentCourse);
             course.removeStudentCourse(studentCourse);
             em.merge(student);
-            em.merge(course);*/
+            em.merge(course);*//*
             studentCourse.setEndDate(truncateDate(new Date()));
             em.merge(studentCourse);
             //StudentCourse sc = em.merge(studentCourse);
@@ -122,7 +122,7 @@ public class StudentService {
             return STUDENT_NOT_ON_COURSE;
         }
 
-    }
+    }*/
 
     /**
      * Has the student left the course early

@@ -144,6 +144,10 @@ public class Course {
                 .collect(Collectors.toSet());
     }
 
+    public boolean isStudentOnCourse(Long studentId) {
+        return getStudentCourse(studentId) != null;
+    }
+
     /**
      * Gets all of the days for which attendance records exist for this course.
      * @return
@@ -164,7 +168,7 @@ public class Course {
      */
     public Day getDay(Date date) {
         Date truncatedDate = truncateDate(date);
-        Optional<Day> day = days
+        Optional<Day> day = getDays()
                 .stream()
                 .filter(d -> d.getDate().equals(truncatedDate))
                 .findFirst();
@@ -188,4 +192,38 @@ public class Course {
     public void addDay(Day day) {
         days.add(day);
     }
+
+
+    /**
+     * Did the course start after a particular date.
+     * (Or whether a given date is BEFORE the start of the course).
+     * Note: returns true if the course has ended.
+     * @param date
+     * @return
+     */
+    public boolean isDateAfterStartDate(Date date) {
+        return date.after(getStartDate()) || date.equals(getStartDate());
+    }
+
+
+    /**
+     * Did the course end after a particular date.
+     * (Or whether a given date is BEFORE the end of the course).
+     * @param date - a truncated date  is used  - where time components
+     *             (hours, minutes, etc) are converted to zero.
+     * @return
+     */
+    public boolean isDateAfterEndDate(Date date) {
+        return truncateDate(date).after(getEndDate());
+    }
+
+    /**
+     * Establishes whether the course is in progress on a given date.
+     * @param date
+     * @return
+     */
+    public boolean isCourseCurrentOn(Date date) {
+        return isDateAfterStartDate(date) && !isDateAfterEndDate(date);
+    }
+
 }

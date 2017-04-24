@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static lib.Helpers.dateToString;
+
 @ManagedBean
 @RequestScoped
 public class CourseBean {
@@ -152,8 +154,57 @@ public class CourseBean {
         return courseService.isFull(id);
     }
 
-    public boolean getIsCourseCurrent(Long id) {
-        return courseService.isCourseCurrent(id);
+    public boolean getIsCourseCurrent(Long courseId) {
+        return courseService.isCourseCurrent(courseId, new Date());
+    }
+
+    public boolean getHasCourseStarted(Long courseId) {
+        return courseService.isDateAfterStart(courseId, new Date());
+    }
+
+    public boolean getHasCourseEnded(Long courseId) {
+        return courseService.isDateAfterEnd(courseId, new Date());
+    }
+
+    public String getCourseEndDate(Long courseId) {
+        Date endDate = courseService.getEndDate(courseId);
+        return dateToString(endDate);
+    }
+
+/*    public boolean getHasLeavingDate(Long courseId, Long studentId) {
+
+    }*/
+
+    public String getLeavingDate(Long courseId, Long studentId) {
+        Date leavingDate = courseService.getLeavingDate(courseId, studentId);
+        return leavingDate != null ? dateToString(leavingDate) : null;
+    }
+
+    public void leaveCourse(Long courseId, Long studentId) {
+
+    }
+
+    public boolean isStudentRegistered(Long courseId, Long studentId) {
+        return courseService.isStudentRegistered(courseId, studentId);
+    }
+
+    public void register(Long courseId, Long studentId) {
+        System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+courseId);
+        courseService.registerForCourse(courseId, studentId);
+        //return "/student" + "?faces-redirect=true";
+    }
+
+    public String deregister(Long courseId, Long studentId) {
+        System.out.println("Dereg...................................................");
+        courseService.leaveOrDeregisterFromCourse(courseId, studentId);
+        return "/student" + "?faces-redirect=true";
+    }
+
+    public String regHandler(Long courseId, Long studentId) {
+        System.out.println("Dereg...................................................");
+        System.out.println(courseId);
+        System.out.println(studentId);
+        return "/student" + "?faces-redirect=true";
     }
 
 }

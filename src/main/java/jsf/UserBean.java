@@ -54,16 +54,16 @@ public class UserBean {
         return "createUser";
     }
 
-    public String register(Long course_id) {
+/*    public void register(Long course_id) {
         System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+course_id);
         studentService.registerForCourse((Student) user, course_id);
-        return "/student" + "?faces-redirect=true";
+        //return "/student" + "?faces-redirect=true";
     }
 
-    public String deregister(Long course_id) {
+    public void deregister(Long course_id) {
         studentService.deregisterFromCourse((Student) user, course_id);
-        return "/student" + "?faces-redirect=true";
-    }
+        //return "/student" + "?faces-redirect=true";
+    }*/
 
     public boolean isLoggedIn() {
         return user != null;

@@ -120,11 +120,12 @@ public class StudentBean {
         this.role = role;
     }
 
-    public boolean getHasLeftCourse() {
+    public boolean getHasLeftCourse(User_ user,  Long cid) {
         Map<String, Object> attr = getRow().getAttributes();
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println(getRow());
-        return true;
+        //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        //System.out.println(getRow());
+        return studentService.hasLeftCourse((Student) user, cid);
+        //return true;
 /*        System.out.println(course);
         return studentService.hasLeftCourse((Student) user, course.getId());*/
     }
