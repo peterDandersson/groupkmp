@@ -188,10 +188,10 @@ public class CourseBean {
         return courseService.isStudentRegistered(courseId, studentId);
     }
 
-    public void register(Long courseId, Long studentId) {
+    public String register(Long courseId, Long studentId) {
         System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+courseId);
         courseService.registerForCourse(courseId, studentId);
-        //return "/student" + "?faces-redirect=true";
+        return "/student" + "?faces-redirect=true";
     }
 
     public String deregister(Long courseId, Long studentId) {

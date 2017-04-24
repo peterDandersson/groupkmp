@@ -2,14 +2,17 @@ package components;
 
 import ejb.CourseService;
 import jpa.Course;
+import jsf.CourseBean;
 
 import javax.ejb.EJB;
 import javax.el.ELContext;
 import javax.el.MethodExpression;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import java.util.Date;
 import java.util.Map;
 
@@ -40,7 +43,7 @@ public class deregisterComponent extends UINamingContainer {
         this.userId = userId;
     }
 
-    public boolean test(Long id) {
+/*    public boolean test(Long id) {
         boolean status = false;
         //Course course = courseService.getCourse(id);
         if (courseService.isDateAfterStart(id, new Date())) {
@@ -71,7 +74,7 @@ public class deregisterComponent extends UINamingContainer {
         Object[] params = {courseId, userId};
 
         return expression.invoke(elContext, params);
-    }
+    }*/
 
 /*    private int value = 2;
 

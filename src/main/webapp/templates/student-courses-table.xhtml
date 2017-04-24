@@ -63,7 +63,7 @@
                         <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 </h:column>
                 <h:column rendered="#{(userBean.isStudent())}">
-                    <h:commandLink value="Deregister" action="#{userBean.deregister(course.id)}"/>
+                    <h:commandLink value="Deregister" action="#{courseBean.deregister(course.id, userBean.user.id)}"/>
 
                     <!--h:column rendered="#{(userBean.isStudent())}"-->
 <!--
