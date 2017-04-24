@@ -108,8 +108,6 @@ public class AttendanceService {
                 .collect(Collectors.toList());
     }
 
-
-
     public void setAttendances(Long courseId, Date date, List<Boolean> presentList) {
         List<Attendance> attendances = getAttendances(courseId, date);
         for (int i=0; i<attendances.size(); i++) {
