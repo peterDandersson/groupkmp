@@ -22,6 +22,8 @@ public class TeachersBean {
 
     Teacher editTeacherObj = new Teacher();
 
+    private String page = "admin/teachers";
+
     private List<Course> courseList;
 
     private Long courseId;
@@ -52,7 +54,7 @@ public class TeachersBean {
         teacher.setCourses(courseList);
         teacherService.saveTeacher(teacher);
         popUp = false;
-        return "teachers";
+        return page;
     }
 
     public String addCourse(Long courseId){
@@ -70,13 +72,13 @@ public class TeachersBean {
         }
 
         popUp = true;
-        return "teachers";
+        return page;
     }
 
     public String cancelPopup(){
         System.out.println("Abort");
         popUp = false;
-        return "teachers";
+        return page;
     }
 
     public List<Course> getCourseList() {
@@ -92,14 +94,14 @@ public class TeachersBean {
         courseList = teacher.getCourses();
 
         popUp = true;
-        return "teachers";
+        return page;
     }
 
     public String create(){
         editTeacherObj = new Teacher();
         courseList = new ArrayList<>();
         popUp = true;
-        return "teachers";
+        return page;
     }
 
     public String removeCourse(Long courseId){
@@ -111,7 +113,7 @@ public class TeachersBean {
             }
         }
         popUp = true;
-        return "teachers";
+        return page;
     }
 
     public List<Course> getAllCourses(){
@@ -142,7 +144,7 @@ public class TeachersBean {
 
     public String removeTeacher(Long id){
         teacherService.removeTeacher(id);
-        return "teachers";
+        return page;
     }
 
     public String test(){
