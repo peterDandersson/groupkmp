@@ -3,6 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
@@ -14,7 +15,7 @@
         tr.even-row {background-color: #daecff; }
         tr.even-row {background-color: #ddd; }
         tr.odd-row {background-color: #eee; }
-        td {padding: 10px;}
+        td {padding: 5px;}
         /*tr.even-row td, tr.odd-row td {padding: 10px;}
         tr.even-row:first-child td:first-child, tr.even-row:first-child td:first-child { border-top-left-radius: 10px; margin-top: 15px; }
         tr:first-child td:last-child { border-top-right-radius: 10px; }
@@ -25,20 +26,44 @@
     </style>
     <h:form>
         <h:panelGrid columns="1">
-            <h:dataTable id="courses-table" value="#{courseBean.allCourses}" var="course" rowClasses="even-row, odd-row">
+            <c:set var="students" value="#{studentBean.allStudents}" />
+            <c:set var="noResultsMessage" value="There are no students at the moment" />
+            <!--c:if test="#{context == 'attendance'}">
+                <c:set var="students" value="#{courseBean.students}" />
+                <c:set var="noResultsMessage" value="There are no students on this course." />
+            </c:if-->
+            <h:outputText rendered="#{students.size() == 0}" value="#{noResultsMessage}" />
+
+            <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row" rendered="#{students.size() > 0}">
                 <h:column >
-                    <f:facet name="header">Name</f:facet>
-                    <h:outputText id="id" value="#{course.courseName}"/>
+                    <f:facet name="header">Email</f:facet>
+                    <h:outputText id="id" value="#{student.email}"/>
                 </h:column>
                 <h:column >
-                    <f:facet name="header">Description</f:facet>
-                    <h:outputText value="#{course.description}"/>
+                    <f:facet name="header">Password</f:facet>
+                    <h:outputText value="#{student.password}"/>
                 </h:column>
                 <h:column >
-                    <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"/>
+                    <f:facet name="header">First Name</f:facet>
+                    <h:outputText value="#{student.firstName}"/>
+                </h:column>
+                <h:column >
+                    <f:facet name="header">Role</f:facet>
+                    <h:outputText value="#{student.role}"/>
+                </h:column>
+                <h:column >
+                    <f:facet name="header">Courses</f:facet>
+                    <h:outputText value="#{student.courseCount}"/>
+                </h:column>
+                <h:column >
+                    <f:facet name="header">Login</f:facet>
+                    <h:commandLink value="Auto Login" action="#{userBean.autoStudentLogin(student.id)}" />
+                </h:column>
+                <h:column >
+                    <h:commandButton value="Remove" action="#{studentBean.removeUser(student.id)}"/>
                 </h:column>
                 <h:column>
-                    <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
+                    <h:commandButton value="Edit" action="#{studentBean.editStudent(student.id)}"/>
                 </h:column>
             </h:dataTable>
         </h:panelGrid>

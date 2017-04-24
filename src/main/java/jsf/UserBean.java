@@ -1,16 +1,18 @@
 package jsf;
 
+import ejb.AdminService;
+import ejb.StudentService;
 import ejb.UserService;
+import jpa.Course;
+import jpa.Student;
 import jpa.User_;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.xml.ws.Response;
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @ManagedBean
 @SessionScoped
@@ -18,6 +20,12 @@ public class UserBean {
 
     @EJB
     UserService userService;
+
+    @EJB
+    AdminService adminService;
+
+    @EJB
+    StudentService studentService;
 
     private String email;
     private String password;
@@ -43,6 +51,17 @@ public class UserBean {
         setPassword("");
         return "createUser";
     }
+
+/*    public void register(Long course_id) {
+        System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+course_id);
+        studentService.registerForCourse((Student) user, course_id);
+        //return "/student" + "?faces-redirect=true";
+    }
+
+    public void deregister(Long course_id) {
+        studentService.deregisterFromCourse((Student) user, course_id);
+        //return "/student" + "?faces-redirect=true";
+    }*/
 
     public boolean isLoggedIn() {
         return user != null;
@@ -89,18 +108,55 @@ public class UserBean {
 
     }
 
-    public String userRole() {
-        return user.getRole();
+    public User_ getUser() {
+        return user;
+    }
+
+    public void setUser(User_ user) {
+        this.user = user;
+    }
+
+    public List<Course> getCourses() {
+        if (isStudent()) {
+            return studentService.getCourses((Student) getUser());
+        }
+        return null;
+    }
+
+    public List<Course> getOtherCourses() {
+        if (isStudent()) {
+            return studentService.getOtherCourses((Student) getUser());
+        }
+        return null;
     }
 
     public String autoLogin() {
-        user = userService.getAdmin();
-        return "admin";
+        user = adminService.getAdmin();
+        return "/admin";
     }
 
-    public String devStudentsPage() {
+    public String autoLoginAsStudent() {
+        user = studentService.getFirstStudent();
+        return "/student";
+    }
+
+    public String autoStudentLogin(Long id) {
+        user = studentService.getStudent(id);
+        return "/student?faces-redirect=true";
+    }
+
+    public String adminStudentsPage() {
         autoLogin();
-        return "admin/students" + "?faces-redirect=true";
+        return "/admin/students" + "?faces-redirect=true";
     }
 
+    public String studentCoursesPage() {
+        autoLoginAsStudent();
+        return "/student" + "?faces-redirect=true";
+    }
+
+    public String attendancePage() {
+        autoLogin();
+        return "/attendance" + "?faces-redirect=true";
+    }
 }

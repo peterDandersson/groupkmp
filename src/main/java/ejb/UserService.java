@@ -1,9 +1,6 @@
 package ejb;
 
-import jpa.Admin;
-import jpa.Student;
-import jpa.Teacher;
-import jpa.User_;
+import jpa.*;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -52,8 +49,14 @@ public class UserService {
     }
 
     public User_ getUser(Long id) {
-        User_ user = (User_) em.createNamedQuery("getUser").setParameter("id", id).getSingleResult();
+        User_ user = em.find(User_.class, id);
+        //User_ user = (User_) em.createNamedQuery("getUser").setParameter("id", id).getSingleResult();
         return user;
+    }
+
+    public void removeUser(Long id) {
+        User_ user = getUser(id);
+        em.remove(user);
     }
 
     public User_ logIn(String email, String password) {
@@ -67,15 +70,4 @@ public class UserService {
         return user;
     }
 
-    public User_ getAdmin() {
-        TypedQuery<User_> query = em.createQuery("SELECT u FROM User_ u", User_.class);
-        List<User_> users = query.getResultList();
-        for (User_ user: users) {
-            String role = user.getRole();
-            if (role.equals("ADMIN")) {
-                return user;
-            }
-        }
-        return null;
-    }
 }

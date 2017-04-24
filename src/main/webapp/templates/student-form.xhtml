@@ -9,13 +9,13 @@
     <h:form>
         <h:panelGrid columns="2">
             <h:outputLabel value="Student Email:"/>
-            <h:inputText value="#{courseBean.courseName}"/>
-            <h:outputLabel value="Description:"/>
-            <h:inputTextarea rows="10" value="#{courseBean.description}"/>
-            <h:inputHidden value="#{courseBean.id}"/>
+            <h:inputText value="#{studentBean.email}"/>
+            <h:outputLabel value="Password:"/>
+            <h:inputText value="#{studentBean.password}"/>
+            <h:inputHidden value="#{studentBean.id}"/>
         </h:panelGrid>
 
-        <h:commandButton action="#{courseBean.createCourse()}" value="#{courseBean.submitButtonLabel}">
+        <h:commandButton action="#{studentBean.createStudent()}" value="#{studentBean.submitButtonLabel}">
             <!--f:ajax execute="@form" listener="#{coursesBean.createCourse()}" /-->
         </h:commandButton>
     </h:form>

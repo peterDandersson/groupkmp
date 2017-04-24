@@ -9,6 +9,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "LogIn", query = "SELECT u FROM User_ u WHERE u.email = :email AND u.password = :password"),
         @NamedQuery(name = "getUser", query="SELECT u FROM User_ u WHERE u.id = :id"),
+        @NamedQuery(name = "getUsers", query="SELECT u FROM User_ u"),
         @NamedQuery(name = "countUsers", query="SELECT COUNT(u) FROM User_ u")
 })
 @DiscriminatorColumn(name = "ROLE", discriminatorType = DiscriminatorType.STRING)

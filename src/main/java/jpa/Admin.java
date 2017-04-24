@@ -7,6 +7,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "getAdmins", query="SELECT u FROM Admin u"),
+})
 @DiscriminatorValue("ADMIN")
 public class Admin extends User_ {
 
