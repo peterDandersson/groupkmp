@@ -91,21 +91,11 @@ public class AttendanceService {
         Course course = courseService.getCourse(courseId);
         Day day = getOrCreateDay(course, date);
 
-        // StudentCourse studentCourse = course.getStudentCourse(studentId);
-
         // TODO: Use namedquery instead of stream.
         List<Attendance> attendances = day.getAttendances()
                 .stream()
                 .filter(d -> d.getStudentCourse().getCourse().getId().equals(courseId))
                 .collect(Collectors.toList());
-
-/*        List<Attendance> attendances = studentCourse.getAttendances()
-                .stream()
-                .filter(a -> a.getDay()
-                        .getDate()
-                        .equals(truncateDate(date))
-                )
-                .collect(Collectors.toList());*/
 
         attendances.sort(new AttendanceComparator());
         return attendances;
@@ -117,6 +107,8 @@ public class AttendanceService {
                 .map(a -> a.isPresent())
                 .collect(Collectors.toList());
     }
+
+
 
     public void setAttendances(Long courseId, Date date, List<Boolean> presentList) {
         List<Attendance> attendances = getAttendances(courseId, date);

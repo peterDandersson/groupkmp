@@ -22,9 +22,6 @@ import static lib.Helpers.*;
 @Local
 @Stateless
 public class StudentService {
-/*    public static final enum TRANSACTION_CODE = {
-        "COURSE_FULL", "DUP_STUDENT", "REGISTERED"
-    };*/
 
     @PersistenceContext
     EntityManager em;

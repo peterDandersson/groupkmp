@@ -44,18 +44,11 @@ public class CourseService {
         return course.getId();
     }
 
-
     public Course getCourse(Long id) {
         //Course course = (Course) em.createNamedQuery("getCourse").setParameter("id", id).getSingleResult();
         Course course = em.find(Course.class, id);
         return course;
     }
-
-/*    public Course1Domain getCourseDomain(Long id) {
-        Course course = (Course) em.createNamedQuery("getCourse").setParameter("id", id).getSingleResult();
-        return new Course1Domain(course);
-    }*/
-
 
     public List<Course> getAllCourses() {
         return em.createNamedQuery("getAllCourses").getResultList();

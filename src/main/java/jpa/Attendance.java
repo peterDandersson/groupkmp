@@ -9,11 +9,6 @@ public class Attendance {
     @GeneratedValue
     private Long id;
 
-/*    @OneToOne
-    private StudentCourse student;*/
-  
-    //private Day day;
-
     @ManyToOne //(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "student_course_id")
     private StudentCourse studentCourse;
