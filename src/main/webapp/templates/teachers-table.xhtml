@@ -6,23 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-    <style>
-        /*table {border-spacing: 0px;}*/
-        table {
-            border-collapse: separate;
-        }
-        tr.even-row {background-color: #daecff; }
-        tr.even-row {background-color: #ddd; }
-        tr.odd-row {background-color: #eee; }
-        td {padding: 10px;}
-        /*tr.even-row td, tr.odd-row td {padding: 10px;}
-        tr.even-row:first-child td:first-child, tr.even-row:first-child td:first-child { border-top-left-radius: 10px; margin-top: 15px; }
-        tr:first-child td:last-child { border-top-right-radius: 10px; }
-        tr:last-child td:first-child { border-bottom-left-radius: 10px; }
-        tr:last-child td:last-child { border-bottom-right-radius: 10px; }
-        td { border-: 25px 0px; }
-        */
-    </style>
+    <h:outputStylesheet name="css/tables.css" />
     <h:panelGrid columns="1">
         <h:dataTable id="teachers-table" value="#{teachersBean.allTeachers}" var="teacher" rowClasses="even-row, odd-row">
             <h:column >
