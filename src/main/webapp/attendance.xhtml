@@ -9,6 +9,9 @@
 
 <ui:composition template="/templates/site-template.xhtml">
 
+    <!--f:metadata>
+        <f:viewParam id="id" name="id" value="#{userBean.userRole()}" validator="#{myBean.validate}"/>
+    </f:metadata-->
     <h:outputStylesheet>
         <style>
             #cal {
@@ -28,24 +31,11 @@
                     <ui:param name="context" value="attendance" />
                 </ui:decorate>
                 <h:form>
-                    <!--p:calendar value="#{attendanceBean.date}" mode="inline">
-                        <f:ajax event="dateSelect" listener="#{attendanceBean.onDateSelect}" />
-                        <f:ajax event="change"
-                        render="attendance-form"
-                        listener="#{attendanceBean.takeAttendance(course.id)}" />
-                    </p:calendar-->
-                    <!--p:outputLabel for="event" value="Select Event:" /-->
-<!--
-                    <p:messages showSummary="true" closable="true" autoUpdate="true" />
--->
                     <p:calendar id="cal" value="#{attendanceBean.date}" mode="inline">
                         <p:ajax event="dateSelect"
                                 listener="#{attendanceBean.onDateSelect}"
                                 update="attendance-form msgs cal" />
-<!--                        <p:ajax event="dateSelect" listener="#{attendanceBean.onDateSelect}" update="msgs" />
-                        <p:ajax event="dateSelect" listener="#{attendanceBean.onDateSelect}" update="cal" />-->
                     </p:calendar>
-
                 </h:form>
                 <ui:decorate template="/templates/attendance-form.xhtml">
                 </ui:decorate>

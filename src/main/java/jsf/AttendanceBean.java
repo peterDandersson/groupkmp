@@ -11,10 +11,7 @@ import org.primefaces.event.SelectEvent;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -23,10 +20,11 @@ import java.util.Date;
 import java.util.List;
 
 import static lib.Helpers.dateToString;
+import static lib.Helpers.notification;
 import static lib.Helpers.truncateDate;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class AttendanceBean implements Serializable {
 
     @EJB
@@ -38,7 +36,7 @@ public class AttendanceBean implements Serializable {
     private Long courseId;
     private Date date = new Date();
     private List<Boolean> attendances;
-    private List<Boolean> selections;
+    private List<Boolean> courseSelectionList;
 
     private boolean test = false;
 
@@ -48,7 +46,6 @@ public class AttendanceBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        //getCourseBean().getAllCourses();
         List<Course> courses = courseService.getAllCourses();
         if (courses.size() > 0) {
             setCourseId(courses.get(0).getId());
@@ -56,15 +53,18 @@ public class AttendanceBean implements Serializable {
     }
 
     public void setSelections() {
-        System.out.println("########################################## SET SELECTIONS #######");
-        selections = new ArrayList<>();
+        courseSelectionList = new ArrayList<>();
         for (Long courseId : courseService.getAllCourseIds()) {
-            selections.add(courseId.equals(getCourseId()));
+            courseSelectionList.add(courseId.equals(getCourseId()));
         }
     }
 
+    public void setSelections(List<Boolean> selections) {
+        this.courseSelectionList = selections;
+    }
+
     public List<Boolean> getSelections() {
-        return selections;
+        return courseSelectionList;
     }
 
     public Long getCourseId() {
@@ -72,8 +72,11 @@ public class AttendanceBean implements Serializable {
     }
 
     public void setCourseId(Long courseId) {
-        System.out.println("ttttttttttttttttttttttttttttttttttttttttt setting course id ffffffffffffffffffffffffffff " + courseId);
         this.courseId = courseId;
+    }
+
+    public String getCourseName() {
+        return courseService.getCourse(getCourseId()).getCourseName();
     }
 
     public Date getDate() {
@@ -85,21 +88,25 @@ public class AttendanceBean implements Serializable {
     }
 
     public void setDate(Date date) {
-        System.out.println("test");
-        if (!date.after(new Date())) {
+        if (!date.after(new Date()) && getCourseId()!=null
+                && courseService.isCourseCurrent(getCourseId(), date)) {
             this.date = date;
         }
     }
 
     public List<Boolean> getAttendances() {
-        if (attendances==null) {
+/*        if (attendances==null) {
             fetchAttendances();
-        }
+        }*/
         return attendances;
     }
 
     public void setAttendances(List<Boolean> attendances) {
-        this.attendances = attendances;
+        this.attendances = new ArrayList<>();
+        for (Boolean attendance : attendances) {
+            this.attendances.add(attendance);
+        }
+        //this.attendances = attendances;
     }
 
     public void takeAttendance(Long courseId) {
@@ -116,9 +123,9 @@ public class AttendanceBean implements Serializable {
         //Day day = attendanceService.getOrCreateDay(course_id, new Date());
         attendanceService.createAllAttendanceRecords(getCourseId(), getDate());
         setAttendances(fetchAttendances());
-        debugAttendances();
+        //debugAttendances();
         setSelections();
-        debugSelections();
+        //debugSelections();
         //return "attendance";
     }
 
@@ -144,17 +151,49 @@ public class AttendanceBean implements Serializable {
     }
 
     public List<Boolean> fetchAttendances() {
-        //setDate(getDate()); // Temporary - date will eventually be provided by a calendar.
         return attendanceService.getPrestentList(getCourseId(), getDate());
     }
 
     public String saveAttendance() {
-        //debugAttendances();
-        attendanceService.setAttendances(getCourseId(), getDate(), getAttendances());
+        System.out.println("saveAttendance");
+        if (courseService.isCourseCurrent(getCourseId(), getDate())) {
+            attendanceService.setAttendances(getCourseId(), getDate(), getAttendances());
+            notification(FacesMessage.SEVERITY_INFO, "Saved", "");
+        }
+        else {
+            notification(FacesMessage.SEVERITY_ERROR, "Error", "Course not running on this date.");
+        }
         return "attendance";
     }
 
-    private void debugAttendances() {
+    public void onDateSelect(SelectEvent event) {
+        System.out.println("======= date select ====== ");
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date = (Date) event.getObject();
+        if (truncateDate(date).after(new Date())) {
+            notification(FacesMessage.SEVERITY_ERROR, format.format(event.getObject()),
+                    "Selected date is in the future." );
+        }
+        else if(!courseService.isDateAfterStart(getCourseId(), date)) {
+            notification(FacesMessage.SEVERITY_ERROR, format.format(event.getObject()),
+                    "The course has not begun on the selected date." );
+        }
+        else if(courseService.isDateAfterEnd(getCourseId(), date)) {
+            notification(FacesMessage.SEVERITY_ERROR, format.format(event.getObject()),
+                    "The course has ended on the selected date." );
+        }
+        else {
+            setDate(date);
+            takeAttendance();
+            notification(FacesMessage.SEVERITY_INFO, format.format(event.getObject()), "Taking attendance.");
+        }
+
+
+    }
+
+/*    private void debugAttendances() {
         System.out.println("=======");
         for (Boolean attendance : attendances) {
             System.out.println(attendance);
@@ -168,25 +207,6 @@ public class AttendanceBean implements Serializable {
             System.out.println("-> " + selection);
         }
         System.out.println("======= Selection");
-    }
-
-    public void onDateSelect(SelectEvent event) {
-        System.out.println("======= date select ====== ");
-
-        FacesContext facesContext;
-        facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date date = (Date) event.getObject();
-        if (!truncateDate(date).after(new Date())) {
-            setDate(date);
-            takeAttendance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, format.format(event.getObject()), "Taking attendance."));
-        }
-        else {
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Not allowed", format.format(event.getObject()) + " is in the future." ));
-        }
-
-    }
+    }*/
 
 }

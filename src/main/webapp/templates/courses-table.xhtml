@@ -66,8 +66,6 @@
         </h:panelGroup>
 
         <h:panelGrid columns="1" rendered="#{courses.size() > 0}">
-            <h:outputText value="#{attendanceBean.courseId}" />
-
 
             <h:dataTable binding="#{table}" value="#{courses}" var="course"
                          rowClasses="even-row, odd-row">
