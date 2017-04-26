@@ -1,5 +1,7 @@
 package lib;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -40,5 +42,11 @@ public class Helpers {
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    public static void notification(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext facesContext;
+        facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
     }
 }

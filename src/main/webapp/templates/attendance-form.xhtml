@@ -3,6 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -25,14 +26,13 @@
         */
     </style>
     <h:form id="attendance-form">
-        <h:outputText value="#{attendanceBean.test}" />
-        <h:outputText value="Attendance for #{attendanceBean.dateStr}" />
+        <h:outputText value="Taking attendance for #{attendanceBean.courseName} on #{attendanceBean.dateStr}." />
         <!--h:inputHidden value="#{attendanceBean.courseId}"/-->
         <c:set var="students" value="#{attendanceBean.studentCounter}" />
 
         <h:panelGrid columns="1" rendered="#{students.size() > 0}">
 
-            <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row">
+            <h:dataTable id="attendance-table" value="#{students}" var="student" rowClasses="even-row, odd-row">
                 <h:column >
                     <f:facet name="header">Email</f:facet>
                     <h:outputText id="id" value="#{student.key.email}"/>
@@ -43,7 +43,10 @@
                 </h:column>
             </h:dataTable>
             <h:commandButton value="Save"
-                             action="#{attendanceBean.saveAttendance()}" />
+                             action="#{attendanceBean.saveAttendance()}">
+                <!-- p:ajax update="courses-table" /-->
+                <!--  <p:ajax update="@form" />-->
+            </h:commandButton>
         </h:panelGrid>
     </h:form>
 </f:view>

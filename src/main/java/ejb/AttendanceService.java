@@ -108,11 +108,11 @@ public class AttendanceService {
                 .collect(Collectors.toList());
     }
 
-
-
     public void setAttendances(Long courseId, Date date, List<Boolean> presentList) {
+        System.out.println("service setAttemdance");
         List<Attendance> attendances = getAttendances(courseId, date);
         for (int i=0; i<attendances.size(); i++) {
+            System.out.println(i + " " + courseId + " " + date + " " + presentList);
             Attendance attendance = attendances.get(i);
             attendance.setPresent(presentList.get(i));
             em.merge(attendance);

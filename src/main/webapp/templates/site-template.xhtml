@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view contentType="text/html">
     <h:head>
@@ -18,6 +19,7 @@
         <h:outputStylesheet library="css" name="nav-bar.css"  />
     </h:head>
     <h:body>
+        <p:growl id="msgs" showDetail="true" />
         <ui:include src="nav-bar.xhtml"/>
         <ui:insert name="main-panel" />
     </h:body>
