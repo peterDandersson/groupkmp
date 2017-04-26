@@ -99,9 +99,10 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Component</f:facet>
-                    <custom:deregister userId="#{userBean.user.id}"
-                                       courseId="#{course.id}"
-                                       action="#{courseBean.regHandler}" />
+                    <custom:deregister courseBean="#{courseBean}"
+                                       role="#{userBean.role}"
+                                       userId="#{userBean.user.id}"
+                                       courseId="#{course.id}"/>
                 </h:column>
                 <h:column>
                     <h:outputText value="Not Started" rendered="#{!courseBean.getHasCourseStarted(course.id)}" />

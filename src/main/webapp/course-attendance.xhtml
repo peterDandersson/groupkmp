@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/site-template.xhtml">
+    <ui:param name="pageTitle" value="Course Attendances"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <f:view>
+                <h:outputLabel value="Course: #{attendanceBean.courseName}"/>
+                <h:dataTable binding="#{table}" var="courseWeek" value="#{attendanceBean.courseWeeks}"
+                             rowClasses="even-row, odd-row">
+                    <h:column>
+                        <f:facet name="header">MON</f:facet>
+                        <h:outputText value="#{courseWeek[0]}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{courseWeek[1]}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{courseWeek[2]}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{courseWeek[3]}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{courseWeek[4]}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{courseWeek[5]}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{courseWeek[6]}" />
+                    </h:column>
+
+                </h:dataTable>
+            </f:view>
+        </div>
+    </ui:define>
+</ui:composition>
+
+
+</html>

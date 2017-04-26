@@ -8,47 +8,86 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition>
     <div id="nav-bar">
-        <div id="nav-bar-logo"> KMP </div>
-        <div id="nav-bar-courses">
-            <c:if test="#{userBean.admin}">
-                <h:link outcome="/add-user" style="text-decoration: none">
-                    <span class="nav-label">Course</span>
+        <div id="nav-bar-logo"> KMP</div>
+
+        <!--                                ADMIN MENU                              -->
+
+        <c:if test="#{userBean.admin}">
+            <div id="nav-bar-courses">
+                <h:link outcome="/admin" style="text-decoration: none">
+                    <span class="nav-label">Courses</span>
                 </h:link>
-            </c:if>
-        </div>
-        <div id="nav-bar-teachers">
-            <c:if test="#{userBean.admin}">
+            </div>
+            <div id="nav-bar-teachers">
                 <h:link outcome="/admin/teachers" style="text-decoration: none">
                     <span class="nav-label">Teachers</span>
                 </h:link>
-            </c:if>
-        </div>
-        <div id="nav-bar-students">
-            <c:if test="#{userBean.admin}">
+            </div>
+            <div id="nav-bar-students">
                 <h:link outcome="/admin/students" style="text-decoration: none">
                     <span class="nav-label">Students</span>
                 </h:link>
-            </c:if>
-        </div>
-        <div id="nav-bar-stats">
-            <c:if test="#{userBean.admin}">
+            </div>
+            <div id="nav-bar-stats">
                 <h:link outcome="/admin/admin-stats" style="text-decoration: none">
                     <span class="nav-label">Stats</span>
                 </h:link>
-            </c:if>
-        </div>
+            </div>
+        </c:if>
+
+        <!--                                TEACHER MENU                              -->
+
+        <c:if test="#{userBean.teacher}">
+            <div id="nav-bar-courses">
+                <h:link outcome="/teacher" style="text-decoration: none">
+                    <span class="nav-label">Courses</span>
+                </h:link>
+            </div>
+            <div id="nav-bar-stats">
+                <h:link outcome="/teacher/course-stats" style="text-decoration: none">
+                    <span class="nav-label">Stats</span>
+                </h:link>
+            </div>
+        </c:if>
+
+
+        <!--                                STUDENT MENU                              -->
+
+        <c:if test="#{userBean.student}">
+            <div id="nav-bar-courses">
+                <h:link outcome="/student" style="text-decoration: none">
+                    <span class="nav-label">Courses</span>
+                </h:link>
+            </div>
+            <div id="nav-bar-stats">
+                <h:link outcome="/admin/admin-stats" style="text-decoration: none">
+                    <span class="nav-label">Stats</span>
+                </h:link>
+            </div>
+        </c:if>
 
 
         <div id="nav-bar-dev">
             <h:link outcome="/dev-links" style="text-decoration: none">
-                <span class="nav-label" >devLinks</span>
+                <span class="nav-label">devLinks</span>
             </h:link>
         </div>
+
+<!--        <div id="nav-bar-log-in">
+            <c:if test="#{!userBean.loggedIn}">
+                <h:form>
+                    <h:link outcome="/login" style="text-decoration: none">
+                        <span class="nav-label">Log in</span>
+                    </h:link>
+                </h:form>
+            </c:if>
+        </div>-->
 
         <div id="nav-bar-log-out">
             <c:if test="#{userBean.loggedIn}">
                 <h:form>
-                    <h:commandButton action="#{userBean.logOut}" value="Log out (#{userBean.user.getEmail()})" style="border: none; background-color: inherit; color: white;" />
+                    <h:commandButton action="#{userBean.logOut}" value="Log out (#{userBean.user.getEmail()})"
+                                     style="border: none; background-color: inherit; color: white;"/>
                 </h:form>
             </c:if>
         </div>

@@ -200,11 +200,13 @@ public class CourseBean {
         return "/student" + "?faces-redirect=true";
     }
 
-    public String regHandler(Long courseId, Long studentId) {
+
+
+/*    public String regHandler(Long courseId, Long studentId) {
         System.out.println("Dereg...................................................");
         System.out.println(courseId);
         System.out.println(studentId);
         return "/student" + "?faces-redirect=true";
-    }
+    }*/
 
 }

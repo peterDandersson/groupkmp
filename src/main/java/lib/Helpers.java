@@ -44,6 +44,39 @@ public class Helpers {
         }
     }
 
+    public static List<Date> daysInWeek(Calendar calendar) {
+        return daysInWeek(calendar.get(Calendar.YEAR), calendar.get(Calendar.WEEK_OF_YEAR));
+    }
+
+    public static List<Date> daysInWeek(int year, int week) {
+        List<Date> days = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.WEEK_OF_YEAR, week);
+        calendar.set(Calendar.YEAR, year);
+        // get first date of week
+        Date date = calendar.getTime();
+        days.add(date);
+        for(int i=0; i<6; i++) {
+            calendar.add(Calendar.DATE, 1);
+            date = calendar.getTime();
+            days.add(date);
+        }
+        return days;
+    }
+
+    public static int dateToWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public static int dateToYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
     public static void notification(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext facesContext;
         facesContext = FacesContext.getCurrentInstance();

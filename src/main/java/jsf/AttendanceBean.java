@@ -16,12 +16,11 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static lib.Helpers.dateToString;
-import static lib.Helpers.notification;
-import static lib.Helpers.truncateDate;
+import static lib.Helpers.*;
 
 @ManagedBean
 @SessionScoped
@@ -47,23 +46,25 @@ public class AttendanceBean implements Serializable {
     @PostConstruct
     public void init() {
         List<Course> courses = courseService.getAllCourses();
+        setDate(new Date());
         if (courses.size() > 0) {
             setCourseId(courses.get(0).getId());
         }
+        setCourseSelections();
     }
 
-    public void setSelections() {
+    public void setCourseSelections() {
         courseSelectionList = new ArrayList<>();
         for (Long courseId : courseService.getAllCourseIds()) {
             courseSelectionList.add(courseId.equals(getCourseId()));
         }
     }
 
-    public void setSelections(List<Boolean> selections) {
+    public void setCourseSelections(List<Boolean> selections) {
         this.courseSelectionList = selections;
     }
 
-    public List<Boolean> getSelections() {
+    public List<Boolean> getCourseSelections() {
         return courseSelectionList;
     }
 
@@ -110,23 +111,20 @@ public class AttendanceBean implements Serializable {
     }
 
     public void takeAttendance(Long courseId) {
-        System.out.println("================== Take attendance 1================");
+        //System.out.println("================== Take attendance 1================");
         setCourseId(courseId);
-        System.out.println(getCourseId());
+        //System.out.println(getCourseId());
         //Day day = attendanceService.getOrCreateDay(course_id, new Date());
         takeAttendance();
         //return "attendance";
     }
 
+
     public void takeAttendance() {
         System.out.println("================== Take attendance 2================");
-        //Day day = attendanceService.getOrCreateDay(course_id, new Date());
         attendanceService.createAllAttendanceRecords(getCourseId(), getDate());
         setAttendances(fetchAttendances());
-        //debugAttendances();
-        setSelections();
-        //debugSelections();
-        //return "attendance";
+        setCourseSelections();
     }
 
     public List<Student> getStudents() {
@@ -137,7 +135,7 @@ public class AttendanceBean implements Serializable {
     }
 
     public List<Pair<Student, Integer>> getStudentCounter() {
-        if (getCourseId() == null) {
+        if (getCourseId() == null || !courseService.getCourse(getCourseId()).isCourseCurrentOn(getDate())) {
             return new ArrayList<>();
         }
         List<Pair<Student, Integer>> psi = new ArrayList<>();
@@ -191,6 +189,24 @@ public class AttendanceBean implements Serializable {
         }
 
 
+    }
+
+    public List<List<Date>> getCourseWeeks() {
+        List<List<Date>> days = new ArrayList<>();
+        List<Calendar> weeks = courseService.getCourseWeeks(courseId);
+        for (Calendar cal : weeks) {
+            days.add(daysInWeek(cal));
+        }
+        return days;
+    }
+
+    public String courseAttendanceStats(Long courseId) {
+        setCourseId(courseId);
+        return "/course-attendance?faces-redirect=true";
+    }
+
+    public List<Date> getWeekDays(Calendar courseWeek) {
+        return daysInWeek(courseWeek);
     }
 
 /*    private void debugAttendances() {

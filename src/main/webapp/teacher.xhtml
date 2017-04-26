@@ -11,6 +11,11 @@
         <div id="main-container">
             <f:view>
                 <h:outputLabel value="Teacher ------ #{userBean.userInfo}"/>
+                <ui:decorate template="/templates/courses-table.xhtml">
+<!--
+                    <ui:param name="context" value="Courses" />
+-->
+                </ui:decorate>
             </f:view>
         </div>
     </ui:define>

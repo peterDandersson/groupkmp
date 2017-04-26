@@ -13,6 +13,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -47,10 +48,10 @@ public class AttendanceService {
         return attendance;
     }
 
-    public Day getOrCreateDay(Long courseId, Date date) {
+/*    public Day getOrCreateDay(Long courseId, Date date) {
         Course course = courseService.getCourse(courseId);
         return getOrCreateDay(course, date);
-    }
+    }*/
 
     private Day getOrCreateDay(Course course, Date date) {
         Day day = course.getDay(date);
@@ -61,14 +62,16 @@ public class AttendanceService {
     }
 
     public void createAllAttendanceRecords(Long courseId, Date date) {
-        Day day = getOrCreateDay(courseId, date);
         Course course = courseService.getCourse(courseId);
+        // Don't create a record if the course is not running.
+        if (!course.isCourseCurrentOn(date)) return;
+        Day day = getOrCreateDay(course, date);
         for(StudentCourse studentCourse : course.getStudentCourses()) {
             getOrCreateAttendance(studentCourse, day);
         }
     }
 
-    public Attendance getOrCreateAttendance(Long courseId, Long studentId, Date date) {
+/*    public Attendance getOrCreateAttendance(Long courseId, Long studentId, Date date) {
         Course course = courseService.getCourse(courseId);
         StudentCourse studentCourse = course.getStudentCourse(studentId);
         Attendance attendance = studentCourse.getAttendance(date);
@@ -77,7 +80,7 @@ public class AttendanceService {
             attendance = createAttendance(studentCourse, day);
         }
         return attendance;
-    }
+    }*/
 
     private Attendance getOrCreateAttendance(StudentCourse studentCourse, Day day) {
         Attendance attendance = studentCourse.getAttendance(day.getDate());
@@ -87,11 +90,21 @@ public class AttendanceService {
         return attendance;
     }
 
+    /**
+     * Return a list of attendance records for all
+     * students on a particular course on a particular date.
+     * @param courseId
+     * @param date
+     * @return
+     */
     public List<Attendance> getAttendances(Long courseId, Date date) {
         Course course = courseService.getCourse(courseId);
+
+        // Return an empty list if the course is not running.
+        if (!course.isCourseCurrentOn(date)) return new ArrayList<>();
+
         Day day = getOrCreateDay(course, date);
 
-        // TODO: Use namedquery instead of stream.
         List<Attendance> attendances = day.getAttendances()
                 .stream()
                 .filter(d -> d.getStudentCourse().getCourse().getId().equals(courseId))
@@ -101,6 +114,13 @@ public class AttendanceService {
         return attendances;
     }
 
+    /**
+     * Return a list of booleans that represents the attendance (present - true; not present false) of all
+     * students on a particular course on a particular date.
+     * @param courseId
+     * @param date
+     * @return
+     */
     public List<Boolean> getPrestentList(Long courseId, Date date) {
         return getAttendances(courseId, date)
                 .stream()
