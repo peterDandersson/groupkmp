@@ -13,14 +13,15 @@
                 <h:form>
                     <div id="day-container">
                         <h:outputLabel value="Date:" />
-                        <h:commandLink action="#{adminStats.theDayBefore}">
+                        <h:inputHidden value="#{adminStats.dateOffset}" />
+                        <h:commandLink action="#{adminStats.changeDay(-1)}">
                             <h:graphicImage value="/resources/images/circle-arrow-left.jpg" width="14"/>
                         </h:commandLink>
-                        <h:outputLabel  converter="groupkmp.DateConverter" value="#{adminStats.date}" style="margin: 10px"/>
-                        <h:commandLink action="#{adminStats.theDayAfter}">
+                        <h:outputLabel converter="groupkmp.DateConverter" value="#{adminStats.date}" style="margin: 10px"/>
+                        <h:commandLink action="#{adminStats.changeDay(1)}">
                             <h:graphicImage value="/resources/images/circle-arrow-right.jpg" width="14" />
                         </h:commandLink>
-                        <ui:decorate template="../templates/admin-courses-attendance-table.xhtml" />
+                        <ui:decorate template="../templates/admin-courses-attendance-table.xhtml"/>
                         <br/>
                         <br/>
                         <h:outputLabel value="#{adminStats.courseAttendanceTotal()}" />

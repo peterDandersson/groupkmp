@@ -9,18 +9,18 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.view.ViewScoped;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO check if course is active
-
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class AdminStats {
     private Date date;
+    private int dateOffset = 0;
     private String page = "admin/admin-stats";
 
     @EJB
@@ -77,13 +77,21 @@ public class AdminStats {
         return courseService.getAllCourses();
     }
 
+    public String changeDay(int newOffset){
+        dateOffset += newOffset;
+        getDate().setDate(new Date().getDate() + dateOffset);
+        return page;
+    }
+
     public String theDayBefore(){
-        this.date.setDate(date.getDate() - 1);
+        dateOffset -= 1;
+        getDate().setDate(new Date().getDate() + dateOffset);
         return page;
     }
 
     public String theDayAfter(){
-        this.date.setDate(date.getDate() + 1);
+        dateOffset += 1;
+        getDate().setDate(new Date().getDate() + dateOffset);
         return page;
     }
 
@@ -93,5 +101,13 @@ public class AdminStats {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getDateOffset() {
+        return dateOffset;
+    }
+
+    public void setDateOffset(int dateOffset) {
+        this.dateOffset = dateOffset;
     }
 }
