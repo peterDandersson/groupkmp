@@ -9,12 +9,11 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static lib.Helpers.dateToWeek;
+import static lib.Helpers.dateToYear;
 import static lib.Helpers.truncateDate;
 import static lib.StatusCode.*;
 
@@ -194,4 +193,33 @@ public class CourseService {
             return STUDENT_NOT_ON_COURSE;
         }
     }
+
+    public List<Calendar> getCourseWeeks(Long courseId) {
+        Course course = getCourse(courseId);
+        Date startDate = course.getStartDate();
+        int startWeek = dateToWeek(startDate);
+        int startYear = dateToYear(startDate);
+        int endWeek = dateToWeek(course.getEndDate());
+        int endYear = dateToYear(course.getEndDate());
+
+
+        List<Calendar> weeks = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.WEEK_OF_YEAR, startWeek);
+        calendar.set(Calendar.YEAR, startYear);
+
+        while(!(calendar.get(Calendar.YEAR) == endYear && calendar.get(Calendar.WEEK_OF_YEAR) == endWeek)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(calendar.getTime());
+            weeks.add(cal);
+            calendar.add(Calendar.WEEK_OF_YEAR, 1);
+
+            System.out.println(calendar.getTime());
+        }
+        return weeks;
+    }
+
+    //public int startWeek(Long courseId, )
 }

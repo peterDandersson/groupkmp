@@ -2,15 +2,19 @@ package jsf;
 
 import ejb.AdminService;
 import ejb.StudentService;
+import ejb.TeacherService;
 import ejb.UserService;
 import jpa.Course;
 import jpa.Student;
+import jpa.Teacher;
 import jpa.User_;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +30,9 @@ public class UserBean {
 
     @EJB
     StudentService studentService;
+
+    @EJB
+    TeacherService teacherService;
 
     private String email;
     private String password;
@@ -120,6 +127,9 @@ public class UserBean {
         if (isStudent()) {
             return studentService.getCourses((Student) getUser());
         }
+        else if (isTeacher()) {
+            return teacherService.getCourses((Teacher) getUser());
+        }
         return null;
     }
 
@@ -130,14 +140,31 @@ public class UserBean {
         return null;
     }
 
+    /**
+     * Dev method. Remove.
+     * @return
+     */
     public String autoLogin() {
         user = adminService.getAdmin();
         return "/admin";
     }
 
+    /**
+     * Dev method. Remove.
+     * @return
+     */
     public String autoLoginAsStudent() {
         user = studentService.getFirstStudent();
         return "/student";
+    }
+
+    /**
+     * Dev method. Remove.
+     * @return
+     */
+    public String teacherPage() {
+        user = teacherService.getFirstTeacher();
+        return "/teacher?faces-redirect=true";
     }
 
     public String autoStudentLogin(Long id) {
@@ -147,16 +174,17 @@ public class UserBean {
 
     public String adminStudentsPage() {
         autoLogin();
-        return "/admin/students" + "?faces-redirect=true";
+        return "/admin/students?faces-redirect=true";
     }
 
     public String studentCoursesPage() {
         autoLoginAsStudent();
-        return "/student" + "?faces-redirect=true";
+        return "/student?faces-redirect=true";
     }
 
     public String attendancePage() {
         autoLogin();
-        return "/attendance" + "?faces-redirect=true";
+        return "/attendance?faces-redirect=true";
     }
+
 }
