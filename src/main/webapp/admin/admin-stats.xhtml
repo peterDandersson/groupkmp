@@ -12,10 +12,18 @@
             <f:view>
                 <h:form>
                     <div id="day-container">
-                        <h:outputLabel value="Attendance:" />
-                        <h:commandLink action="#{adminStats.theDayBefore}"> before </h:commandLink>
-                        #{adminStats.date}
-                        <h:commandLink action="#{adminStats.theDayAfter}"> after </h:commandLink>
+                        <h:outputLabel value="Date:" />
+                        <h:commandLink action="#{adminStats.theDayBefore}">
+                            <h:graphicImage value="/resources/images/circle-arrow-left.jpg" width="14"/>
+                        </h:commandLink>
+                        <h:outputLabel  converter="groupkmp.DateConverter" value="#{adminStats.date}" style="margin: 10px"/>
+                        <h:commandLink action="#{adminStats.theDayAfter}">
+                            <h:graphicImage value="/resources/images/circle-arrow-right.jpg" width="14" />
+                        </h:commandLink>
+                        <ui:decorate template="../templates/admin-courses-attendance-table.xhtml" />
+                        <br/>
+                        <br/>
+                        <h:outputLabel value="#{adminStats.courseAttendanceTotal()}" />
                     </div>
                 </h:form>
             </f:view>
