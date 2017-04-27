@@ -30,6 +30,13 @@ public class AttendanceService {
     @EJB
     CourseService courseService;
 
+    /**
+     * Add a day to a course.
+     * This record is used in the management of attendance keeping.
+     * @param course
+     * @param date
+     * @return
+     */
     private Day createDay(Course course, Date date) {
         Day day = new Day(course, date);
         course.addDay(day);
@@ -38,6 +45,12 @@ public class AttendanceService {
         return day;
     }
 
+    /**
+     * Create an attendance record for a particular student on a particular day.
+     * @param studentCourse
+     * @param day
+     * @return
+     */
     private Attendance createAttendance(StudentCourse studentCourse, Day day) {
         Attendance attendance = new Attendance(studentCourse, day);
         studentCourse.addAttendance(attendance);
@@ -53,6 +66,13 @@ public class AttendanceService {
         return getOrCreateDay(course, date);
     }*/
 
+
+    /**
+     * Get the day record for a course. But if it doesn't exist, return and create it.
+     * @param course
+     * @param date
+     * @return
+     */
     private Day getOrCreateDay(Course course, Date date) {
         Day day = course.getDay(date);
         if (day == null) {
@@ -60,6 +80,7 @@ public class AttendanceService {
         }
         return day;
     }
+
 
     public void createAllAttendanceRecords(Long courseId, Date date) {
         Course course = courseService.getCourse(courseId);
@@ -107,7 +128,8 @@ public class AttendanceService {
 
         List<Attendance> attendances = day.getAttendances()
                 .stream()
-                .filter(d -> d.getStudentCourse().getCourse().getId().equals(courseId))
+                .filter(d -> d.getStudentCourse().getCourse().getId().equals(courseId)
+                )
                 .collect(Collectors.toList());
 
         attendances.sort(new AttendanceComparator());
@@ -139,4 +161,45 @@ public class AttendanceService {
         }
     }
 
+
+    /*
+
+    Data Retrieval Methods.
+
+     */
+
+
+    /**
+     * Expected attendance is the maximum possible attendance. If everyone turned up.
+     * @param courseId
+     * @param date
+     * @return
+     */
+    public Long getExpectedAttendanceForDate(Long courseId, Date date) {
+        Course course = courseService.getCourse(courseId);
+
+        // Return zero for future days.
+        if (date.after(new Date()) || !course.isCourseCurrentOn(date)) return 0L;
+
+        return course.getStudentCourses()
+                .stream()
+                .filter(sc -> sc.getEndDate() == null || !date.after(sc.getEndDate()))
+                .count();
+    }
+
+    public Long getAttendanceForDate(Long courseId, Date date) {
+        Course course = courseService.getCourse(courseId);
+
+        // Return zero for future days.
+        if (date.after(new Date())
+                || !course.isCourseCurrentOn(date))
+            return 0L;
+
+        if (course.getDay(date) == null) return null;
+
+        return course.getDay(date).getAttendances()
+                .stream()
+                .filter(attendance -> attendance.isPresent())
+                .count();
+    }
 }

@@ -201,7 +201,7 @@ public class CourseService {
         int startYear = dateToYear(startDate);
         int endWeek = dateToWeek(course.getEndDate());
         int endYear = dateToYear(course.getEndDate());
-
+        int endEpochWeek = endYear * 53 + endWeek;   // Hackish!
 
         List<Calendar> weeks = new ArrayList<>();
 
@@ -210,16 +210,17 @@ public class CourseService {
         calendar.set(Calendar.WEEK_OF_YEAR, startWeek);
         calendar.set(Calendar.YEAR, startYear);
 
-        while(!(calendar.get(Calendar.YEAR) == endYear && calendar.get(Calendar.WEEK_OF_YEAR) == endWeek)) {
+        while(calendar.get(Calendar.YEAR) * 53 + calendar.get(Calendar.WEEK_OF_YEAR) <= endEpochWeek) {
+            // Create new calendar instance and add it to the the list.
             Calendar cal = Calendar.getInstance();
             cal.setTime(calendar.getTime());
             weeks.add(cal);
-            calendar.add(Calendar.WEEK_OF_YEAR, 1);
 
-            System.out.println(calendar.getTime());
+            // Increment by a week.
+            calendar.add(Calendar.WEEK_OF_YEAR, 1);
         }
+
         return weeks;
     }
 
-    //public int startWeek(Long courseId, )
 }

@@ -14,32 +14,36 @@
                 <h:dataTable binding="#{table}" var="courseWeek" value="#{attendanceBean.courseWeeks}"
                              rowClasses="even-row, odd-row">
                     <h:column>
-                        <f:facet name="header">MON</f:facet>
+                        <f:facet name="header">Week Starting</f:facet>
                         <h:outputText value="#{courseWeek[0]}" />
                     </h:column>
                     <h:column>
+                        <f:facet name="header">MON</f:facet>
+                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[0])}" />
+                    </h:column>
+                    <h:column>
                         <f:facet name="header">TUE</f:facet>
-                        <h:outputText value="#{courseWeek[1]}" />
+                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[1])}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">WED</f:facet>
-                        <h:outputText value="#{courseWeek[2]}" />
+                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[2])}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">THU</f:facet>
-                        <h:outputText value="#{courseWeek[3]}" />
+                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[3])}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">FRI</f:facet>
-                        <h:outputText value="#{courseWeek[4]}" />
+                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[4])}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">SAT</f:facet>
-                        <h:outputText value="#{courseWeek[5]}" />
+                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[5])}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">SUN</f:facet>
-                        <h:outputText value="#{courseWeek[6]}" />
+                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[6])}" />
                     </h:column>
 
                 </h:dataTable>

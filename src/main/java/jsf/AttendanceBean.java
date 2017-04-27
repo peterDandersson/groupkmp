@@ -209,6 +209,15 @@ public class AttendanceBean implements Serializable {
         return daysInWeek(courseWeek);
     }
 
+    public String getCourseAttendance(Date date) {
+        if (!courseService.isCourseCurrent(getCourseId(), date)) return "-";
+
+        Long expected = attendanceService.getExpectedAttendanceForDate(getCourseId(), date);
+        Long actual   = attendanceService.getAttendanceForDate(getCourseId(), date);
+        if (actual==null) return "Not Taken";
+        return String.format("%d/%d", actual, expected);
+    }
+
 /*    private void debugAttendances() {
         System.out.println("=======");
         for (Boolean attendance : attendances) {
