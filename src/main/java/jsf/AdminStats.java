@@ -7,9 +7,10 @@ import jpa.Course;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.view.ViewScoped;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +18,8 @@ import java.util.Map;
 
 
 @ManagedBean
-@RequestScoped
-public class AdminStats {
+@SessionScoped
+public class AdminStats implements Serializable {
     private Date date;
     private int dateOffset = 0;
     private String page = "admin/admin-stats";
@@ -28,6 +29,16 @@ public class AdminStats {
     @EJB
     CourseService courseService;
 
+    @ManagedProperty(value="#{attendanceBean}")
+    private AttendanceBean attendanceBean;
+
+    //must povide the setter method
+    public void setAttendanceBean(AttendanceBean attendanceBean) {
+        this.attendanceBean = attendanceBean;
+    }
+    public AttendanceBean getAttendanceBean() {
+        return attendanceBean;
+    }
 
     public String courseAttendance(Long id){
         Map map = courseAttendanceMap(id);
@@ -83,18 +94,6 @@ public class AdminStats {
         return page;
     }
 
-    public String theDayBefore(){
-        dateOffset -= 1;
-        getDate().setDate(new Date().getDate() + dateOffset);
-        return page;
-    }
-
-    public String theDayAfter(){
-        dateOffset += 1;
-        getDate().setDate(new Date().getDate() + dateOffset);
-        return page;
-    }
-
     public Date getDate() {
         return (date != null) ? date : (date = new Date());
     }
@@ -109,5 +108,11 @@ public class AdminStats {
 
     public void setDateOffset(int dateOffset) {
         this.dateOffset = dateOffset;
+    }
+
+    public String goToCourseStats(Long id){
+        System.out.println("ID: " + id);
+        attendanceBean.setCourseId(id);
+        return "/course-attendance";
     }
 }
