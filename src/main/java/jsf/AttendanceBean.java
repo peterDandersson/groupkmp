@@ -169,18 +169,25 @@ public class AttendanceBean implements Serializable {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
+
         Date date = (Date) event.getObject();
+        int dayOfWeek = getDayOfWeek(date);
+
         if (truncateDate(date).after(new Date())) {
             notification(FacesMessage.SEVERITY_ERROR, format.format(event.getObject()),
                     "Selected date is in the future." );
         }
         else if(!courseService.isDateAfterStart(getCourseId(), date)) {
             notification(FacesMessage.SEVERITY_ERROR, format.format(event.getObject()),
-                    "The course has not begun on the selected date." );
+                    "Course not started on this date." );
         }
         else if(courseService.isDateAfterEnd(getCourseId(), date)) {
             notification(FacesMessage.SEVERITY_ERROR, format.format(event.getObject()),
-                    "The course has ended on the selected date." );
+                    "Course ended on this date." );
+        }
+        else if(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
+            notification(FacesMessage.SEVERITY_ERROR, format.format(event.getObject()),
+                    "Closed during weekends." );
         }
         else {
             setDate(date);
@@ -211,6 +218,8 @@ public class AttendanceBean implements Serializable {
 
     public String getCourseAttendance(Date date) {
         if (!courseService.isCourseCurrent(getCourseId(), date)) return "-";
+        int dayOfWeek = getDayOfWeek(date);
+        if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) return "-";
 
         Long expected = attendanceService.getExpectedAttendanceForDate(getCourseId(), date);
         Long actual   = attendanceService.getAttendanceForDate(getCourseId(), date);

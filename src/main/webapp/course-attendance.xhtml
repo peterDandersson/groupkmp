@@ -15,7 +15,7 @@
                              rowClasses="even-row, odd-row">
                     <h:column>
                         <f:facet name="header">Week Starting</f:facet>
-                        <h:outputText value="#{courseWeek[0]}" />
+                        <h:outputText converter="groupkmp.DateConverter" value="#{courseWeek[0]}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">MON</f:facet>
