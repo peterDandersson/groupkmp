@@ -52,7 +52,13 @@ public class AttendanceBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        List<Course> courses = courseService.getAllCourses();
+        List<Course> courses;
+        if (userBean.isAdmin()) {
+            courses = courseService.getAllCourses();
+        }
+        else {
+            courses = userBean.getCourses();
+        }
         setDate(new Date());
         if (courses.size() > 0) {
             setCourseId(courses.get(0).getId());

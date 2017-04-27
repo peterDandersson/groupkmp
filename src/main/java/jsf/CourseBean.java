@@ -189,7 +189,6 @@ public class CourseBean {
     }
 
     public String register(Long courseId, Long studentId) {
-        System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+courseId);
         courseService.registerForCourse(courseId, studentId);
         return "/student" + "?faces-redirect=true";
     }
@@ -202,7 +201,6 @@ public class CourseBean {
      * @return
      */
     public String leaveOrDeregister(Long courseId, Long studentId) {
-        System.out.println("Dereg...................................................");
         courseService.leaveOrDeregisterFromCourse(courseId, studentId);
         return "/student" + "?faces-redirect=true";
     }
