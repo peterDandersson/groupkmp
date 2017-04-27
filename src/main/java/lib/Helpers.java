@@ -88,4 +88,9 @@ public class Helpers {
         calendar.setTime(date);
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
+
+    public static boolean isAtWeekend(Date date) {
+        int dayOfWeek = getDayOfWeek(date);
+        return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
+    }
 }
