@@ -202,4 +202,19 @@ public class AttendanceService {
                 .filter(attendance -> attendance.isPresent())
                 .count();
     }
+
+    /**
+     * Experimental - might use.
+     * @param courseId
+     * @param studentId
+     * @param date
+     * @return
+     */
+    public List<Attendance> getAttendances(Long courseId, Long studentId, Date date) {
+        List<Attendance> attendances = getAttendances(courseId, date);
+        return attendances.stream()
+                .filter(attendance -> attendance.getStudentCourse().getStudent().getId() == studentId)
+                .collect(Collectors.toList());
+    }
+
 }
