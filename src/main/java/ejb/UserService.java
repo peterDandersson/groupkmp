@@ -60,14 +60,17 @@ public class UserService {
     }
 
     public User_ logIn(String email, String password) {
+        try{
+            TypedQuery<User_> query = em.createNamedQuery("LogIn", User_.class);
+            query.setParameter("email", email);
+            query.setParameter("password", password);
 
-        TypedQuery<User_> query = em.createNamedQuery("LogIn", User_.class);
-        query.setParameter("email", email);
-        query.setParameter("password", password);
+            User_ user = query.getSingleResult();
 
-        User_ user = query.getSingleResult();
-
-        return user;
+            return user;
+        } catch (Exception e){
+            return null;
+        }
     }
 
 }

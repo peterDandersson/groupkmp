@@ -10,6 +10,7 @@ import jpa.Teacher;
 import jpa.User_;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static lib.Helpers.notification;
 
 @ManagedBean
 @SessionScoped
@@ -44,12 +47,16 @@ public class UserBean {
         user = userService.logIn(email, password);
         setEmail("");
         setPassword("");
+        if(user == null){
+            notification(FacesMessage.SEVERITY_ERROR, "Error", "Wrong Email or Password.");
+            return "login";
+        }
         return user.getRole().toLowerCase() + "?faces-redirect=true";
     }
 
     public String logOut(){
         user = null;
-        return "login";
+        return "/login";
     }
 
     public String createUser() {
