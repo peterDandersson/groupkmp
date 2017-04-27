@@ -11,18 +11,19 @@
         <div id="main-container">
             <f:view>
                 <h:outputStylesheet name="css/admin-teachers.css" />
-                <h:form>
-                <ui:decorate template="../templates/teachers-table.xhtml">
-                    <ui:param name="dataList" value="#{teachersBean.allTeachers()}"/>
-                    <!--<ui:param name="editable" value="#{true}" />
-                    <ui:param name="removable" value="#{true}" />-->
-                </ui:decorate>
-                <!--</h:form>
-                <h:form>-->
-                    <c:if test="#{teachersBean.popUp}">
-                        <ui:decorate template="../templates/teacher-pop-up.xhtml"> </ui:decorate>
-                    </c:if>
+                <h:form rendered="#{userBean.isAdmin()}">
+                    <ui:decorate template="../templates/teachers-table.xhtml">
+                        <ui:param name="dataList" value="#{teachersBean.allTeachers()}"/>
+                        <!--<ui:param name="editable" value="#{true}" />
+                        <ui:param name="removable" value="#{true}" />-->
+                    </ui:decorate>
+                    <!--</h:form>
+                    <h:form>-->
+                        <c:if test="#{teachersBean.popUp}">
+                            <ui:decorate template="../templates/teacher-pop-up.xhtml"> </ui:decorate>
+                        </c:if>
                 </h:form>
+                    <h:outputLabel rendered="#{!userBean.isAdmin()}" value="denied"/>
             </f:view>
         </div>
     </ui:define>

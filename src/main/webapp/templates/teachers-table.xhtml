@@ -10,11 +10,11 @@
     <h:panelGrid columns="1">
         <h:dataTable id="teachers-table" value="#{teachersBean.allTeachers}" var="teacher" rowClasses="even-row, odd-row">
             <h:column >
-                <f:facet name="header">Last name</f:facet>
+                <f:facet name="header">Last Name</f:facet>
                 <h:outputText value="#{teacher.lastName}"/>
             </h:column>
             <h:column >
-                <f:facet name="header">First name</f:facet>
+                <f:facet name="header">First Name</f:facet>
                 <h:outputText value="#{teacher.firstName}"/>
             </h:column>
             <h:column >

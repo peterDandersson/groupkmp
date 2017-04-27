@@ -28,6 +28,9 @@ public class StudentBean {
     private Long id;
     private String email;
     private String password;
+    private String firstName;
+    private String lastName;
+    private String address;
     private String role;
 
     // private User_ user;
@@ -42,7 +45,10 @@ public class StudentBean {
     }
 
     public String createStudent() {
-        try {
+        Student s = new Student(email, password, firstName, lastName, address);
+        s.setId(id);
+        studentService.saveStudent(s);
+        /*try {
             if (getId()==null) {
                 studentService.createStudent(email, password);
             }
@@ -52,9 +58,13 @@ public class StudentBean {
         } catch (EJBException e) {
             // Do nothing
             // Pop-up message - email already exists.
-        }
+        }*/
         setEmail("");
         setPassword("");
+        setFirstName("");
+        setLastName("");
+        setAddress("");
+        setId(null);
         return "admin/students";
     }
 
@@ -74,6 +84,9 @@ public class StudentBean {
         setId(id);
         setEmail(student.getEmail());
         setPassword(student.getPassword());
+        setFirstName(student.getFirstName());
+        setLastName(student.getLastName());
+        setAddress(student.getAddress());
         return "admin";
     }
 
@@ -110,6 +123,30 @@ public class StudentBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getRole() {

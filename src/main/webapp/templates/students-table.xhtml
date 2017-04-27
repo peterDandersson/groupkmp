@@ -36,16 +36,16 @@
 
             <h:dataTable id="courses-table" value="#{students}" var="student" rowClasses="even-row, odd-row" rendered="#{students.size() > 0}">
                 <h:column >
-                    <f:facet name="header">Email</f:facet>
-                    <h:outputText id="id" value="#{student.email}"/>
+                    <f:facet name="header">Last Name</f:facet>
+                    <h:outputText id="id" value="#{student.lastName}"/>
                 </h:column>
                 <h:column >
                     <f:facet name="header">First Name</f:facet>
                     <h:outputText value="#{student.firstName}"/>
                 </h:column>
                 <h:column >
-                    <f:facet name="header">Role</f:facet>
-                    <h:outputText value="#{student.role}"/>
+                    <f:facet name="header">Email</f:facet>
+                    <h:outputText value="#{student.email}"/>
                 </h:column>
                 <h:column >
                     <f:facet name="header">Courses</f:facet>

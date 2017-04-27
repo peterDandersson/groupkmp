@@ -36,6 +36,21 @@ public class StudentService {
         return userService.createUser(email, password, "STUDENT");
     }
 
+    public void saveStudent(Student student) {
+        if(student.getId() == null){
+            em.persist(student);
+        } else {
+            Student s = em.find(Student.class,student.getId());
+            s.setEmail(student.getEmail());
+            s.setPassword(student.getPassword());
+            s.setFirstName(student.getFirstName());
+            s.setLastName(student.getLastName());
+            s.setAddress(student.getAddress());
+            s.setAddress(student.getAddress());
+            em.merge(s);
+        }
+    }
+
     public Student getStudent(Long id) {
         return (Student) userService.getUser(id);
     }
