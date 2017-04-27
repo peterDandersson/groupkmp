@@ -29,7 +29,7 @@
 
     <ui:define name="main-panel">
         <div id="main-container">
-            <h:panelGroup rendered="#{userBean.isAdmin()}">
+            <h:panelGroup rendered="#{userBean.isAdmin() || userBean.teacher}">
                 <br />
                 <h:outputText styleClass="tableTitle" value="Courses:" />
                 <ui:decorate template="/templates/courses-table.xhtml">
@@ -45,7 +45,7 @@
                 <ui:decorate template="/templates/attendance-form.xhtml">
                 </ui:decorate>
             </h:panelGroup>
-            <h:panelGroup rendered="#{!userBean.isAdmin()}">
+            <h:panelGroup rendered="#{!(userBean.isAdmin() || userBean.teacher)}">
                 <h:outputLabel value="denied"/>
             </h:panelGroup>
         </div>
