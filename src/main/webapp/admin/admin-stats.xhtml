@@ -17,7 +17,7 @@
                         <h:commandLink action="#{adminStats.changeDay(-1)}">
                             <h:graphicImage value="/resources/images/circle-arrow-left.jpg" width="14"/>
                         </h:commandLink>
-                        <h:outputLabel converter="groupkmp.DateConverter" value="#{adminStats.date}" style="margin: 10px"/>
+                        <h:outputLabel value="#{adminStats.formatDate()}" style="margin: 10px"/>
                         <h:commandLink action="#{adminStats.changeDay(1)}">
                             <h:graphicImage value="/resources/images/circle-arrow-right.jpg" width="14" />
                         </h:commandLink>
