@@ -82,4 +82,15 @@ public class Helpers {
         facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
     }
+
+    public static int getDayOfWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public static boolean isAtWeekend(Date date) {
+        int dayOfWeek = getDayOfWeek(date);
+        return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
+    }
 }
