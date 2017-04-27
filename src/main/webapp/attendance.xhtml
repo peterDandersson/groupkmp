@@ -26,7 +26,6 @@
     </h:outputStylesheet>
 
     <ui:param name="pageTitle" value="Admin"/>
-    <h:outputText value="First course being selected. wrong for teachers" />
     <ui:define name="main-panel">
         <div id="main-container">
             <h:panelGroup rendered="#{userBean.isAdmin() || userBean.teacher}">
