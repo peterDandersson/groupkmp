@@ -73,4 +73,17 @@ public class UserService {
         }
     }
 
+    public boolean checkForUser(){
+        try{
+            TypedQuery<User_> query = em.createNamedQuery("countUsers", User_.class);
+
+            int count = ((Number)em.createNamedQuery("countUsers", Long.class).getSingleResult()).intValue();
+            System.out.println(count);
+            return count == 0 ? false : true;
+
+        } catch (Exception e){
+            return false;
+        }
+    }
+
 }
