@@ -9,6 +9,7 @@ import jpa.Student;
 import jpa.Teacher;
 import jpa.User_;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -40,10 +41,17 @@ public class UserBean {
     private String email;
     private String password;
     private String role;
+    private boolean newDB = false;
 
     private User_ user;
 
     public String logIn(){
+        if((!userService.checkForUser()) && email.equals("admin") && password.equals("admin")){
+            newDB = true;
+            email = "";
+            password = "";
+            return "/add-user";
+        }
         user = userService.logIn(email, password);
         setEmail("");
         setPassword("");
@@ -60,10 +68,11 @@ public class UserBean {
     }
 
     public String createUser() {
-        Long id = userService.createUser(email, password, role);
+        Long id = userService.createUser(email, password, "ADMIN");
+        newDB = false;
         setEmail("");
         setPassword("");
-        return "createUser";
+        return "/login";
     }
 
 /*    public void register(Long course_id) {
@@ -115,6 +124,10 @@ public class UserBean {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isNewDB() {
+        return newDB;
     }
 
     public String getUserInfo(){
