@@ -216,8 +216,7 @@ public class AttendanceBean implements Serializable {
     }
 
     public String getCourseAttendance(Date date) {
-        if (!courseService.isCourseCurrent(getCourseId(), date)) return "-";
-        if (isAtWeekend(date)) return "-";
+        if (!courseService.isCourseCurrent(getCourseId(), date) || isAtWeekend(date)) return "-";
 
         Long expected = attendanceService.getExpectedAttendanceForDate(getCourseId(), date);
         Long actual   = attendanceService.getAttendanceForDate(getCourseId(), date);

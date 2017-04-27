@@ -63,12 +63,14 @@ public class StudentService {
         userService.removeUser(id);
     }
 
-    public List<Course> getCourses(Student student) {
+    public List<Course> getCourses(Long studentId) {
+        Student student = getStudent(studentId);
         Set<Course> courses = student.getCourses();
         return courses.stream().sorted(new CourseComparator()).collect(Collectors.toList());
     }
 
-    public List<Course> getOtherCourses(Student student) {
+    public List<Course> getOtherCourses(Long studentId) {
+        Student student = getStudent(studentId);
         Set<Long> registeredCourseIds = student.getCourseIds();
         List<Long> allCourseIds = courseService.getAllCourseIds();
         allCourseIds.removeAll(registeredCourseIds);

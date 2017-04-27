@@ -194,13 +194,27 @@ public class CourseBean {
         return "/student" + "?faces-redirect=true";
     }
 
-    public String deregister(Long courseId, Long studentId) {
+    /**
+     * Student leaves the course if it has already started.
+     * Student deregisters from the course if it has not yet started started.
+     * @param courseId
+     * @param studentId
+     * @return
+     */
+    public String leaveOrDeregister(Long courseId, Long studentId) {
         System.out.println("Dereg...................................................");
         courseService.leaveOrDeregisterFromCourse(courseId, studentId);
         return "/student" + "?faces-redirect=true";
     }
 
+    public int getRegisteredStudentCount(Long courseId) {
+        return courseService.getCourse(courseId).getStudentCourses().size();
+    }
 
+    public boolean canRemove(Long courseId) {
+        Course course = courseService.getCourse(courseId);
+        return course.getStudentCourses().size() == 0 && course.getDays().size() == 0;
+    }
 
 /*    public String regHandler(Long courseId, Long studentId) {
         System.out.println("Dereg...................................................");

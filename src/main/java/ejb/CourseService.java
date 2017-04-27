@@ -155,6 +155,8 @@ public class CourseService {
         for (Attendance attendance : attendances) {
             em.remove(attendance);
         }
+        student.removeStudentCourse(studentCourse);
+        course.removeStudentCourse(studentCourse);
         em.merge(student);
         em.merge(course);
         StudentCourse sc = em.merge(studentCourse);

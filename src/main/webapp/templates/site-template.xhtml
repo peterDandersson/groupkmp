@@ -8,20 +8,28 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view contentType="text/html">
     <h:head>
-        <f:metadata charset="UTF-8" />
+        <f:metadata charset="UTF-8"/>
         <title>CourseApp - #{pageTitle}</title>
         <style type="text/css">
-            #main-container{
+            #main-container {
                 margin: 40px;
                 margin-top: 80px;
             }
+
+            #cal {
+                margin: 100px;
+            }
+
+            #courses-table, #cal-form {
+                display: inline-block;
+            }
         </style>
-        <h:outputStylesheet library="css" name="nav-bar.css"  />
+        <h:outputStylesheet library="css" name="nav-bar.css"/>
     </h:head>
     <h:body>
-        <p:growl id="msgs" showDetail="true" />
+        <p:growl id="msgs" showDetail="true"/>
         <ui:include src="nav-bar.xhtml"/>
-        <ui:insert name="main-panel" />
+        <ui:insert name="main-panel"/>
     </h:body>
 </f:view>
 </html>

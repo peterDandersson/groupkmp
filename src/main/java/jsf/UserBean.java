@@ -125,17 +125,17 @@ public class UserBean {
 
     public List<Course> getCourses() {
         if (isStudent()) {
-            return studentService.getCourses((Student) getUser());
+            return studentService.getCourses(getUser().getId());
         }
         else if (isTeacher()) {
-            return teacherService.getCourses((Teacher) getUser());
+            return teacherService.getCourses(getUser().getId());
         }
         return null;
     }
 
     public List<Course> getOtherCourses() {
         if (isStudent()) {
-            return studentService.getOtherCourses((Student) getUser());
+            return studentService.getOtherCourses(getUser().getId());
         }
         return null;
     }
