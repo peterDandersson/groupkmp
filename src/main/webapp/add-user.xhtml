@@ -11,21 +11,31 @@
     <ui:define name="main-panel">
         <div id="main-container">
             <f:view>
-                <h:form>
-                    <h:outputLabel value="email:"/>
-                    <h:inputText value="#{userBean.email}"/>
+                <h:form rendered="#{userBean.newDB}">
+                    <h:panelGrid columns="2">
+                        <h:column >
+                            <h:outputLabel value="email:"/>
+                        </h:column>
+                        <h:column >
+                            <h:inputText value="#{userBean.email}"/>
+                        </h:column>
+                        <h:column >
+                            <h:outputLabel value="password:"/>
+                        </h:column>
+                        <h:column >
+                            <h:inputText value="#{userBean.password}"/>
+                        </h:column>
                     <br/>
-                    <h:outputLabel value="password:"/>
-                    <h:inputText value="#{userBean.password}"/>
+                    </h:panelGrid>
                     <br/>
-                    <h:outputLabel value="role:"/>
+                    <!--<h:outputLabel value="role:"/>
                     <h:selectOneRadio value="#{userBean.role}">
                         <f:selectItem itemValue="ADMIN" itemLabel="Admin" />
                         <f:selectItem itemValue="TEACHER" itemLabel="Teacher" />
                         <f:selectItem itemValue="STUDENT" itemLabel="Student" />
-                    </h:selectOneRadio>
+                    </h:selectOneRadio>-->
                     <br/>
-                    <h:commandButton action="#{userBean.createUser}" value="klicka"/>
+                    <h:commandButton action="#{userBean.createUser}" value="Create Admin"/>
                 </h:form>
             </f:view>
         </div>
