@@ -38,7 +38,8 @@ public class TeacherService {
         return teacher;
     }
 
-    public List<Course> getCourses(Teacher teacher) {
+    public List<Course> getCourses(Long teacherId) {
+        Teacher teacher = getTeacher(teacherId);
         List<Course> courses = teacher.getCourses();
         return courses.stream().sorted(new CourseComparator()).collect(Collectors.toList());
     }

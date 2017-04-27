@@ -9,12 +9,12 @@
       xmlns:cc="http://java.sun.com/jsf/composite">
 <cc:interface componentType="groupkmp.components.QuestionView">
     <cc:attribute name="courseBean" type="jsf.CourseBean" required="true"/>
-    <cc:attribute name="role" type="java.lang.String" required="true"/>
+    <cc:attribute name="isStudent" type="boolean" required="true"/>
     <cc:attribute name="courseId" type="java.lang.Long" required="true"/>
     <cc:attribute name="userId" type="java.lang.Long" required="true"/>
-<!--    <cc:attribute name="action"
-                  method-signature="java.lang.Object action(java.lang.Long, java.lang.Long)"
-                  required="true"/>-->
+    <!--    <cc:attribute name="action"
+                      method-signature="java.lang.Object action(java.lang.Long, java.lang.Long)"
+                      required="true"/>-->
 
     <!--cc:clientBehavior name="click" targets="questionContainer:questionOptions:qop" event="click"/-->
 </cc:interface>
@@ -24,7 +24,7 @@
         <!--    <h:form>-->
 
         <c:set var="courseBean" value="#{cc.attrs.courseBean}"/>
-        <c:set var="isStudent" value="#{role=='STUDENT'}"/>
+        <c:set var="isStudent" value="#{cc.attrs.isStudent}"/>
 
         <c:set var="hasStarted" value="#{courseBean.getHasCourseStarted(cc.attrs.courseId)}"/>
         <c:set var="isCurrent" value="#{courseBean.getIsCourseCurrent(cc.attrs.courseId)}"/>
@@ -38,20 +38,25 @@
         <c:set var="hasLeft"
                value="#{hasLeavingDate and courseBean.getCourseEndDate(cc.attrs.courseId) > leavingDate}"/>
 
-        <h:commandLink value="Register *"
+        <!--                      STUDENT                     -->
+
+        <h:commandLink value="Register"
                        action="#{courseBean.register(cc.attrs.courseId, cc.attrs.userId)}"
                        rendered="#{isStudent and !isRegistered and !hasStarted}"/>
-
-        <h:outputText value="Course Started"
+        <h:outputText value="Course Started "
                       rendered="#{isStudent and !isRegistered and isCurrent}"/>
-
         <h:outputText value="Course Ended"
                       rendered="#{isStudent and !isRegistered and hasEnded}"/>
-        <h:commandLink value="Deregister *"
-                       action="#{courseBean.deregister(cc.attrs.courseId, cc.attrs.userId)}"
+        <h:outputText value="Not Started "
+                      rendered="#{isStudent and isRegistered and !hasStarted}"/>
+        <h:commandLink value="(Deregister)"
+                       action="#{courseBean.leaveOrDeregister(cc.attrs.courseId, cc.attrs.userId)}"
                        rendered="#{isStudent and isRegistered and !hasStarted}"/>
-        <h:outputText value="Leave"
+        <h:outputText value="Started "
                       rendered="#{isStudent and isRegistered and isCurrent and !hasLeavingDate}"/>
+        <h:commandLink value="(Leave)"
+                       action="#{courseBean.leaveOrDeregister(cc.attrs.courseId, cc.attrs.userId)}"
+                       rendered="#{isStudent and isRegistered and isCurrent and !hasLeavingDate}"/>
         <h:outputText value="Left on #{leavingDate}"
                       rendered="#{isStudent and isRegistered and isCurrent and hasLeavingDate and hasLeft}"/>
         <h:outputText value="Leaving on #{leavingDate}"
@@ -71,7 +76,6 @@
         <h:outputText value="Completed"
                       rendered="#{!isStudent and hasEnded}"/>
 
-        <!--   </h:form>-->
     </f:view>
 </cc:implementation>
 </html>

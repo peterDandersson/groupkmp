@@ -40,13 +40,10 @@
     </style>
     <h:form>
         <h:panelGrid columns="1">
-            <!--h:dataTable id="courses-table" value="#{courseBean.allCourses}" var="course"
-                         rowClasses="even-row, odd-row"-->
-            <h:dataTable id="courses-table" value="#{userBean.courses}" var="course"
+            <h:dataTable binding="#{scTable}" id="courses-table" value="#{userBean.courses}" var="course"
                          rowClasses="even-row, odd-row">
-                <!--c:set var="rowCount" value="#{mycourses.rowIndex}" /-->
                 <h:column>
-                    <!--h:outputText value="#{mycourses.rowIndex}" /-->
+                    <h:outputText value="#{scTable.rowIndex}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header">Course Name</f:facet>
@@ -62,17 +59,9 @@
                 <h:column rendered="#{userBean.isAdmin()}">
                         <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 </h:column>
-                <h:column rendered="#{(userBean.isStudent())}">
+<!--                <h:column rendered="#{(userBean.isStudent())}">
                     <h:commandLink value="Deregister" action="#{courseBean.deregister(course.id, userBean.user.id)}"/>
-
-                    <!--h:column rendered="#{(userBean.isStudent())}"-->
-<!--
-                    <c:if test="#{not userBean.getHasLeftCourse(userBean.courses[rowCount])}">
--->
-                    <!--c:if test="#{!studentBean.getHasLeftCourse()}">
-                        <h:commandLink value="Leave Course" action="#{userBean.deregister(course.id)}"/>
-                    </c:if-->
-                </h:column>
+                </h:column>-->
 <!--                <h:column rendered="#{(userBean.isStudent())}">
                     <f:facet name="header">Has Left</f:facet>
                     <h:outputText value="#{studentBean.getHasLeftCourse(userBean.user, course.id)}" />
@@ -85,29 +74,20 @@
                     <f:facet name="header">End Date</f:facet>
                     <h:outputText converter="groupkmp.DateConverter" value="#{course.endDate}"/>
                 </h:column>
-                <h:column rendered="#{(userBean.isStudent())}">
-                    <f:facet name="header">Course Current</f:facet>
-                    <h:outputText value="#{courseBean.getIsCourseCurrent(course.id)}" />
-                </h:column>
-                <h:column rendered="#{(userBean.isStudent())}">
-                    <f:facet name="header">Course Started</f:facet>
-                    <h:outputText value="#{courseBean.getHasCourseStarted(course.id)}" />
-                </h:column>
-                <h:column rendered="#{(userBean.isStudent())}">
-                    <f:facet name="header">Course Ended</f:facet>
-                    <h:outputText value="#{courseBean.getHasCourseEnded(course.id)}" />
-                </h:column>
                 <h:column>
-                    <f:facet name="header">Component</f:facet>
+                    <f:facet name="header">Take up</f:facet>
+                    <h:outputText value="#{course.studentCount}/#{course.maxStudents}"/>
+                </h:column>
+<!--                <h:column>
+                    <f:facet name="header">Take up</f:facet>
+                    <h:outputText value="#{courseBean.getRegisteredStudentCount(course.id)}/#{course.maxStudents}"/>
+                </h:column>-->
+                <h:column>
+                    <f:facet name="header">Status</f:facet>
                     <custom:deregister courseBean="#{courseBean}"
-                                       role="#{userBean.role}"
+                                       isStudent="#{userBean.student}"
                                        userId="#{userBean.user.id}"
                                        courseId="#{course.id}"/>
-                </h:column>
-                <h:column>
-                    <h:outputText value="Not Started" rendered="#{!courseBean.getHasCourseStarted(course.id)}" />
-                    <h:outputText value="Current" rendered="#{courseBean.getIsCourseCurrent(course.id)}" />
-                    <h:outputText value="Ended" rendered="#{courseBean.getHasCourseEnded(course.id)}" />
                 </h:column>
 
                 <!--h:column rendered="#{(userBean.isStudent()) and !userBean.getHasLeftCourse(userBean.courses[mycourses.rowIndex])}">
