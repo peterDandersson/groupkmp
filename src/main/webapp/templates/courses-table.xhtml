@@ -134,10 +134,8 @@
                     <h:commandLink value="Deregister" action="#{courseBean.deregister(course.id, userBean.user.id)}"/>
                 </h:column>-->
                 <h:column rendered="#{context != 'attentances'}">
-                    <f:facet name="header">Component</f:facet>
-<!--                    <custom:deregister userId="#{userBean.user.id}"
-                                       courseId="#{course.id}"
-                                       action="#{courseBean.regHandler}"/>-->
+                    <f:facet name="header">Status</f:facet>
+
                     <custom:deregister courseBean="#{courseBean}"
                                        role="#{userBean.role}"
                                        userId="#{userBean.user.id}"
