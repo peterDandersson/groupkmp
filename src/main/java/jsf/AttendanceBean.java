@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static lib.Helpers.*;
 
@@ -37,10 +38,16 @@ public class AttendanceBean implements Serializable {
     private List<Boolean> attendances;
     private List<Boolean> courseSelectionList;
 
-    private boolean test = false;
 
-    public void setTest(boolean test) {
-        this.test = test;
+    @ManagedProperty(value="#{userBean}")
+    private UserBean userBean;
+
+    public UserBean getUserBean() {
+        return userBean;
+    }
+
+    public void setUserBean(UserBean userBean) {
+        this.userBean = userBean;
     }
 
     @PostConstruct
@@ -50,21 +57,42 @@ public class AttendanceBean implements Serializable {
         if (courses.size() > 0) {
             setCourseId(courses.get(0).getId());
         }
-        setCourseSelections();
+        setCourseSelectionList();
     }
 
-    public void setCourseSelections() {
+    /**
+     * courseSelectionList is a list of Booleans that makes the stars '**' follow the course selection on the
+     * take attendance page.
+     */
+    public void setCourseSelectionList() {
         courseSelectionList = new ArrayList<>();
-        for (Long courseId : courseService.getAllCourseIds()) {
+
+        List<Long> courseIds;
+
+        if (userBean.isAdmin()) {
+            courseIds = courseService.getAllCourseIds();
+        } else {
+            courseIds = userBean.getCourses().stream()
+                    .map(course -> course.getId())
+                    .collect(Collectors.toList());
+        }
+
+        for (Long courseId : courseIds) {
             courseSelectionList.add(courseId.equals(getCourseId()));
         }
+
     }
 
-    public void setCourseSelections(List<Boolean> selections) {
+    /**
+     * courseSelectionList is a list of Booleans that makes the stars '**' follow the course selection on the
+     * take attendance page.
+     * @param selections
+     */
+    public void setCourseSelectioLists(List<Boolean> selections) {
         this.courseSelectionList = selections;
     }
 
-    public List<Boolean> getCourseSelections() {
+    public List<Boolean> getCourseSelectionList() {
         return courseSelectionList;
     }
 
@@ -107,16 +135,11 @@ public class AttendanceBean implements Serializable {
         for (Boolean attendance : attendances) {
             this.attendances.add(attendance);
         }
-        //this.attendances = attendances;
     }
 
     public void takeAttendance(Long courseId) {
-        //System.out.println("================== Take attendance 1================");
         setCourseId(courseId);
-        //System.out.println(getCourseId());
-        //Day day = attendanceService.getOrCreateDay(course_id, new Date());
         takeAttendance();
-        //return "attendance";
     }
 
 
@@ -124,7 +147,7 @@ public class AttendanceBean implements Serializable {
         System.out.println("================== Take attendance 2================");
         attendanceService.createAllAttendanceRecords(getCourseId(), getDate());
         setAttendances(fetchAttendances());
-        setCourseSelections();
+        setCourseSelectionList();
     }
 
     public List<Student> getStudents() {

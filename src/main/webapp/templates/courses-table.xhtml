@@ -62,7 +62,11 @@
         <c:set var="courses" value="#{courseBean.allCourses}"/>
         <c:set var="noResultsMessage" value="There are no courses."/>
     </c:if>
-    <c:if test="#{userBean.isTeacher()}">
+    <c:if test="#{context == 'attendance' and userBean.teacher}">
+        <c:set var="courses" value="#{userBean.courses}"/>
+        <c:set var="noResultsMessage" value="There are no courses."/>
+    </c:if>
+    <c:if test="#{context != 'attendance' and userBean.teacher}">
         <c:set var="courses" value="#{userBean.courses}"/>
         <c:set var="noResultsMessage" value="You are not teaching any courses."/>
     </c:if>
@@ -97,57 +101,25 @@
                 <f:facet name="header">Take up</f:facet>
                 <h:outputText value="#{courseBean.getRegisteredStudentCount(course.id)}/#{course.maxStudents}"/>
             </h:column>
-            <!--                <h:column>
-                                <h:outputText value="#{courseBean.getRegisteredStudentCount(course.id)}"/>
-                            </h:column>-->
-            <!--               <h:column>
-                               <f:facet name="header">ID</f:facet>
-                               <h:outputText value="#{course.id}"/>
-                           </h:column>-->
-<!--            <h:column rendered="#{context == 'adminAllCourses'}">
-                <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"
-                                 rendered="#{courseBean.canRemove(course.id)}"/>
-            </h:column>-->
+
             <h:column rendered="#{context == 'adminAllCourses'}">
                 <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"
                                  rendered="#{courseBean.canRemove(course.id)}"/>
 
             </h:column>
-            <!--                <h:column rendered="#{context == 'attendance'}">
-                                <f:facet name="header">Days</f:facet>
-                                <h:outputText value="#{course.days.size()}" />
-                            </h:column>-->
+
             <h:column rendered="#{context == 'attendance'}">
-                <!--h:commandLink value="Take Attendance" action="#{attendanceBean.takeAttendance(course.id)}"-->
                 <h:commandLink value="Take Attendance">
-                    <!--f:ajax listener="#{attendanceBean.takeAttendance(course.id)}" render="attendance-form course-form" /-->
                     <f:ajax listener="#{attendanceBean.takeAttendance(course.id)}"/>
                     <f:ajax render="attendance-form"/>
                     <f:ajax render="@form"/>
                 </h:commandLink>
             </h:column>
             <h:column rendered="#{context == 'attendance'}">
-                <h:outputText value="**" rendered="${attendanceBean.courseSelections[cTable.rowIndex]}"/>
+                <h:outputText value="**" rendered="${attendanceBean.courseSelectionList[cTable.rowIndex]}"/>
             </h:column>
-            <!--                <h:column rendered="#{context == 'studentOtherCourses'}">
-                                <h:commandLink value="Register" action="#{courseBean.register(course.id, userBean.user.id)}"/>
-                            </h:column>-->
-            <!--               <h:column rendered="#{context != 'studentOtherCourses'}">
-                               <f:facet name="header">Status</f:facet>
 
-                               <custom:deregister courseBean="#{courseBean}"
-                                                  userBean="#{userBean}"
-                                                  userId="#{userBean.user.id}"
-                                                  courseId="#{course.id}" />
-                           </h:column>-->
-            <!--
-                            <c:set var="hide" value="#{(context == 'studentOtherCourses') and (not course.isFull())}" />
-            -->
-            <!--h:column rendered="${(context == 'studentOtherCourses') and (!course.isFull)}"-->
-            <!--                <h:column rendered="#{(userBean.isStudent()) and (context == 'studentRegisteredCourses')}">
-                                <h:commandLink value="Deregister" action="#{courseBean.deregister(course.id, userBean.user.id)}"/>
-                            </h:column>-->
             <h:column rendered="#{context != 'attentance'}">
                 <f:facet name="header">Info</f:facet>
                 <custom:deregister courseBean="#{courseBean}"
@@ -155,9 +127,9 @@
                                    userId="#{userBean.user.id}"
                                    courseId="#{course.id}"/>
             </h:column>
-            <h:column rendered="#{userBean.teacher}">
+<!--            <h:column rendered="#{userBean.teacher}">
                 <h:commandLink value="Attendance" action="#{attendanceBean.courseAttendanceStats(course.id)}"/>
-            </h:column>
+            </h:column>-->
 
         </h:dataTable>
     </h:panelGrid>
