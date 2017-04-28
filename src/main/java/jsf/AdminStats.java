@@ -2,6 +2,7 @@ package jsf;
 
 import ejb.AttendanceService;
 import ejb.CourseService;
+import ejb.TeacherService;
 import jpa.Attendance;
 import jpa.Course;
 import jpa.Student;
@@ -28,9 +29,14 @@ public class AdminStats implements Serializable {
     AttendanceService attendanceService;
     @EJB
     CourseService courseService;
+    @EJB
+    TeacherService teacherService;
 
     @ManagedProperty(value="#{attendanceBean}")
     private AttendanceBean attendanceBean;
+
+    @ManagedProperty(value="#{userBean}")
+    private UserBean userBean;
 
     //must provide the setter method
     public void setAttendanceBean(AttendanceBean attendanceBean) {
@@ -38,6 +44,12 @@ public class AdminStats implements Serializable {
     }
     public AttendanceBean getAttendanceBean() {
         return attendanceBean;
+    }
+    public void setUserBean(UserBean userBean) {
+        this.userBean = userBean;
+    }
+    public UserBean getUserBean() {
+        return userBean;
     }
 
     public String courseAttendance(Long id){
@@ -51,7 +63,7 @@ public class AdminStats implements Serializable {
     }
 
     public boolean statsExists(){
-        return 0 != courseService.countCourses();
+        return (null != getAllCourses() && 0 != getAllCourses().size());
     }
 
     public Map courseAttendanceMap(Long id){
@@ -99,6 +111,9 @@ public class AdminStats implements Serializable {
 
 
     public List<Course> getAllCourses(){
+        if(userBean.getUser().getRole().equals("TEACHER")){
+            return teacherService.getCourses(userBean.getUser().getId());
+        }
         return courseService.getAllCourses();
     }
 
