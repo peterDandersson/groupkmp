@@ -2,6 +2,7 @@ package jsf;
 
 import ejb.AttendanceService;
 import ejb.CourseService;
+import ejb.TeacherService;
 import jpa.Attendance;
 import jpa.Course;
 import jpa.Student;
@@ -28,16 +29,27 @@ public class AdminStats implements Serializable {
     AttendanceService attendanceService;
     @EJB
     CourseService courseService;
+    @EJB
+    TeacherService teacherService;
 
     @ManagedProperty(value="#{attendanceBean}")
     private AttendanceBean attendanceBean;
 
-    //must povide the setter method
+    @ManagedProperty(value="#{userBean}")
+    private UserBean userBean;
+
+    //must provide the setter method
     public void setAttendanceBean(AttendanceBean attendanceBean) {
         this.attendanceBean = attendanceBean;
     }
     public AttendanceBean getAttendanceBean() {
         return attendanceBean;
+    }
+    public void setUserBean(UserBean userBean) {
+        this.userBean = userBean;
+    }
+    public UserBean getUserBean() {
+        return userBean;
     }
 
     public String courseAttendance(Long id){
@@ -50,6 +62,9 @@ public class AdminStats implements Serializable {
         return "" + map.get("ATTENDANCE") + "/" + map.get("STUDENTS");
     }
 
+    public boolean statsExists(){
+        return (null != getAllCourses() && 0 != getAllCourses().size());
+    }
 
     public Map courseAttendanceMap(Long id){
 
@@ -96,6 +111,9 @@ public class AdminStats implements Serializable {
 
 
     public List<Course> getAllCourses(){
+        if(userBean.getUser().getRole().equals("TEACHER")){
+            return teacherService.getCourses(userBean.getUser().getId());
+        }
         return courseService.getAllCourses();
     }
 
@@ -108,7 +126,7 @@ public class AdminStats implements Serializable {
         c.add(Calendar.DATE, dateOffset);
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
-        DateFormat df = new SimpleDateFormat("EEE dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("d-MMMM-yyyy", Locale.US);
 
         System.out.println("day: " + dayOfWeek + df.format(c.getTime()));
 
@@ -128,7 +146,7 @@ public class AdminStats implements Serializable {
     public String formatDate(){
         Calendar c = Calendar.getInstance();
         c.setTime(getDate());
-        DateFormat df = new SimpleDateFormat("EEE dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("EEE dd/MM/yyyy", Locale.US);
         return df.format(c.getTime());
     }
 
