@@ -10,7 +10,8 @@
     <ui:define name="main-panel">
         <div id="main-container">
             <f:view>
-                <h:outputLabel value="Course: #{attendanceBean.courseName}"/>
+                <h:outputLabel styleClass="table-heading" value="Course: #{attendanceBean.courseName} Date:"/>
+                <h:outputLabel styleClass="table-heading" value=" #{attendanceBean.dateStr}"/>
                 <h:dataTable binding="#{saTable}" var="student" value="#{attendanceBean.studentAttendancesForCourseDate}"
                              rowClasses="even-row, odd-row">
 

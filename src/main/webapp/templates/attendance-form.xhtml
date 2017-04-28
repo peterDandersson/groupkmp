@@ -27,7 +27,6 @@
     </style>
     <h:form id="attendance-form">
         <h:outputText value="Taking attendance for #{attendanceBean.courseName} on #{attendanceBean.dateStr}." />
-        <!--h:inputHidden value="#{attendanceBean.courseId}"/-->
         <c:set var="students" value="#{attendanceBean.studentCounter}" />
         <br />
         <h:panelGrid columns="1" rendered="#{students.size() > 0}">

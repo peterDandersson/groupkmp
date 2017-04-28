@@ -170,8 +170,10 @@ public class CourseService {
     }
 
     /**
-     * Deregisters the student from the course if the course is yet to start.
-     * Student leaves the course if the course is running.
+     * Student leaves the course if it has already started (by setting endDate
+     * in the studentCourses record).
+     * Student deregisters from the course if it has not yet started started (by
+     * deleting the student courses record).
      * @param course_id
      * @param studentId
      * @return
@@ -196,6 +198,12 @@ public class CourseService {
         }
     }
 
+    /**
+     * Gets a list of calendar objects. Each represents a day (it could be any day)
+     * in each week of the course's duration.
+     * @param courseId
+     * @return
+     */
     public List<Calendar> getCourseWeeks(Long courseId) {
         Course course = getCourse(courseId);
         Date startDate = course.getStartDate();
