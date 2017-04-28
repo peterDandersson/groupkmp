@@ -79,7 +79,7 @@
         <h:dataTable binding="#{cTable}" value="#{courses}" var="course"
                      rowClasses="even-row, odd-row">
             <h:column>
-                <h:outputText value="#{cTable.rowIndex}"/>
+                <h:outputText value="#{cTable.rowIndex + 1}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Course Name</f:facet>
