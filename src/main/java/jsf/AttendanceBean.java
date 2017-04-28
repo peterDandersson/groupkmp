@@ -170,7 +170,10 @@ public class AttendanceBean implements Serializable {
         Integer counter = 0;
         for (Student student : courseService.getStudents(getCourseId())) {
             Pair<Student, Integer> pair = new Pair<>(student, counter);
-            psi.add(pair);
+            Date endDate = student.getStudentCourse(getCourseId()).getEndDate();
+            if (null == endDate || !endDate.before(getDate())){
+                psi.add(pair);
+            }
             counter++;
         }
         return psi;
