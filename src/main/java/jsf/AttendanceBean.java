@@ -3,7 +3,6 @@ package jsf;
 import ejb.AttendanceService;
 import ejb.CourseService;
 import javafx.util.Pair;
-import jpa.Attendance;
 import jpa.Course;
 import jpa.Student;
 import org.primefaces.event.SelectEvent;
@@ -12,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -130,9 +128,6 @@ public class AttendanceBean implements Serializable {
     }
 
     public List<Boolean> getAttendances() {
-/*        if (attendances==null) {
-            fetchAttendances();
-        }*/
         return attendances;
     }
 
@@ -143,17 +138,21 @@ public class AttendanceBean implements Serializable {
         }
     }
 
+    public void takeAttendance(Long courseId, Date date) {
+        setDate(date);
+        takeAttendance(courseId);
+    }
+
     public void takeAttendance(Long courseId) {
         setCourseId(courseId);
         takeAttendance();
     }
 
-
-    public void takeAttendance() {
-        System.out.println("================== Take attendance 2================");
+    public String takeAttendance() {
         attendanceService.createAllAttendanceRecords(getCourseId(), getDate());
         setAttendances(fetchAttendances());
         setCourseSelectionList();
+        return "/attendance?faces-redirect=true";
     }
 
     public List<Student> getStudents() {
