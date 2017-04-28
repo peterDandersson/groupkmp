@@ -49,9 +49,11 @@
                 </h:link>
             </div>
             <div id="nav-bar-students">
-                <h:link outcome="/attendance" style="text-decoration: none">
-                    <span class="nav-label">Take attendance</span>
-                </h:link>
+                <h:form>
+                    <h:commandLink action="#{attendanceBean.refreshTakeAttendance()}" style="text-decoration: none">
+                        <span class="nav-label">Take attendance</span>
+                    </h:commandLink>
+                </h:form>
             </div>
         </c:if>
 
@@ -78,15 +80,15 @@
             </h:link>
         </div>-->
 
-<!--        <div id="nav-bar-log-in">
-            <c:if test="#{!userBean.loggedIn}">
-                <h:form>
-                    <h:link outcome="/login" style="text-decoration: none">
-                        <span class="nav-label">Log in</span>
-                    </h:link>
-                </h:form>
-            </c:if>
-        </div>-->
+        <!--        <div id="nav-bar-log-in">
+                    <c:if test="#{!userBean.loggedIn}">
+                        <h:form>
+                            <h:link outcome="/login" style="text-decoration: none">
+                                <span class="nav-label">Log in</span>
+                            </h:link>
+                        </h:form>
+                    </c:if>
+                </div>-->
 
         <div id="nav-bar-log-out">
             <c:if test="#{userBean.loggedIn}">

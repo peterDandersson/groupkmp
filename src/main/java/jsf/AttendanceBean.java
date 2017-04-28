@@ -48,7 +48,6 @@ public class AttendanceBean implements Serializable {
         this.userBean = userBean;
     }
 
-    @PostConstruct
     public void init() {
         List<Course> courses;
         if (userBean.isAdmin()) {
@@ -62,6 +61,11 @@ public class AttendanceBean implements Serializable {
             setCourseId(courses.get(0).getId());
         }
         setCourseSelectionList();
+    }
+
+    public String refreshTakeAttendance() {
+        init();
+        return "/attendance?faces-redirect=true";
     }
 
     /**
