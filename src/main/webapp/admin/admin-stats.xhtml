@@ -10,7 +10,8 @@
     <ui:define name="main-panel">
         <div id="main-container">
             <f:view>
-                <h:form>
+                <h:outputLabel value="There are no stats at the moment" rendered="#{!adminStats.statsExists()}" />
+                <h:form rendered="#{adminStats.statsExists()}">
                     <div id="day-container">
                         <h:outputLabel value="Date:" />
                         <h:inputHidden value="#{adminStats.dateOffset}" />

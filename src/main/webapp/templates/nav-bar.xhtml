@@ -44,13 +44,13 @@
                 </h:link>
             </div>
             <div id="nav-bar-teachers">
-                <h:link outcome="/attendance" style="text-decoration: none">
-                    <span class="nav-label">Take attendance</span>
+                <h:link outcome="/admin/admin-stats" style="text-decoration: none">
+                    <span class="nav-label">Stats</span>
                 </h:link>
             </div>
-            <div id="nav-bar-stats">
-                <h:link outcome="/teacher/course-stats" style="text-decoration: none">
-                    <span class="nav-label">Stats</span>
+            <div id="nav-bar-students">
+                <h:link outcome="/attendance" style="text-decoration: none">
+                    <span class="nav-label">Take attendance</span>
                 </h:link>
             </div>
         </c:if>
@@ -64,7 +64,7 @@
                     <span class="nav-label">Courses</span>
                 </h:link>
             </div>
-            <div id="nav-bar-stats">
+            <div id="nav-bar-teachers">
                 <h:link outcome="/admin/admin-stats" style="text-decoration: none">
                     <span class="nav-label">Stats</span>
                 </h:link>
@@ -72,11 +72,11 @@
         </c:if>
 
 
-        <div id="nav-bar-dev">
+        <!--<div id="nav-bar-dev">
             <h:link outcome="/dev-links" style="text-decoration: none">
                 <span class="nav-label">devLinks</span>
             </h:link>
-        </div>
+        </div>-->
 
 <!--        <div id="nav-bar-log-in">
             <c:if test="#{!userBean.loggedIn}">
