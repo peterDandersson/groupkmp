@@ -12,13 +12,15 @@
             <f:view>
                 <h:outputStylesheet name="css/admin-teachers.css" />
                 <h:form rendered="#{userBean.isAdmin()}">
-                    <ui:decorate template="../templates/teachers-table.xhtml">
-                        <ui:param name="dataList" value="#{teachersBean.allTeachers()}"/>
-                        <!--<ui:param name="editable" value="#{true}" />
-                        <ui:param name="removable" value="#{true}" />-->
-                    </ui:decorate>
-                    <!--</h:form>
-                    <h:form>-->
+                    <h:outputLabel rendered="#{!teachersBean.teachersExist()}" value="There are no teachers at the moment" />
+                    <c:if test="#{teachersBean.teachersExist()}">
+                        <ui:decorate template="../templates/teachers-table.xhtml">
+                            <ui:param name="dataList" value="#{teachersBean.allTeachers()}"/>
+                        </ui:decorate>
+                    </c:if>
+                    <br />
+                    <br />
+                    <h:commandButton value="Create New" action="#{teachersBean.create}"/>
                         <c:if test="#{teachersBean.popUp}">
                             <ui:decorate template="../templates/teacher-pop-up.xhtml"> </ui:decorate>
                         </c:if>

@@ -124,6 +124,10 @@ public class TeachersBean {
         return teacherService.getAllTeachers();
     }
 
+    public boolean teachersExist(){
+        return (null != getAllTeachers() && getAllTeachers().size() != 0);
+    }
+
     public List<Map<String, String>> textItems(){
 
         List<Map<String, String>> list = new ArrayList<>();
