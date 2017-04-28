@@ -247,6 +247,16 @@ public class AttendanceBean implements Serializable {
         return String.format("%d/%d", actual, expected);
     }
 
+    public String studentAttendance(Date date) {
+        setDate(date);
+        return "student-attendance?faces-redirect=true";
+    }
+
+    public List<Student> getStudentAttendancesForCourseDate() {
+        //List<Attendance> attendances = attendanceService.getAttendances(getCourseId(), getDate());
+        return courseService.getStudents(getCourseId());
+    }
+
 /*    private void debugAttendances() {
         System.out.println("=======");
         for (Boolean attendance : attendances) {

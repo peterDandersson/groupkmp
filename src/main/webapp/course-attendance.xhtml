@@ -10,43 +10,48 @@
     <ui:define name="main-panel">
         <div id="main-container">
             <f:view>
-                <h:outputLabel value="Course: #{attendanceBean.courseName}"/>
-                <h:dataTable binding="#{table}" var="courseWeek" value="#{attendanceBean.courseWeeks}"
-                             rowClasses="even-row, odd-row">
-                    <h:column>
-                        <f:facet name="header">Week Starting</f:facet>
-                        <h:outputText converter="groupkmp.DateConverter" value="#{courseWeek[0]}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">MON</f:facet>
-                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[0])}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">TUE</f:facet>
-                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[1])}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">WED</f:facet>
-                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[2])}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">THU</f:facet>
-                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[3])}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">FRI</f:facet>
-                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[4])}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">SAT</f:facet>
-                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[5])}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">SUN</f:facet>
-                        <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeek[6])}" />
-                    </h:column>
+                <h:form>
+                    <h:outputLabel value="Course: #{attendanceBean.courseName}"/>
+                    <h:dataTable binding="#{table}" var="courseWeekDays" value="#{attendanceBean.courseWeeks}"
+                                 rowClasses="even-row, odd-row">
+                        <h:column>
+                            <f:facet name="header">Week Starting</f:facet>
+                            <h:outputText converter="groupkmp.DateConverter" value="#{courseWeekDays[0]}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">MON</f:facet>
+                            <h:commandLink value="#{attendanceBean.getCourseAttendance(courseWeekDays[0])}"
+                                           action="#{attendanceBean.studentAttendance(courseWeekDays[0])}"
+                                           rendered="#{attendanceBean.getCourseAttendance(courseWeekDays[0]) != '-'}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">TUE</f:facet>
+                            <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeekDays[1])}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">WED</f:facet>
+                            <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeekDays[2])}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">THU</f:facet>
+                            <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeekDays[3])}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">FRI</f:facet>
+                            <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeekDays[4])}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">SAT</f:facet>
+                            <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeekDays[5])}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">SUN</f:facet>
+                            <h:outputText value="#{attendanceBean.getCourseAttendance(courseWeekDays[6])}"/>
+                        </h:column>
 
-                </h:dataTable>
+                    </h:dataTable>
+                </h:form>
+
             </f:view>
         </div>
     </ui:define>
