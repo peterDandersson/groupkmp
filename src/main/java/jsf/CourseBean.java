@@ -171,38 +171,48 @@ public class CourseBean {
         return dateToString(endDate);
     }
 
-/*    public boolean getHasLeavingDate(Long courseId, Long studentId) {
-
-    }*/
-
+    /**
+     * If a student has left the course return the leaving date, else null.
+     * @param courseId
+     * @param studentId
+     * @return
+     */
     public String getLeavingDate(Long courseId, Long studentId) {
         Date leavingDate = courseService.getLeavingDate(courseId, studentId);
         return leavingDate != null ? dateToString(leavingDate) : null;
     }
 
-    public void leaveCourse(Long courseId, Long studentId) {
-
-    }
-
+    /**
+     * Returns true if a student is registered for a course.
+     * @param courseId
+     * @param studentId
+     * @return
+     */
     public boolean isStudentRegistered(Long courseId, Long studentId) {
         return courseService.isStudentRegistered(courseId, studentId);
     }
 
+    /**
+     * Used by students to register for courses.
+     * @param courseId
+     * @param studentId
+     * @return
+     */
     public String register(Long courseId, Long studentId) {
-        System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+courseId);
         courseService.registerForCourse(courseId, studentId);
         return "/student" + "?faces-redirect=true";
     }
 
     /**
-     * Student leaves the course if it has already started.
-     * Student deregisters from the course if it has not yet started started.
+     * Student leaves the course if it has already started (by setting endDate
+     * in the studentCourses record).
+     * Student deregisters from the course if it has not yet started started (by
+     * deleting the student courses record).
      * @param courseId
      * @param studentId
      * @return
      */
     public String leaveOrDeregister(Long courseId, Long studentId) {
-        System.out.println("Dereg...................................................");
         courseService.leaveOrDeregisterFromCourse(courseId, studentId);
         return "/student" + "?faces-redirect=true";
     }
@@ -215,12 +225,5 @@ public class CourseBean {
         Course course = courseService.getCourse(courseId);
         return course.getStudentCourses().size() == 0 && course.getDays().size() == 0;
     }
-
-/*    public String regHandler(Long courseId, Long studentId) {
-        System.out.println("Dereg...................................................");
-        System.out.println(courseId);
-        System.out.println(studentId);
-        return "/student" + "?faces-redirect=true";
-    }*/
 
 }
