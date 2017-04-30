@@ -88,11 +88,57 @@ public class CourseService {
         return i;
     }
 
-    public List<Student> getStudents(Long course_id) {
-        Course course = getCourse(course_id);
+
+    /**
+     * Get all students who have registered for a course.
+     * Note: this will include students who have left the course.
+     * @param courseId
+     * @return
+     */
+    public List<Student> getStudents(Long courseId) {
+        Course course = getCourse(courseId);
         List<Student> students = new ArrayList<>(course.getStudents());
         students.sort(new StudentComparator());
         return students;
+    }
+
+    /**
+     * Get students who should attend a course on a particular date.
+     * Any students who have left the course before a given date are not
+     * included in the list.
+     * @param courseId
+     * @param date
+     * @return
+     */
+    public List<Student> getStudents(Long courseId, Date date) {
+        return getStudents(courseId).stream()
+                .filter(student -> !hasStudentLeftCourse(courseId, student, date))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Has the student left the course on a particular date.
+     * @param student
+     * @param courseId
+     * @return boolean - true if the student has left the course early, else false.
+     */
+    public boolean hasStudentLeftCourse(Long courseId, Student student, Date date) {
+        Course course = getCourse(courseId);
+        // Get the (possible) leaving date..
+        Date leavingDate = getLeavingDate(student, course);
+        // Return true if a date was found and it is after the given date.
+        return leavingDate != null && truncateDate(date).after(leavingDate);
+    }
+
+    /**
+     * If the student leaves the course early
+     * @param student
+     * @param course
+     * @return
+     */
+    public Date getLeavingDate(Student student, Course course) {
+        StudentCourse studentCourse = student.getStudentCourse(course);
+        return studentCourse.getEndDate();
     }
 
     public boolean isStudentRegistered(Long courseId, Long studentId) {

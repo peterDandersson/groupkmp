@@ -169,6 +169,6 @@ public class AdminStats implements Serializable {
     public String goToCourseStats(Long id){
         System.out.println("ID: " + id);
         attendanceBean.setCourseId(id);
-        return "/course-attendance";
+        return "/course-attendance?faces-redirect=true";
     }
 }

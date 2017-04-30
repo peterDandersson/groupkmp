@@ -2,17 +2,16 @@ package ejb;
 
 
 import domain.AttendanceComparator;
-import jpa.Attendance;
-import jpa.Course;
-import jpa.Day;
-import jpa.StudentCourse;
+import jpa.*;
 import org.eclipse.persistence.annotations.TimeOfDay;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -161,13 +160,33 @@ public class AttendanceService {
         }
     }
 
+    private Attendance getAttendance(Long courseId, Date date, Long studentId) {
+        TypedQuery<Attendance> query = em.createNamedQuery("getStudentAttendance", Attendance.class);
+        query.setParameter("date", date);
+        query.setParameter("course_id", courseId);
+        query.setParameter("student_id", studentId);
+
+        Attendance attendance = null;
+        try {
+            attendance = query.getSingleResult();
+        } catch (NoResultException e) {
+            // NOP
+        }
+
+        return attendance;
+    }
+
+    public boolean isStudentPresent(Long courseId, Date date, Long studentId) {
+        Attendance attendance = getAttendance(courseId, date, studentId);
+        return attendance != null && attendance.isPresent();
+    }
+
 
     /*
 
     Data Retrieval Methods.
 
      */
-
 
     /**
      * Expected attendance is the maximum possible attendance. If everyone turned up.

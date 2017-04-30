@@ -196,7 +196,7 @@ public class AttendanceBean implements Serializable {
         else {
             notification(FacesMessage.SEVERITY_ERROR, "Error", "Course not running on this date.");
         }
-        return "attendance";
+        return "attendance?faces-redirect=true";
     }
 
     public void onDateSelect(SelectEvent event) {
@@ -250,24 +250,35 @@ public class AttendanceBean implements Serializable {
         return daysInWeek(courseWeek);
     }
 
+    public Long getExpectedAttendance() {
+        return attendanceService.getExpectedAttendanceForDate(getCourseId(), date);
+    }
+
+    public Long getActualAttendance() {
+        return attendanceService.getAttendanceForDate(getCourseId(), date);
+    }
+
     public String getCourseAttendance(Date date) {
         if (!courseService.isCourseCurrent(getCourseId(), date) || isAtWeekend(date)) return "-";
-
-        Long expected = attendanceService.getExpectedAttendanceForDate(getCourseId(), date);
+        setDate(date);
         Long actual   = attendanceService.getAttendanceForDate(getCourseId(), date);
         if (actual==null) return "Not Taken";
-        return String.format("%d/%d", actual, expected);
+        return String.format("%d/%d", actual, getExpectedAttendance());
     }
 
     public String studentAttendance(Date date) {
         setDate(date);
-        return "student-attendance?faces-redirect=true";
+        return "course-attendance-for-day?faces-redirect=true";
     }
 
-    public List<Student> getStudentAttendancesForCourseDate() {
-        //List<Attendance> attendances = attendanceService.getAttendances(getCourseId(), getDate());
-        return courseService.getStudents(getCourseId());
+    public List<Student> getStudentsForCourseDate() {
+        return courseService.getStudents(getCourseId(), getDate());
     }
+
+    public boolean isStudentPresent(Student student) {
+        return attendanceService.isStudentPresent(getCourseId(), getDate(), student.getId());
+    }
+
 
 /*    private void debugAttendances() {
         System.out.println("=======");
