@@ -52,7 +52,7 @@ Much like the courses and teachers pages, the students page allows an administra
 
 Here the administrator can see the daily attendance record for courses. By clicking the left and right arrows above the table a date is selected, and in the 'Attendance' column the table displays the attendance records for all courses on that day as a pair of integers (number of students that attended)/(number of students that were available to attend).
 
-Clicking on the course name in this table will display a page that shows the full attendance record for this course.
+Clicking on the course name in this table will display a page that shows a table of daily attendance records for this course. If an attendance has not been taken this is shown, and the user can click on the link to take the attendance. If an attendance has been taken the stat is show and the user can click the entry and see the individual student attendances for that day.
 
 
 ## Using the App as a Student
@@ -89,7 +89,7 @@ This shows the student's attendance record for each course.
 
 #### Courses
 
-On the courses page a teacher can view datails of the courses that they teach.
+On the courses page a teacher can view datails of the courses that they teach, and the students on each course.
 
 
 #### Take attendance
@@ -108,6 +108,6 @@ Note that a date cannot be selected (and attendance cannot be taken) if:
 
 #### Stats
 
-Lets teachers view attendance statistics for the courses that they teach.
+This is identical to the stats section for admins except that the courses that are displayed are restricted to the courses that the teacher teaches.
 
 
