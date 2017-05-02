@@ -1,27 +1,30 @@
+ER Diagram
+==========
 
-
- -------            -----------            ---------
-| Admin |-Extends->| User      |<-Extends-| Teacher |
- -------           |-----------|          |---------|
-                   | id        |          |         |
-                   | Email     |          | Courses |
-                   | Password  |           ---------
-                   | FirstName |
-                   | LastName  |
-                   | Address   |
-                    -----------
-                        ^
-                Extends |
-                        |            ---------------
-                ----------------    | StudentCourse |
-               | Student        |   |---------------|
-               |----------------|   | id            |
-               |                |   | Course        |
-               | StudentCourses |--<| Student
-                ----------------    | EndDate
-
-
-
+ -------            -----------            ---------       ----------------
+| Admin |-Extends->| User      |<-Extends-| Teacher |     | Course         |
+ -------           |-----------|          |---------|     |----------------|
+                   | id        |          |         |     | id             |
+                   | Email     |          | Courses |----<| Name           |
+                   | Password  |           ---------      | Description    |
+                   | FirstName |                          | Max Students   |
+                   | LastName  |                          | StartDate      |
+                   | Address   |                          | EndDate        |
+                    -----------                       .---| StudentCourses |
+                        ^                             |   | Days           |--.
+                Extends |                             |    ----------------   |
+                        |                             |                       |
+                        |                             |                       |
+                        |                             |                       |
+                ----------------     ---------------  |    ----------------   |   -------------
+               | Student        |   | StudentCourse | |   | Attendance     |  |  | Day         |
+               |----------------|   |---------------| |   |----------------|  |  |-------------|
+               |                |   | id            | |   | id             |  |  | id          |
+               | StudentCourses |-. | Course        |>' .<| StudentCourse  |  '-<| Course      |
+                ----------------  '<| Student       |   | | Day            |>----| Attendances |
+                                    | EndDate       |   | | Present (bool) |     | Date        |
+                                    | Attendances   |---'  ----------------       -------------
+                                     ---------------
 
 
 
