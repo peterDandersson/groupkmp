@@ -1,6 +1,6 @@
 package ejb;
 
-import domain.StudentComparator;
+import lib.StudentComparator;
 import jpa.*;
 import lib.StatusCode;
 

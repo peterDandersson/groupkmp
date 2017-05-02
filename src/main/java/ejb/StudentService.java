@@ -1,9 +1,8 @@
 package ejb;
 
-import domain.CourseComparator;
+import lib.CourseComparator;
 import jpa.*;
 import jpa.Student;
-import lib.StatusCode;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -11,13 +10,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static lib.StatusCode.*;
-import static lib.Helpers.*;
 
 @Local
 @Stateless

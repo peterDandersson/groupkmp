@@ -22,11 +22,15 @@
                         <h:column>
                             <f:facet name="header">MON</f:facet>
                             <c:set var="i" value="0"/>
-                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendance(courseWeekDays[i])}"/>
-                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Not Taken'))}"/>
+                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendanceStr(courseWeekDays[i])}"/>
+                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Future Date'))}"/>
+                            <c:set var="notTaken" value="#{(dateStr.equals('Not Taken'))}"/>
                             <h:commandLink value="#{dateStr}"
                                            action="#{attendanceBean.studentAttendance(courseWeekDays[i])}"
-                                           rendered="#{renderLinks}"/>
+                                           rendered="#{renderLinks and !notTaken}"/>
+                            <h:commandLink value="#{dateStr}"
+                                           action="#{attendanceBean.takeAttendanceForDate(courseWeekDays[i])}"
+                                           rendered="#{renderLinks and notTaken}"/>
                             <h:outputText rendered="#{!renderLinks}" value="#{dateStr}" />
 
                             </h:column>
@@ -34,66 +38,90 @@
                         <h:column>
                             <f:facet name="header">TUE</f:facet>
                             <c:set var="i" value="1"/>
-                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendance(courseWeekDays[i])}"/>
-                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Not Taken'))}"/>
+                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendanceStr(courseWeekDays[i])}"/>
+                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Future Date'))}"/>
+                            <c:set var="notTaken" value="#{(dateStr.equals('Not Taken'))}"/>
                             <h:commandLink value="#{dateStr}"
                                            action="#{attendanceBean.studentAttendance(courseWeekDays[i])}"
-                                           rendered="#{renderLinks}"/>
+                                           rendered="#{renderLinks and !notTaken}"/>
+                            <h:commandLink value="#{dateStr}"
+                                           action="#{attendanceBean.takeAttendanceForDate(courseWeekDays[i])}"
+                                           rendered="#{renderLinks and notTaken}"/>
                             <h:outputText rendered="#{!renderLinks}" value="#{dateStr}" />
 
                         </h:column>
                         <h:column>
                             <f:facet name="header">WED</f:facet>
                             <c:set var="i" value="2"/>
-                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendance(courseWeekDays[i])}"/>
-                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Not Taken'))}"/>
+                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendanceStr(courseWeekDays[i])}"/>
+                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Future Date'))}"/>
+                            <c:set var="notTaken" value="#{(dateStr.equals('Not Taken'))}"/>
                             <h:commandLink value="#{dateStr}"
                                            action="#{attendanceBean.studentAttendance(courseWeekDays[i])}"
-                                           rendered="#{renderLinks}"/><!-- brittle -->
+                                           rendered="#{renderLinks and !notTaken}"/>
+                            <h:commandLink value="#{dateStr}"
+                                           action="#{attendanceBean.takeAttendanceForDate(courseWeekDays[i])}"
+                                           rendered="#{renderLinks and notTaken}"/>
                             <h:outputText rendered="#{!renderLinks}" value="#{dateStr}" />
 
                         </h:column>
                         <h:column>
                             <f:facet name="header">THU</f:facet>
                             <c:set var="i" value="3"/>
-                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendance(courseWeekDays[i])}"/>
-                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Not Taken'))}"/>
+                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendanceStr(courseWeekDays[i])}"/>
+                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Future Date'))}"/>
+                            <c:set var="notTaken" value="#{(dateStr.equals('Not Taken'))}"/>
                             <h:commandLink value="#{dateStr}"
                                            action="#{attendanceBean.studentAttendance(courseWeekDays[i])}"
-                                           rendered="#{renderLinks}"/><!-- brittle -->
+                                           rendered="#{renderLinks and !notTaken}"/>
+                            <h:commandLink value="#{dateStr}"
+                                           action="#{attendanceBean.takeAttendanceForDate(courseWeekDays[i])}"
+                                           rendered="#{renderLinks and notTaken}"/>
                             <h:outputText rendered="#{!renderLinks}" value="#{dateStr}" />
 
                         </h:column>
                         <h:column>
                             <f:facet name="header">FRI</f:facet>
                             <c:set var="i" value="4"/>
-                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendance(courseWeekDays[i])}"/>
-                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Not Taken'))}"/>
+                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendanceStr(courseWeekDays[i])}"/>
+                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Future Date'))}"/>
+                            <c:set var="notTaken" value="#{(dateStr.equals('Not Taken'))}"/>
                             <h:commandLink value="#{dateStr}"
                                            action="#{attendanceBean.studentAttendance(courseWeekDays[i])}"
-                                           rendered="#{renderLinks}"/><!-- brittle -->
+                                           rendered="#{renderLinks and !notTaken}"/>
+                            <h:commandLink value="#{dateStr}"
+                                           action="#{attendanceBean.takeAttendanceForDate(courseWeekDays[i])}"
+                                           rendered="#{renderLinks and notTaken}"/>
                             <h:outputText rendered="#{!renderLinks}" value="#{dateStr}" />
 
                         </h:column>
                         <h:column>
                             <f:facet name="header">SAT</f:facet>
                             <c:set var="i" value="5"/>
-                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendance(courseWeekDays[i])}"/>
-                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Not Taken'))}"/>
+                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendanceStr(courseWeekDays[i])}"/>
+                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Future Date'))}"/>
+                            <c:set var="notTaken" value="#{(dateStr.equals('Not Taken'))}"/>
                             <h:commandLink value="#{dateStr}"
                                            action="#{attendanceBean.studentAttendance(courseWeekDays[i])}"
-                                           rendered="#{renderLinks}"/><!-- brittle -->
+                                           rendered="#{renderLinks and !notTaken}"/>
+                            <h:commandLink value="#{dateStr}"
+                                           action="#{attendanceBean.takeAttendanceForDate(courseWeekDays[i])}"
+                                           rendered="#{renderLinks and notTaken}"/>
                             <h:outputText rendered="#{!renderLinks}" value="#{dateStr}" />
 
                         </h:column>
                         <h:column>
                             <f:facet name="header">SUN</f:facet>
                             <c:set var="i" value="6"/>
-                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendance(courseWeekDays[i])}"/>
-                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Not Taken'))}"/>
+                            <c:set var="dateStr" value="#{attendanceBean.getCourseAttendanceStr(courseWeekDays[i])}"/>
+                            <c:set var="renderLinks" value="#{!(dateStr.equals('-') or dateStr.equals('Future Date'))}"/>
+                            <c:set var="notTaken" value="#{(dateStr.equals('Not Taken'))}"/>
                             <h:commandLink value="#{dateStr}"
                                            action="#{attendanceBean.studentAttendance(courseWeekDays[i])}"
-                                           rendered="#{renderLinks}"/><!-- brittle -->
+                                           rendered="#{renderLinks and !notTaken}"/>
+                            <h:commandLink value="#{dateStr}"
+                                           action="#{attendanceBean.takeAttendanceForDate(courseWeekDays[i])}"
+                                           rendered="#{renderLinks and notTaken}"/>
                             <h:outputText rendered="#{!renderLinks}" value="#{dateStr}" />
 
                         </h:column>

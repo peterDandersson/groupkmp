@@ -221,6 +221,11 @@ public class CourseBean {
         return courseService.getCourse(courseId).getStudentCourses().size();
     }
 
+    /**
+     * Can a course be safely removed?
+     * @param courseId
+     * @return
+     */
     public boolean canRemove(Long courseId) {
         Course course = courseService.getCourse(courseId);
         return course.getStudentCourses().size() == 0 && course.getDays().size() == 0;

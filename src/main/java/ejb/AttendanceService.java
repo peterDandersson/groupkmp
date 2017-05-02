@@ -1,9 +1,8 @@
 package ejb;
 
 
-import domain.AttendanceComparator;
+import lib.AttendanceComparator;
 import jpa.*;
-import org.eclipse.persistence.annotations.TimeOfDay;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -15,7 +14,6 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static lib.Helpers.truncateDate;
@@ -160,7 +158,7 @@ public class AttendanceService {
         }
     }
 
-    private Attendance getAttendance(Long courseId, Date date, Long studentId) {
+    public Attendance getAttendance(Long courseId, Date date, Long studentId) {
         TypedQuery<Attendance> query = em.createNamedQuery("getStudentAttendance", Attendance.class);
         query.setParameter("date", date);
         query.setParameter("course_id", courseId);
@@ -210,7 +208,7 @@ public class AttendanceService {
         Course course = courseService.getCourse(courseId);
 
         // Return zero for future days.
-        if (date.after(new Date())
+        if (!date.before(truncateDate(new Date()))
                 || !course.isCourseCurrentOn(date))
             return 0L;
 

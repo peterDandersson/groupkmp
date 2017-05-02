@@ -7,18 +7,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="/templates/site-template.xhtml">
-    <ui:param name="pageTitle" value="Course Attendances"/>
+    <ui:param name="pageTitle" value="Students on Course"/>
     <ui:define name="main-panel">
         <div id="main-container">
             <f:view>
-
-                <h:outputLabel styleClass="table-heading" value="Date: #{attendanceBean.dateStr}"/>
-                <br />
                 <h:outputLabel styleClass="table-heading" value="Course: #{attendanceBean.courseName}"/>
                 <br />
-                <h:outputText value="#{attendanceBean.actualAttendance} out of
-                                     #{attendanceBean.expectedAttendance} students attended." />
-                <h:dataTable var="student" value="#{attendanceBean.studentsForCourseDate}"
+                <h:dataTable var="student" value="#{attendanceBean.students}"
                              rowClasses="even-row, odd-row">
                     <h:column>
                         <f:facet name="header">Eamil</f:facet>
@@ -36,12 +31,14 @@
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">Present</f:facet>
-                        <c:set var="present" value="#{attendanceBean.isStudentPresent(student)}" />
-                        <h:outputText value="&#x2714; yes" rendered="#{present}" />
-                        <h:outputText value="&#x2718; no" rendered="#{not present}" />
+                        <f:facet name="header">Status</f:facet>
+                        <h:outputText value="#{attendanceBean.getStudentStatus(student)}" />
                     </h:column>
 
+                    <h:column>
+                        <f:facet name="header">Attendance</f:facet>
+                        <h:outputText value="#{attendanceBean.getStudentAttendance(student)}" />
+                    </h:column>
                 </h:dataTable>
 
             </f:view>

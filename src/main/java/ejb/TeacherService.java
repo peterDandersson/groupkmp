@@ -1,9 +1,8 @@
 package ejb;
 
 
-import domain.CourseComparator;
+import lib.CourseComparator;
 import jpa.Course;
-import jpa.Student;
 import jpa.Teacher;
 
 import javax.ejb.Local;
@@ -12,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Local

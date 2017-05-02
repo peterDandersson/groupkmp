@@ -77,10 +77,11 @@ public class Helpers {
         return calendar.get(Calendar.YEAR);
     }
 
-    public static void notification(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext facesContext;
-        facesContext = FacesContext.getCurrentInstance();
-        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
+    public static Date addDays(Date date, int amount) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, amount);
+        return calendar.getTime();
     }
 
     public static int getDayOfWeek(Date date) {
@@ -92,5 +93,11 @@ public class Helpers {
     public static boolean isAtWeekend(Date date) {
         int dayOfWeek = getDayOfWeek(date);
         return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
+    }
+
+    public static void notification(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext facesContext;
+        facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
     }
 }

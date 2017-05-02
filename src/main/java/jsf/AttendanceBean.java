@@ -3,8 +3,10 @@ package jsf;
 import ejb.AttendanceService;
 import ejb.CourseService;
 import javafx.util.Pair;
+import jpa.Attendance;
 import jpa.Course;
 import jpa.Student;
+import jpa.StudentCourse;
 import org.primefaces.event.SelectEvent;
 
 import javax.annotation.PostConstruct;
@@ -147,6 +149,11 @@ public class AttendanceBean implements Serializable {
         takeAttendance(courseId);
     }
 
+    public String takeAttendanceForDate(Date date) {
+        setDate(date);
+        return takeAttendance();
+    }
+
     public void takeAttendance(Long courseId) {
         setCourseId(courseId);
         takeAttendance();
@@ -258,8 +265,9 @@ public class AttendanceBean implements Serializable {
         return attendanceService.getAttendanceForDate(getCourseId(), date);
     }
 
-    public String getCourseAttendance(Date date) {
+    public String getCourseAttendanceStr(Date date) {
         if (!courseService.isCourseCurrent(getCourseId(), date) || isAtWeekend(date)) return "-";
+        if (date.after(new Date())) return "Future Date";
         setDate(date);
         Long actual   = attendanceService.getAttendanceForDate(getCourseId(), date);
         if (actual==null) return "Not Taken";
@@ -279,21 +287,55 @@ public class AttendanceBean implements Serializable {
         return attendanceService.isStudentPresent(getCourseId(), getDate(), student.getId());
     }
 
-
-/*    private void debugAttendances() {
-        System.out.println("=======");
-        for (Boolean attendance : attendances) {
-            System.out.println(attendance);
-        }
-        System.out.println("=======");
+    public String viewStudents(Long courseId) {
+        setCourseId(courseId);
+        return "/students-on-course?faces-redirect=true";
     }
 
-    private void debugSelections() {
-        System.out.println("======= Selection " + getSelections().size());
-        for (Boolean selection : getSelections()) {
-            System.out.println("-> " + selection);
+    public String getStudentStatus(Student student) {
+        StudentCourse studentCourse = student.getStudentCourse(getCourseId());
+        Course course = courseService.getCourse(getCourseId());
+        Date leavingDate = studentCourse.getEndDate();
+        if (leavingDate != null) {
+            return "Leaving Date: " + dateToString(leavingDate);
         }
-        System.out.println("======= Selection");
-    }*/
+        else if (course.isDateAfterEndDate(new Date())) {
+            return "Completed Course";
+        }
+        else {
+            return "Studying Course";
+        }
+    }
+
+    /**
+     * Total a students registration attendances for a course.
+     * @param student
+     * @return
+     */
+    public String getStudentAttendance(Student student) {
+        Course course = courseService.getCourse(getCourseId());
+        Date date = course.getStartDate();
+        Date endDate = course.getEndDate();
+        Date leavingDate = student.getStudentCourse(getCourseId()).getEndDate();
+        Date now = new Date();
+        Date stopDate = leavingDate == null ? course.getEndDate()
+                : leavingDate.before(endDate) ? leavingDate : endDate;
+        stopDate = now.before(stopDate) ? now : stopDate;
+
+        int dayCount = 0, presentCount = 0;
+        while (!date.after(stopDate)) {
+            Attendance attendance = attendanceService.getAttendance(courseId, date, student.getId());
+            // Only include attendances that have been taken.
+            if (attendances != null) {
+                dayCount++;
+                presentCount += attendanceService.isStudentPresent(getCourseId(), date, student.getId()) ? 1 : 0;
+            }
+            date = addDays(date, 1);
+            while (isAtWeekend(date)) date = addDays(date, 1);
+        }
+
+        String percentStr = dayCount != 0 ? String.format(" (%.1f)", presentCount*100.0/dayCount) : "";
+        return String.format("%d/%d", presentCount, dayCount);
+    }
 
 }
