@@ -208,7 +208,7 @@ public class AttendanceService {
         Course course = courseService.getCourse(courseId);
 
         // Return zero for future days.
-        if (!date.before(truncateDate(new Date()))
+        if (date.after(truncateDate(new Date()))
                 || !course.isCourseCurrentOn(date))
             return 0L;
 

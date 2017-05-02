@@ -1,0 +1,34 @@
+
+
+ -------            -----------            ---------
+| Admin |-Extends->| User      |<-Extends-| Teacher |
+ -------           |-----------|          |---------|
+                   | id        |          |         |
+                   | Email     |          | Courses |
+                   | Password  |           ---------
+                   | FirstName |
+                   | LastName  |
+                   | Address   |
+                    -----------
+                        ^
+                Extends |
+                        |            ---------------
+                ----------------    | StudentCourse |
+               | Student        |   |---------------|
+               |----------------|   | id            |
+               |                |   | Course        |
+               | StudentCourses |--<| Student
+                ----------------    | EndDate
+
+
+
+
+
+
+
+
+
+
+
+
+

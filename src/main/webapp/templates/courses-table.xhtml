@@ -130,9 +130,6 @@
                 <h:commandLink value="View Students" action="#{attendanceBean.viewStudents(course.id)}"
                                rendered="#{course.students.size() > 0}" />
             </h:column>
-<!--            <h:column rendered="#{userBean.teacher}">
-                <h:commandLink value="Attendance" action="#{attendanceBean.courseAttendanceStats(course.id)}"/>
-            </h:column>-->
 
         </h:dataTable>
     </h:panelGrid>
