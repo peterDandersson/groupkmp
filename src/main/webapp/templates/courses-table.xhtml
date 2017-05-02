@@ -106,7 +106,6 @@
                 <h:commandButton value="Edit" action="#{courseBean.editCourse(course.id)}"/>
                 <h:commandButton value="Remove" action="#{courseBean.removeCourse(course.id)}"
                                  rendered="#{courseBean.canRemove(course.id)}"/>
-
             </h:column>
 
             <h:column rendered="#{context == 'attendance'}">
@@ -126,6 +125,10 @@
                                    isStudent="#{userBean.student}"
                                    userId="#{userBean.user.id}"
                                    courseId="#{course.id}"/>
+            </h:column>
+            <h:column rendered="#{!userBean.student and context != 'attentance'}">
+                <h:commandLink value="View Students" action="#{attendanceBean.viewStudents(course.id)}"
+                               rendered="#{course.students.size() > 0}" />
             </h:column>
 <!--            <h:column rendered="#{userBean.teacher}">
                 <h:commandLink value="Attendance" action="#{attendanceBean.courseAttendanceStats(course.id)}"/>

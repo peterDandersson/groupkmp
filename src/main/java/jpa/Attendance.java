@@ -3,6 +3,12 @@ package jpa;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "getStudentAttendance", query="SELECT a FROM Attendance a " +
+                "WHERE a.day.date = :date " +
+                "AND a.studentCourse.course.id = :course_id " +
+                "AND a.studentCourse.student.id = :student_id")
+})
 public class Attendance {
 
     @Id

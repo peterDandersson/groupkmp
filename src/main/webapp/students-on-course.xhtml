@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/site-template.xhtml">
+    <ui:param name="pageTitle" value="Students on Course"/>
+    <ui:define name="main-panel">
+        <div id="main-container">
+            <f:view>
+                <h:outputLabel styleClass="table-heading" value="Course: #{attendanceBean.courseName}"/>
+                <br />
+                <h:dataTable var="student" value="#{attendanceBean.students}"
+                             rowClasses="even-row, odd-row">
+                    <h:column>
+                        <f:facet name="header">Eamil</f:facet>
+                        <h:outputText value="#{student.email}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">First Name</f:facet>
+                        <h:outputText value="#{student.firstName}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Last Name</f:facet>
+                        <h:outputText value="#{student.lastName}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                        <h:outputText value="#{attendanceBean.getStudentStatus(student)}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Attendance</f:facet>
+                        <h:outputText value="#{attendanceBean.getStudentAttendance(student)}" />
+                    </h:column>
+                </h:dataTable>
+
+            </f:view>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

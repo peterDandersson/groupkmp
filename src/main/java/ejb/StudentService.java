@@ -1,9 +1,8 @@
 package ejb;
 
-import domain.CourseComparator;
+import lib.CourseComparator;
 import jpa.*;
 import jpa.Student;
-import lib.StatusCode;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -11,13 +10,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static lib.StatusCode.*;
-import static lib.Helpers.*;
 
 @Local
 @Stateless
@@ -144,21 +139,8 @@ public class StudentService {
      * @param courseId
      * @return boolean - true if the student has left the course early, else false.
      */
-    public boolean hasLeftCourse(Student student, Long courseId) {
+/*    public boolean hasLeftCourse(Student student, Long courseId) {
         Course course = courseService.getCourse(courseId);
         return getLeavingDate(student, course) != null;
-
-    }
-
-    /**
-     * I the student leaves the course early
-     * @param student
-     * @param course
-     * @return
-     */
-    public Date getLeavingDate(Student student, Course course) {
-        StudentCourse studentCourse = student.getStudentCourse(course);
-        return studentCourse.getEndDate();
-    }
-
+    }*/
 }

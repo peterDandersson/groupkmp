@@ -157,13 +157,8 @@ public class StudentBean {
         this.role = role;
     }
 
-    public boolean getHasLeftCourse(User_ user,  Long cid) {
+/*    public boolean getHasLeftCourse(User_ user,  Long courseId) {
         Map<String, Object> attr = getRow().getAttributes();
-        //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        //System.out.println(getRow());
-        return studentService.hasLeftCourse((Student) user, cid);
-        //return true;
-/*        System.out.println(course);
-        return studentService.hasLeftCourse((Student) user, course.getId());*/
-    }
+        return studentService.hasLeftCourse((Student) user, courseId);
+    }*/
 }

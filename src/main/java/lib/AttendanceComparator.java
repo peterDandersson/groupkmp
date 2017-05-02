@@ -1,4 +1,4 @@
-package domain;
+package lib;
 
 import jpa.Attendance;
 import jpa.Student;
