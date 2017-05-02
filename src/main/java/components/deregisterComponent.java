@@ -24,8 +24,29 @@ public class deregisterComponent extends UINamingContainer {
     @EJB
     CourseService courseService;
 
+
+    @ManagedProperty(value="#{courseBean}")
+    private CourseBean courseBean;
+
+    private boolean isStudent;
     private Long courseId;
     private Long userId;
+
+    public CourseBean getCourseBean() {
+        return courseBean;
+    }
+
+    public void setCourseBean(CourseBean courseBean) {
+        this.courseBean = courseBean;
+    }
+
+    public boolean isStudent() {
+        return isStudent;
+    }
+
+    public void setStudent(boolean student) {
+        isStudent = student;
+    }
 
     public Long getCourseId() {
         return courseId;
@@ -41,6 +62,59 @@ public class deregisterComponent extends UINamingContainer {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+/*
+
+            <c:set var="hasStarted" value="#{courseBean.getHasCourseStarted(cc.attrs.courseId)}"/>
+        <c:set var="isCurrent" value="#{courseBean.getIsCourseCurrent(cc.attrs.courseId)}"/>
+        <c:set var="hasEnded" value="#{courseBean.getHasCourseEnded(cc.attrs.courseId)}"/>
+        <c:set var="isRegistered"
+    value="#{courseBean.isStudentRegistered(cc.attrs.courseId, cc.attrs.userId)}"/>
+        <c:set var="hasLeavingDate"
+    value="#{leavingDate != null}"/>
+        <c:set var="leavingDate"
+    value="#{courseBean.getLeavingDate(cc.attrs.courseId, cc.attrs.userId)}"/>
+        <c:set var="hasLeft"
+    value="#{hasLeavingDate and courseBean.getCourseEndDate(cc.attrs.courseId) > leavingDate}"/>
+*/
+    public boolean getHasStarted() {
+        return courseBean.getHasCourseStarted(getCourseId());
+    }
+
+    public boolean isCurrent() {
+        return courseBean.getIsCourseCurrent(getCourseId());
+    }
+
+    public boolean isEnded() {
+        return courseBean.getHasCourseEnded(getCourseId());
+    }
+
+    public boolean isRegistered() {
+        return courseBean.isStudentRegistered(getCourseId(), getUserId());
+    }
+
+    public String getLeavingDate() {
+        return courseBean.getLeavingDate(getCourseId(), getUserId());
+    }
+
+    public boolean getHasLeavingDate() {
+        return getLeavingDate() != null;
+    }
+
+    public boolean getHasLeft() {
+        return getHasLeavingDate() && courseBean.getCourseEndDate(getCourseId()).compareTo(getLeavingDate()) > 1;
+    }
+
+
+    public String getOutputText() {
+        String output = "bum";
+        System.out.println(isStudent());
+        System.out.println(isRegistered());
+        System.out.println(isEnded());
+        if (isStudent() && isRegistered() && isEnded()) {
+            return "Completed";
+        }
+        return "bum";
     }
 
 /*    public boolean test(Long id) {
