@@ -12,13 +12,14 @@ import jpa.StudentCourse;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class StudentStats {
 
     @EJB
@@ -31,14 +32,22 @@ public class StudentStats {
     @ManagedProperty(value="#{userBean}")
     private UserBean userBean;
 
+    public void setUserBean(UserBean userBean) {
+        this.userBean = userBean;
+    }
+    public UserBean getUserBean() {
+        return userBean;
+    }
+
     public List<Course> studentCourses(){
 
         return studentService.getCourses(userBean.getUser().getId());
     }
 
-    public String getAttendance(Course course){
+    public String getAttendance(Long id){
 
-        int day = 0;
+        Course course = courseService.getCourse(id);
+
         int attendance = 0;
 
         StudentCourse studentCourse = course.getStudentCourse(userBean.getUser().getId());
@@ -46,21 +55,8 @@ public class StudentStats {
         for (Attendance attendance1 : attendanceList){
             attendance += attendance1.isPresent() ? 1 : 0;
         }
-        day = attendanceList.size();
+        int day = attendanceList.size();
 
         return "" + attendance + "/" + day;
-    }
-
-    public List<Pair<Course, String>> attendanceList(){
-        Pair<Course,String> pair;
-        List<Pair<Course, String>> list = new ArrayList();
-
-
-        for (Course course : studentCourses()){
-            String s = getAttendance(course);
-            Pair<Course, String> p = new Pair<>(course, s);
-            list.add(p);
-        }
-        return list;
     }
 }
