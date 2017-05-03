@@ -10,6 +10,7 @@
     <h:head>
         <f:metadata charset="UTF-8"/>
         <title>CourseApp - #{pageTitle}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <style type="text/css">
             #main-container {
                 margin: 40px;
@@ -33,10 +34,17 @@
         </style>
         <h:outputStylesheet library="css" name="nav-bar.css"/>
     </h:head>
+
     <h:body>
         <p:growl id="msgs" showDetail="true"/>
         <ui:include src="nav-bar.xhtml"/>
         <ui:insert name="main-panel"/>
     </h:body>
+    <!-- Latest compiled and minified CSS -->
+<!--
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous" />
+    -->
 </f:view>
 </html>
